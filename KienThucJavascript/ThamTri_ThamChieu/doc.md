@@ -187,8 +187,36 @@ console.log(clone.sizes.width); // 51, Tại nơi khác kết quả cũng bị t
 Để fix vấn đề này thì chúng ta có thể dùng một số phương pháp dưới đây
 
 - `JSON.parse(JSON.stringify())`
-- Dùng method [\_.cloneDeep(obj)](https://lodash.com/docs#cloneDeep) của thư viện Lodash (sâu bên trong nó dùng đệ quy để lặp các thuộc tính bên trong object)
-- Dùng các thư viện như [immer](https://immerjs.github.io/immer/). Thư viện này khá hiệu quả vì đôi lúc chúng ta cũng không cần thiết clone hết cả một object lớn để chỉnh sửa 1 vài thuộc tính, cơ chế của cái này là chỉnh sửa thuộc tính nào thì nó sẽ tự tính và clone cho đúng thôi. Vậy nên giúp cải thiện về mặt performance trong một số trường hợp.
+
+  - Câu lệnh này có thể được sử dụng để tạo một bản sao sâu (deep copy) của một đối tượng JavaScript. Bản sao sâu là một đối tượng hoàn toàn mới và độc lập với đối tượng gốc ban đầu, vì vậy nếu bạn thay đổi bản sao, thì đối tượng gốc sẽ không bị ảnh hưởng.
+
+  - Để thực hiện điều này, trước tiên chúng ta cần chuyển đối tượng JavaScript thành string (chuỗi) `JSON` bằng phương thức `JSON.stringify()`. Sau đó, chúng ta sẽ chuyển đổi chuỗi `JSON` thành một object(đối tượng) JavaScript mới bằng phương thức `JSON.parse()`. Việc này sẽ tạo ra một bản sao độc lập với đối tượng gốc ban đầu.
+
+Ví dụ, giả sử chúng ta có một đối tượng `JavaScript` như sau:
+
+```js
+const originalObj = {
+  name: "John",
+  age: 30,
+  hobbies: ["reading", "cooking"],
+  address: {
+    street: "123 Main St",
+    city: "New York",
+    state: "NY",
+  },
+};
+```
+
+- Chúng ta có thể tạo một bản sao sâu của đối tượng này bằng cách sử dụng câu lệnh sau:
+
+```js
+const clonedObj = JSON.parse(JSON.stringify(originalObj));
+```
+
+- Sau khi thực hiện, `clonedObj` sẽ là một bản sao độc lập của `originalObj`. Bất kỳ thay đổi nào được thực hiện trên `clonedObj` sẽ không ảnh hưởng đến `originalObj`, và ngược lại.
+
+* Dùng method [\_.cloneDeep(obj)](https://lodash.com/docs#cloneDeep) của thư viện Lodash (sâu bên trong nó dùng đệ quy để lặp các thuộc tính bên trong object)
+* Dùng các thư viện như [immer](https://immerjs.github.io/immer/). Thư viện này khá hiệu quả vì đôi lúc chúng ta cũng không cần thiết clone hết cả một object lớn để chỉnh sửa 1 vài thuộc tính, cơ chế của cái này là chỉnh sửa thuộc tính nào thì nó sẽ tự tính và clone cho đúng thôi. Vậy nên giúp cải thiện về mặt performance trong một số trường hợp.
 
 #### Lưu ý: Const object cũng có thể chỉnh sửa
 
