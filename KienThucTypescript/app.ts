@@ -105,10 +105,10 @@ let body: { name: string | number } | { firstName: string } = {
  */
 
 enum Sizes {
-  S = "S",
-  M = "M",
-  L = "L",
-  XL = "XL",
+  S,
+  M,
+  L,
+  XL,
 }
 
 let size = Sizes.S;

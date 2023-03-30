@@ -20,7 +20,7 @@
 
 fetch("https://reqres.in/api/users?page=2")
   .then((res) => {
-    console.log("data: ", res);
+    console.log("data from response: ", res);
     if (res.ok) {
       return res.json();
     } else {
@@ -37,7 +37,7 @@ fetch("https://reqres.in/api/users?page=2")
     });
     document.getElementById("result").innerHTML = html;
 
-    console.log("chinh thuc: ", res);
+    console.log("result chinh thuc: ", res);
   })
   .catch((error) => {
     console.log("Error: ", error);
