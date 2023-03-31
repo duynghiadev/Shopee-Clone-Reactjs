@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "SET NODE_ENV=production&webpack serve"
+    "start": "webpack serve --env development"
   },
   "author": "duynghiadev",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2",
     "webpack": "^5.77.0",
+    "webpack-bundle-analyzer": "4.5.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.1"
   }

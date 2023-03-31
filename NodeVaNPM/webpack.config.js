@@ -1,9 +1,27 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
+  const basePlugins = [
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+    new HtmlWebpackPlugin({
+      title: "Webpack App",
+      filename: "index.html",
+      template: "src/template.html",
+    }),
+  ];
+
   const isDevelopment = Boolean(env.development);
+
+  const plugins = isDevelopment
+    ? basePlugins
+    : [...basePlugins, new BundleAnalyzerPlugin()];
+
   return {
     mode: isDevelopment ? "development" : "production",
     entry: {
@@ -34,7 +52,7 @@ module.exports = (env) => {
                   {
                     debug: true, // Hiển thị debug lên terminal để dễ debug
                     useBuiltIns: "entry",
-                    corejs: "3.29.1", // nên quy định version core-js để babel-preset-env nó hoạt động tối ưu
+                    corejs: "3.23.4", // nên quy định version core-js để babel-preset-env nó hoạt động tối ưu
                   },
                 ],
               ],
@@ -47,16 +65,7 @@ module.exports = (env) => {
         },
       ],
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: "[name].[contenthash].css",
-      }),
-      new HtmlWebpackPlugin({
-        title: "Webpack App",
-        filename: "index.html",
-        template: "src/template.html",
-      }),
-    ],
+    plugins,
     devServer: {
       static: {
         directory: "dist", // Đường dẫn tương đối đến với thư mục chứa index.html
