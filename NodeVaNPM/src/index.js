@@ -3,8 +3,11 @@ import "core-js/modules/es.promise";
 import sum from "./utils";
 import "./styles/style.css";
 import "./styles/style.scss";
+import domHandler from "./dom";
 
 console.log(sum(100, 300));
+
+domHandler();
 
 // ES6 Spread Operator
 const person = { name: "Duoc" };
