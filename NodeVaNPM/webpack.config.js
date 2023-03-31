@@ -13,6 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
+    filename: "[name].[contenthash].js",
   },
   module: {
     rules: [
@@ -23,7 +24,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
     new HtmlWebpackPlugin({
       title: "Webpack App",
       filename: "index.html",
