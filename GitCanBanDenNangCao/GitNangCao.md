@@ -233,7 +233,7 @@ Giải thích:
 
 Git rebase sẽ làm Git Graph của bạn trông đẹp, dễ nhìn, đỡ phải phân tách nhánh rồi gộp như bên rebase. Nhưng cái gì cũng có cái giá của nó. Bạn phải sử dụng `git push -f` sau cùng, và câu lệnh này **rất nguy hiểm** nếu bạn đang thực hiện trên một branch nhiều người dùng.
 
-Ở trên mình đang thực hiện trên branch `feature/Login`, mình rebase `feature` vào. Nếu mình làm người lại là rebase `feature/Login` vào `feature` thì rất nguy hiểm.
+Ở trên mình đang thực hiện trên branch `feature/Login`, mình rebase `feature` vào. Nếu mình làm ngược lại là rebase `feature/Login` vào `feature` thì rất nguy hiểm.
 
 ### Hãy cẩn thận với git rebase
 
