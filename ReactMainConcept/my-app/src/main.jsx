@@ -2,23 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import Welcome from "./Welcome";
 
-// ReactDOM.createRoot(document.getElementById("root")).render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-function tick() {
-  const element = (
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <div>
-      <h1>Hello World!</h1>
-      <h2>it is {new Date().toLocaleTimeString()}</h2>
+      <App />
+      <Welcome name="Duynghiadev" age="20" />
+      <Welcome name="Duynghiadev" age="21" />
+      <Welcome name="Duynghiadev" age="22" />
     </div>
-  );
-  root.render(element);
-}
-
-setInterval(tick, 1000);
+  </React.StrictMode>
+);
