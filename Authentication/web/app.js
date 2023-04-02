@@ -4,6 +4,7 @@ class Http {
       baseURL: "http://localhost:4000/",
       timeout: 10000,
     });
+    this.refreshTokenRequest = null;
 
     this.instance.interceptors.request.use(
       (config) => {
@@ -21,7 +22,29 @@ class Http {
 
     this.instance.interceptors.response.use(
       (config) => config.data,
-      (error) => Promise.reject(error)
+      (error) => {
+        console.log("Loi: ", error);
+        if (
+          error.response.status === 401 &&
+          error.response.data.name === "EXPIRED_ACCESS_TOKEN"
+        ) {
+          this.refreshTokenRequest = this.refreshTokenRequest
+            ? this.refreshTokenRequest
+            : refreshToken().finally(() => {
+                this.refreshTokenRequest = null;
+              });
+
+          return this.refreshTokenRequest
+            .then((access_token) => {
+              error.response.config.Authorization = access_token;
+              return this.instance(error.response.config);
+            })
+            .catch((errorRefreshToken) => {
+              throw errorRefreshToken;
+            });
+        }
+        return Promise.reject(error);
+      }
     );
   }
 
@@ -56,6 +79,21 @@ const fetchProduct = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const refreshToken = async () => {
+  const refresh_token = localStorage.getItem("refresh_token");
+  try {
+    const res = await http.post("refresh-token", {
+      refresh_token,
+    });
+    const { access_token } = res.data;
+    localStorage.setItem("access_token", res.data.access_token);
+    return access_token;
+  } catch (error) {
+    localStorage.clear();
+    throw error.response;
+  }
 };
 
 document.getElementById("login-form").addEventListener("submit", (event) => {
@@ -93,3 +131,9 @@ document.getElementById("btn-get-both").addEventListener("click", (event) => {
   fetchProfile();
   fetchProduct();
 });
+
+document
+  .getElementById("btn-refresh-token")
+  .addEventListener("click", (event) => {
+    refreshToken();
+  });
