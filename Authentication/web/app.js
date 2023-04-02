@@ -87,8 +87,10 @@ const refreshToken = async () => {
     const res = await http.post("refresh-token", {
       refresh_token,
     });
+
     const { access_token } = res.data;
     localStorage.setItem("access_token", res.data.access_token);
+
     return access_token;
   } catch (error) {
     localStorage.clear();
