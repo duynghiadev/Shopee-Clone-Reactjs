@@ -22,6 +22,7 @@ export default class Clock extends React.Component {
         end: 121212,
       },
       lists: [],
+      darkMode: false,
     };
     this.date = "3/4/2023";
     this.getTime = this.getTime.bind(this);
@@ -39,6 +40,22 @@ export default class Clock extends React.Component {
     );
   }
 
+  componentDidUpdate() {
+    if (this.state.darkMode) {
+      const value = document.querySelector("input").value;
+      console.log("Value in value: ", value);
+    }
+
+    if (this.state.lists.length === 0) {
+      fetchApi().then((res) =>
+        this.setState((prevState) => ({
+          ...prevState,
+          lists: res,
+        }))
+      );
+    }
+  }
+
   getTime() {
     const newState = {
       ...this.state, // spread operator
@@ -50,6 +67,13 @@ export default class Clock extends React.Component {
     this.setState(newState);
   }
 
+  toggleDarkMode = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      darkMode: !prevState.darkMode,
+    }));
+  };
+
   render() {
     console.log(this.state);
     return (
@@ -59,6 +83,10 @@ export default class Clock extends React.Component {
         <h2 id="seconds">It is {this.state.seconds.created}</h2>
         <h2>It is {this.date}</h2>
         <button onClick={this.getTime}>Get Time</button>
+        <button onClick={this.toggleDarkMode}>Toggle</button>
+        {this.state.darkMode && (
+          <input value={this.state.darkMode} type="text" />
+        )}
       </div>
     );
   }
