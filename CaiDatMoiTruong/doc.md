@@ -26,6 +26,8 @@ Nếu như các bạn muốn setting mỗi workspace hiện tại thôi (nghĩa 
 
 ### 4.2. Tạo file `.editorconfig` để chia sẻ một số setting giữa các editor với nhau
 
+- `.editorconfig`: Nó cấu hình các tùy chọn cho trình soạn thảo văn bản
+
 ```bash
 [*]
 indent_style = space
@@ -33,6 +35,9 @@ indent_size = 2
 ```
 
 ### 4.3. Tạo file `.prettierrc` để chia sẻ setting prettier giữa các editor
+
+- `.prettierrc`: Nó cấu hình các tùy chọn cho công cụ Prettier,
+- `Prettier` là một công cụ tự động định dạng mã nguồn theo các quy tắc rõ ràng và đơn giản. Nó sẽ tự động sửa đổi các lỗi định dạng như các dòng quá dài, khoảng trắng thừa, v.v.
 
 ```json
 {
@@ -59,6 +64,9 @@ npm i prettier eslint-plugin-prettier eslint-config-prettier -D
 Trên là những plugin cần thiết để setting Prettier và Eslint cho CRA. Các bạn nếu dùng yarn thì chạy `yarn add` nhé.
 
 ### 4.5. Tạo file `.eslintrc` để setting eslint
+
+- .`eslintrc`: Nó cấu hình các tùy chọn cho công cụ ESLint,
+- ` ESLint` là một công cụ kiểm tra chất lượng mã nguồn. Nó sẽ phát hiện các lỗi cú pháp, các từ khóa trùng lặp, v.v.
 
 ```json
 {
