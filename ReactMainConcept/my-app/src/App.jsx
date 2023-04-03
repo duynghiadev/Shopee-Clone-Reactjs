@@ -3,6 +3,7 @@ import "./App.css";
 import BareButton from "./BareButton";
 import BareInput from "./BareInput";
 import Layout from "./Layout";
+import LoginControl from "./LoginControl";
 // import Clock from "./Clock";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
 
       {visible && <Clock name={name} />} */}
 
-      <Layout>
+      {/* <Layout>
         <h1>Hello</h1>
 
         <BareInput
@@ -27,7 +28,9 @@ function App() {
           onChange={() => {}}
         />
         <BareButton />
-      </Layout>
+      </Layout> */}
+
+      <LoginControl isLoggedIn={false} />
     </div>
   );
 }
