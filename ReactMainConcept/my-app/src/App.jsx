@@ -2,6 +2,7 @@
 import "./App.css";
 import BareButton from "./BareButton";
 import BareInput from "./BareInput";
+import CorrectlyState from "./CorrectlyState";
 import Layout from "./Layout";
 import LoginControl from "./LoginControl";
 // import Clock from "./Clock";
@@ -30,7 +31,8 @@ function App() {
         <BareButton />
       </Layout> */}
 
-      <LoginControl isLoggedIn={false} />
+      {/* <LoginControl isLoggedIn={false} /> */}
+      <CorrectlyState />
     </div>
   );
 }
