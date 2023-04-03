@@ -1,5 +1,6 @@
 // import { useState } from "react";
 import "./App.css";
+import BareButton from "./BareButton";
 import BareInput from "./BareInput";
 import Layout from "./Layout";
 // import Clock from "./Clock";
@@ -25,6 +26,7 @@ function App() {
           className="input-control"
           onChange={() => {}}
         />
+        <BareButton />
       </Layout>
     </div>
   );
