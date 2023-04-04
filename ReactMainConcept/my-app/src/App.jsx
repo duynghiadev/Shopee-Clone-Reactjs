@@ -5,6 +5,7 @@ import BareInput from "./BareInput";
 import CorrectlyState from "./CorrectlyState";
 import Layout from "./Layout";
 import LoginControl from "./LoginControl";
+import ProductList from "./ProductList/ProductList";
 // import Clock from "./Clock";
 
 function App() {
@@ -32,7 +33,8 @@ function App() {
       </Layout> */}
 
       {/* <LoginControl isLoggedIn={false} /> */}
-      <CorrectlyState />
+      {/* <CorrectlyState /> */}
+      <ProductList />
     </div>
   );
 }
