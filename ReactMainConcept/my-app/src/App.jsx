@@ -11,6 +11,7 @@ import UncontrolledComponent from "./Form/UncontrolledComponent";
 import Layout from "./Layout";
 import LoginControl from "./LoginControl";
 import ProductList from "./ProductList/ProductList";
+import FilterableProductTable from "./ThinkingInReact/FilterableProductTable";
 // import Clock from "./Clock";
 
 function App() {
@@ -44,7 +45,8 @@ function App() {
       {/* <UncontrolledComponent /> */}
       {/* <Calculator /> */}
       {/* <Inheritance /> */}
-      <Composition />
+      {/* <Composition /> */}
+      <FilterableProductTable />
     </div>
   );
 }
