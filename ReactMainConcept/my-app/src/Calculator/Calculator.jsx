@@ -24,7 +24,7 @@ const tryConvert = (temperature, convertFunc) => {
   let output = convertFunc(input);
   output = Math.round(output * 1000) / 1000;
 
-  return output;
+  return String(output);
 };
 
 export class Calculator extends Component {
