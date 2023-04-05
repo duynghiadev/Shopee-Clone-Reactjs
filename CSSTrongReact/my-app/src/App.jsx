@@ -32,7 +32,7 @@ function App() {
       </p>
 
       <ProductList />
-      <Cart />
+      <Cart isShow={true} />
     </div>
   );
 }
