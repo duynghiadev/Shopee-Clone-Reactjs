@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import UserProfile from "./UserProfile";
 
 const initialAddress = () => {
   console.log("Initial address");
@@ -24,6 +25,19 @@ const getAddress = () => {
     }, 3000);
   });
 };
+
+export const UserContext = createContext({
+  address: {
+    nation: "Vietnam",
+    city: {
+      street: "223 Huston, New York",
+      house: "Building",
+    },
+  },
+  age: 100,
+  firstName: "Duynghia Dev",
+  increaseAge: () => {},
+});
 
 export default function User() {
   const [firstName, setFirstName] = useState("Alex");
@@ -104,15 +118,8 @@ export default function User() {
   return (
     <div>
       <h1>User functional component</h1>
-      <ul>
-        <li>First Name: {firstName}</li>
-        <li>Age: {age}</li>
-        <li>Nation: {address.nation}</li>
-        <li>Street: {address.city.street}</li>
-        <li>House: {address.city.house}</li>
-      </ul>
+      <UserProfile />
 
-      <button onClick={increaseAge}>Increase Age</button>
       <button onClick={rerender}>Rerender</button>
       <button onClick={changeStreet}>ChangCity</button>
     </div>
