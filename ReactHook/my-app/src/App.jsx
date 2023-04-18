@@ -16,8 +16,8 @@ function App() {
       <button onClick={() => setIsShow((prevState) => !prevState)}>
         Change isShow
       </button> */}
-      {/* <RuleOfHook /> */}
-      <AutoBatching />
+      <RuleOfHook />
+      {/* <AutoBatching /> */}
     </div>
   );
 }
