@@ -4,6 +4,8 @@ import User from "./User";
 import UserClassComponent from "./User.class";
 import RuleOfHook from "./ruleOfHook";
 import AutoBatching from "./AutoBatching";
+import Cart from "./Header/Cart";
+import Navigation from "./Header/Navigation";
 
 function App() {
   const [isShow, setIsShow] = useState(true);
@@ -16,8 +18,11 @@ function App() {
       <button onClick={() => setIsShow((prevState) => !prevState)}>
         Change isShow
       </button> */}
-      <RuleOfHook />
+      {/* <RuleOfHook /> */}
       {/* <AutoBatching /> */}
+
+      <Cart />
+      <Navigation />
     </div>
   );
 }
