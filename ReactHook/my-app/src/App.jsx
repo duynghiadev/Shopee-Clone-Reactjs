@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import User from "./User";
 import UserClassComponent from "./User.class";
+import RuleOfHook from "./ruleOfHook";
 
 function App() {
   const [isShow, setIsShow] = useState(true);
@@ -9,11 +10,12 @@ function App() {
   return (
     <div className="App">
       {/* <UserClassComponent /> */}
-      {isShow && <User />}
+      {/* {isShow && <User />}
 
       <button onClick={() => setIsShow((prevState) => !prevState)}>
         Change isShow
-      </button>
+      </button> */}
+      <RuleOfHook />
     </div>
   );
 }
