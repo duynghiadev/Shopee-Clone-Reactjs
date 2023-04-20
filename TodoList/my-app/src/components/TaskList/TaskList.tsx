@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types'
 import { Todo } from '../../@types/todo.type'
+import { TodoTypes } from '../../PropTypes/todo.proptype'
 import styles from './taskList.module.scss'
 
 interface TaskListProps {
@@ -42,4 +44,12 @@ export default function TaskList(props: TaskListProps) {
       </div>
     </div>
   )
+}
+
+TaskList.propTypes = {
+  doneTaskList: PropTypes.bool,
+  todos: PropTypes.arrayOf(TodoTypes),
+  handleDoneTodo: PropTypes.func,
+  startEditTodo: PropTypes.func,
+  deleteTodo: PropTypes.func
 }
