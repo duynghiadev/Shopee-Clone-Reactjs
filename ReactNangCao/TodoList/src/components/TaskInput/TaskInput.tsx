@@ -5,6 +5,7 @@ import styles from './taskInput.module.scss'
 import { TodoTypes } from '../../PropTypes/todo.proptype'
 import connect from '../../HOC/connect'
 import { debug, log } from '../../constant'
+import Title from '../Title'
 
 interface TaskInputProps {
   addTodo: (name: string) => void
@@ -17,7 +18,11 @@ function TaskInput(props: TaskInputProps & typeof injectedProps) {
   const { addTodo, currentTodo, editTodo, finishEditTodo, debug, log } = props
   const [name, setName] = useState<string>('')
 
-  log('debug: ' + debug)
+  log('Đây là debug của bài Higher Order Component (HOC): ' + debug)
+
+  const address = {
+    street: '10 Tran Hung Dao'
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -41,7 +46,7 @@ function TaskInput(props: TaskInputProps & typeof injectedProps) {
 
   return (
     <div className='mb-2'>
-      <h1 className={styles.title}>To do list typescript</h1>
+      <Title address={address} />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type='text'
