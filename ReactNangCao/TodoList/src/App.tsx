@@ -1,9 +1,13 @@
+import Slider from './components/Slider'
 import TodoList from './components/TodoList'
+import Watch from './components/Watch'
 
 function App() {
   return (
     <div>
-      <TodoList />
+      {/* <TodoList /> */}
+      {/* <Watch /> */}
+      <Slider />
     </div>
   )
 }
