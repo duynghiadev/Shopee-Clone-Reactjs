@@ -38,4 +38,4 @@ function equal(prevProp: any, nextProps: any) {
   return false
 }
 
-export default React.memo(Title, equal)
+export default React.memo(Title)
