@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Todo } from '../../@types/todo.type'
 import styles from './taskInput.module.scss'
@@ -46,9 +46,27 @@ function TaskInput(props: TaskInputProps & typeof injectedProps) {
     }
   }
 
+  /**
+   * useCallback() vaf useMemo() là 2 hook có tính năng hầu như là giống nhau
+   * Nhưng useCallback() được sinh ra là để dùng cho function
+   * Còn useMemo() được dùng sử dụng trong biến
+   */
+
+  // Cách 1: Sử dụng Hook useCallback()
+  const handleClickTitle = useCallback((value: any) => {
+    console.log(value)
+  }, [])
+
+  // Cách 2: Sử dụng Hook useMemo()
+  // const handleClickTitle = useMemo(() => {
+  //   return (value: any) => {
+  //     console.log(value)
+  //   }
+  // }, [])
+
   return (
     <div className='mb-2'>
-      <Title address={address} />
+      <Title address={address} handleClickTitle={handleClickTitle} />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type='text'

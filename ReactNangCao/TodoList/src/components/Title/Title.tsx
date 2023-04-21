@@ -5,6 +5,7 @@ type TitleProps = {
   address: {
     street: string
   }
+  handleClickTitle: (value: any) => void
 }
 
 function Title(props: TitleProps) {
@@ -14,7 +15,13 @@ function Title(props: TitleProps) {
    * => Component cha render dẫn đến Component con render theo
    */
   console.log('address render: ', props.address)
-  return <h1 className={styles.title}>To do list typescript</h1>
+  console.log('props: ', props)
+
+  return (
+    <h1 className={styles.title} onClick={() => props.handleClickTitle(100)}>
+      To do list typescript
+    </h1>
+  )
 }
 
 function equal(prevProp: any, nextProps: any) {
@@ -37,5 +44,13 @@ function equal(prevProp: any, nextProps: any) {
   }
   return false
 }
+
+/**
+ * Do chúng ta đã dùng Hook useMemo() nên không cần thiết phải dùng function equal nữa
+ * => export default React.memo(Title)
+ * Nếu muốn dùng function equal thì ta phải chuyển qua dùng React.memo()
+ * => export default React.memo(Title ,equal)
+ * Còn dùng Hook useMemo() thì không cần dùng cũng được
+ */
 
 export default React.memo(Title)
