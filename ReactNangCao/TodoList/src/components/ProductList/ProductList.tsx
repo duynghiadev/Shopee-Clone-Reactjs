@@ -36,7 +36,7 @@ export default function ProductList() {
       setDeferredName(value)
     })
   }
-  // console.log('pending', pending)
+  console.log('pending', pending)
   // const deferredName = useDeferredValue(name)
   return (
     <div>
