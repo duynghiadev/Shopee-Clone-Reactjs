@@ -1,3 +1,4 @@
+import AutoInput from './components/AutoInput'
 import Count from './components/Count'
 import Counter from './components/Counter'
 import Slider from './components/Slider'
@@ -13,7 +14,8 @@ function App() {
       {/* <Slider /> */}
       {/* <Count /> */}
       {/* <Counter /> */}
-      <Welcome />
+      {/* <Welcome /> */}
+      <AutoInput />
     </div>
   )
 }
