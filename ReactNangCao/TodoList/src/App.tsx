@@ -12,6 +12,7 @@ import Watch from './components/Watch'
 import Welcome from './components/Welcome'
 import MainLayout from './layouts/MainLayout'
 import { PositionType } from './components/MouseTracker/MouseTracker'
+import User from './components/User'
 
 // Chúng ta có thể để biến ở ngoài
 // const renderAds = (value: PositionType) => <Ads {...value} visible
@@ -42,14 +43,18 @@ function App() {
       {/* <Welcome /> */}
       {/* <AutoInput /> */}
       {/* <ProductList /> */}
+
       {/* <MainLayout>
         <Manager />
       </MainLayout> */}
-      <div>
+
+      {/* <div>
         <button onClick={() => render({})}>Force Rerender</button>
       </div>
-      <MouseTracker render={renderRef.current} />
+      <MouseTracker render={renderRef.current} /> */}
       {/* <Ads visible /> */}
+
+      <User />
     </div>
   )
 }
