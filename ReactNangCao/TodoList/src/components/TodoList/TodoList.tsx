@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react'
-import styles from './todoList.module.scss'
 import TaskInput from '../TaskInput'
 import TaskList from '../TaskList'
 import { Todo } from '../../@types/todo.type'
+import styles from './todoList.module.scss'
 
-// Solution 1: Declare interface
 // interface HandleNewTodos {
 //   (todos: Todo[]): Todo[]
 // }
 
-// Solution 2: Declare type
 type HandleNewTodos = (todos: Todo[]) => Todo[]
 
 const syncReactToLocal = (handleNewTodos: HandleNewTodos) => {
@@ -22,7 +20,6 @@ const syncReactToLocal = (handleNewTodos: HandleNewTodos) => {
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [currentTodo, setCurrentTodo] = useState<Todo | null>(null)
-
   const doneTodos = todos.filter((todo) => todo.done)
   const notDoneTodos = todos.filter((todo) => !todo.done)
 
@@ -30,6 +27,11 @@ export default function TodoList() {
     const todosString = localStorage.getItem('todos')
     const todosObj: Todo[] = JSON.parse(todosString || '[]')
     setTodos(todosObj)
+    // setTimeout(() => {
+    // let a: any = null
+    // a.b = 0
+    // setTodos(null)
+    // })
   }, [])
 
   const addTodo = (name: string) => {
@@ -38,6 +40,13 @@ export default function TodoList() {
       done: false,
       id: new Date().toISOString()
     }
+    // try {
+    //   let a: any = null
+    //   a.b = 0
+    // } catch (error) {
+    //   console.log('Loi roi')
+    // }
+
     setTodos((prev) => [...prev, todo])
     syncReactToLocal((todosObj: Todo[]) => [...todosObj, todo])
   }
@@ -76,7 +85,6 @@ export default function TodoList() {
         return todo
       })
     }
-
     setTodos(handler)
     setCurrentTodo(null)
     syncReactToLocal(handler)
@@ -86,7 +94,6 @@ export default function TodoList() {
     if (currentTodo) {
       setCurrentTodo(null)
     }
-
     const handler = (todoObj: Todo[]) => {
       const findedIndexTodo = todoObj.findIndex((todo) => todo.id === id)
       if (findedIndexTodo > -1) {
@@ -96,7 +103,6 @@ export default function TodoList() {
       }
       return todoObj
     }
-
     setTodos(handler)
     syncReactToLocal(handler)
   }
@@ -105,14 +111,12 @@ export default function TodoList() {
     <div className={styles.todoList}>
       <div className={styles.todoListContainer}>
         <TaskInput addTodo={addTodo} currentTodo={currentTodo} editTodo={editTodo} finishEditTodo={finishEditTodo} />
-
         <TaskList
           todos={notDoneTodos}
           handleDoneTodo={handleDoneTodo}
           startEditTodo={startEditTodo}
           deleteTodo={deleteTodo}
         />
-
         <TaskList
           doneTaskList
           todos={doneTodos}

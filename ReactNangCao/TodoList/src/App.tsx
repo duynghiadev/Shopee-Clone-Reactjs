@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div>
-      {/* <TodoList /> */}
+      <TodoList />
       {/* <Watch /> */}
       {/* <Slider /> */}
       {/* <Count /> */}
@@ -54,7 +54,7 @@ function App() {
       <MouseTracker render={renderRef.current} /> */}
       {/* <Ads visible /> */}
 
-      <User />
+      {/* <User /> */}
     </div>
   )
 }
