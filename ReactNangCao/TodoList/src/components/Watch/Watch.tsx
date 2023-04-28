@@ -5,9 +5,11 @@ function WatchTimer() {
   const intervalRef = useRef<any>(null)
 
   useEffect(() => {
+    console.log('Chạy 1 lần !!')
+
     intervalRef.current = setInterval(() => {
       setSeconds((prev) => prev + 1)
-      console.log('setInterval dang chay!')
+      console.log('setInterval đang chạy !!')
     }, 1000)
 
     return () => {

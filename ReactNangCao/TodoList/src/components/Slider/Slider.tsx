@@ -62,7 +62,7 @@ const ActiveSlide = React.memo(
               alt='Tính năng đặc biệt chỉ có trong khóa học Super React'
               placeholder='blur'
               className={styles.activeSlideItemImage}
-              ref={naturalActiveImageRef}
+              ref={naturalActiveImageRef} // Chỉ sử dụng props ref khi ta dùng với forwardRef
             />
           </div>
         </div>
