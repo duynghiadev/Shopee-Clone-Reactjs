@@ -27,6 +27,10 @@ export default function Manager() {
   }
 
   const handleDelete = () => {
+    /**
+     * Hàm này sử dụng filter để tạo một mảng mới chỉ chứa các sinh viên có id khác với id của sinh
+     * viên bị xóa.
+     */
     setStudents((prev) => prev.filter((student) => student.id !== idDelete))
     hideConfirm()
   }
