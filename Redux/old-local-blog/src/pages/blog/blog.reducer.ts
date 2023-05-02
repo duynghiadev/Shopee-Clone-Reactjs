@@ -78,6 +78,12 @@ const blogReducer = createReducer(initialState, (builder) => {
     )
 })
 
+/**
+ * Sử dụng cách này thì dài hơn.
+ * Nhưng không khuyến khích sử dụng cách này.
+ * Đã sử dụng Redux Toolkit thì hãy dùng cách trên lun cho khoẻ.
+ */
+
 // const blogReducer = createReducer(
 //   initialState,
 //   {
