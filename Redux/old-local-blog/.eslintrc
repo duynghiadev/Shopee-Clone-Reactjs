@@ -4,7 +4,6 @@
     "prettier"
   ],
   "plugins": [
-    "react",
     "prettier"
   ],
   "rules": {
@@ -13,8 +12,9 @@
       {
         "arrowParens": "always",
         "semi": false,
-        "trailingComa": "none",
+        "trailingComma": "none",
         "tabWidth": 2,
+        "endOfLine": "auto",
         "useTabs": false,
         "singleQuote": true,
         "printWidth": 120,
