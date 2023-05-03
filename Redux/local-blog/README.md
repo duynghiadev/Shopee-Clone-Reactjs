@@ -1,4 +1,4 @@
-## Project này code theo kiểu `createAction` và `createReducer`
+## Project này code theo kiểu `createSlice`
 
 # Getting Started with Create React App
 
