@@ -103,21 +103,102 @@ const http = new Http().instance
 
 - Sau khi đã định nghĩa lớp `Http`, chúng ta có thể tạo một `instance` của nó bằng cách sử dụng từ khóa `new`:
 
+- Đoạn code `const http = new Http().instance` có ý nghĩa là tạo một `instance mới` của lớp `Http`, và lấy ra thuộc tính `instance` của đối tượng đó để gán cho `biến http`.
+
+- Lấy ra thuộc tính `instance` của đối tượng đó để gán cho biến `http`. Có nghĩa là biến này nào ?
+
+  - `http` là biến được khởi tạo và gán giá trị bằng thuộc tính `instance` của đối tượng `Http`. Khi ta sử dụng biến `http` để gửi các yêu cầu `HTTP`, nó sẽ gọi đến phương thức `instance` của đối tượng `Http` để lấy ra `instance` của `Axios`, và sử dụng `instance` này để gửi các yêu cầu.
+
+  - Việc này giúp cho việc sử dụng `Axios` trở nên dễ dàng và hiệu quả hơn, bởi vì ta không cần phải tạo mới một `instance Axios` cho mỗi yêu cầu, mà chỉ cần sử dụng lại `instance` đã được tạo trước đó.
+
+- Thuộc tính `instance` là dòng code nào ?
+
+  - Thuộc tính `instance` là thuộc tính của đối tượng `Http`, được định nghĩa trong phương thức khởi tạo của lớp như sau:
+
 ```jsx
-const http = new Http().instance
+this.instance = axios.create({
+  baseURL: 'http://localhost:4000/',
+  timeout: 10000
+})
 ```
 
-- Khi tạo instance của Http, chúng ta gọi hàm khởi tạo của lớp này. Hàm khởi tạo này sẽ tạo ra một instance của AxiosInstance, và lưu trữ nó vào thuộc tính instance của lớp Http.
+- Nó được gán giá trị bằng một `instance` của `Axios` được tạo ra bởi phương thức `create()` của `axios`.
 
-- Do đó, chúng ta có thể truy cập vào instance của AxiosInstance bằng cách sử dụng http.instance. Tuy nhiên, để thuận tiện trong việc sử dụng instance này, đoạn mã đã được thiết lập để xuất instance này ra bên ngoài module. Vì vậy, chúng ta có thể sử dụng instance http để gửi các yêu cầu HTTP đến máy chủ được xác định bởi baseURL.
+  - Bạn có đề cập đến `instance` của `Axios`. Cụ thể là sao ? sao lại là `instance` của `Axios` ? hãy giải thích rõ hơn ?
+
+  - Trong đoạn mã này, `instance` được gán giá trị là một `instance` của `Axios`, được tạo ra bởi phương thức `create()` của `axios`.
+
+  - Cụ thể, `create()` trả về một `instance` của `Axios`, cũng giống như khi chúng ta gọi `new` để tạo một `instance` của một `lớp`. Tuy nhiên, khi sử dụng `create()`, chúng ta có thể thiết lập các cấu hình và tùy chỉnh chúng theo nhu cầu của mình.
+
+  - Sau khi tạo `instance` của `Axios` bằng cách gọi `axios.create()`, chúng ta gán `instance` này cho thuộc tính `instance` của đối tượng `Http`. Khi đó, các phương thức (`method`) và thuộc tính (`property`) của `instance` này sẽ được sử dụng để gọi các `API`.
+
+  - Vì vậy, trong đoạn mã này, thuộc tính `instance` của `Http` chứa một `instance` của `Axios`, được sử dụng để tạo và gửi các yêu cầu `HTTP`.
+
+- `instance` của `axios` gồm có những gì ?
+
+  - `Instance` của `Axios` bao gồm các `thuộc tính` và `phương thức` để thực hiện các yêu cầu `HTTP`. Một số thuộc tính quan trọng bao gồm:
+
+  - `defaults`: Lưu trữ các giá trị mặc định được sử dụng khi gửi các yêu cầu, ví dụ như `baseURL`, `headers`, `timeout`, v.v.
+
+  - `interceptors`: Là một công cụ mạnh mẽ cho phép bạn can thiệp vào quá trình gửi yêu cầu và nhận phản hồi. `Interceptors` cho phép bạn thay đổi dữ liệu, thêm thông tin `header` hoặc thực hiện một số xử lý trước khi yêu cầu được gửi hoặc sau khi phản hồi được nhận.
+
+  - `request(config)`: Gửi một yêu cầu `HTTP` với các tùy chọn được chỉ định trong đối tượng `config`.
+
+  - `get(url[, config])`, `post(url[, data[, config]])`, `put(url[, data[, config]])`, `delete(url[, config])`, v.v.: Các phương thức này tương ứng với các phương thức `HTTP` tương ứng và được sử dụng để gửi các yêu cầu `HTTP`.
+
+- Ngoài ra còn có nhiều thuộc tính và phương thức khác để làm việc với các yêu cầu `HTTP`.
+
+- Trước khi giải thích dòng này, ta có thể xem lại phần khởi tạo lớp `Http`:
+
+```jsx
+import axios, { AxiosInstance } from 'axios'
+
+class Http {
+  instance: AxiosInstance
+  constructor() {
+    this.instance = axios.create({
+      baseURL: 'http://localhost:4000/',
+      timeout: 10000
+    })
+  }
+}
+```
+
+- Trong đoạn mã trên, lớp `Http` có một thuộc tính là `instance` có kiểu dữ liệu là `AxiosInstance`, và trong phương thức khởi tạo của lớp này, chúng ta sử dụng `axios.create()` để tạo một `instance` mới của `AxiosInstance`, và gán nó cho thuộc tính `instance` của lớp `Http`.
+
+- Trở lại với dòng mã `const http = new Http().instance`, ta thực hiện việc tạo một `instance mới` của lớp `Http` bằng cách sử dụng toán tử `new`. Sau đó, chúng ta lấy ra thuộc tính `instance` của đối tượng (`object`) đó bằng cách sử dụng dấu `.` để truy cập thuộc tính. Cuối cùng, ta `gán` giá trị đó cho `biến http`.
+
+- Vì `instance` của lớp `Http` có kiểu dữ liệu là `AxiosInstance`, nên biến `http` cũng có kiểu dữ liệu là `AxiosInstance`, và nó được sử dụng để gửi các yêu cầu `HTTP` đến `server` thông qua các phương thức `get`, `post`, `put`, `delete`,... của `AxiosInstance`.
 
 - Ví dụ:
 
 ```jsx
 http
   .get('/users')
-  .then((response) => console.log(response.data))
-  .catch((error) => console.error(error))
+  .then((response) => {
+    console.log(response.data)
+  })
+  .catch((error) => {
+    console.error(error)
+  })
 ```
 
-- Đoạn mã trên sử dụng phương thức get() của instance http để gửi yêu cầu HTTP GET đến địa chỉ 'http://localhost:4000/users'. Khi nhận được phản hồi từ máy chủ, dữ liệu được trả về sẽ được ghi ra console. Nếu có lỗi xảy ra trong quá trình gửi yêu cầu hoặc xử lý phản hồi, lỗi sẽ được ghi ra console để kiểm tra và xử lý.
+- Ở đoạn mã trên, ta sử dụng biến http (`instance http`) để gửi một yêu cầu `GET` đến địa chỉ `/users` trên `server`, cụ thể là `'http://localhost:4000/users'`. Nếu yêu cầu thành công, kết quả trả về được lưu trong đối tượng `response` và sẽ được ghi ra console. Ngược lại, nếu có lỗi, lỗi sẽ được xử lý trong phần .`catch()`.
+
+## Làm như vậy có khác gì so với làm cách khác ?
+
+- Việc tạo một `instance` của lớp `Http` và lấy thuộc tính `instance` của nó là cách tiếp cận phổ biến để sử dụng đối tượng `Axios` trong toàn bộ ứng dụng của bạn.
+
+- Nếu bạn tạo một `instance mới` của `Axios` trong mỗi phương thức `API` của mình, bạn sẽ cần phải cấu hình `Axios` lại vài lần. Điều này `không hiệu quả` và làm cho mã của bạn `khó bảo trì` hơn.
+
+- `Vì vậy`, bằng cách tạo một `instance` của `Http` và sử dụng thuộc tính `instance` để gọi các phương thức `Axios`, bạn đảm bảo rằng cấu hình `Axios` của bạn sẽ được sử dụng duy nhất trong toàn bộ ứng dụng của bạn.
+
+## Sử dụng `instance` nó hiệu quả như thế nào. Hãy giải thích rõ hơn ?
+
+- Khi sử dụng một `instance` của `Axios` thông qua lớp `Http` đã được cấu hình trước đó, bạn có thể tiết kiệm thời gian và tăng tính hiệu quả của ứng dụng của mình.
+
+- Ví dụ, nếu bạn có một ứng dụng web với nhiều trang, và tất cả các trang đều sử dụng các yêu cầu `API` để tương tác với máy chủ của bạn. Nếu bạn sử dụng `instance` của `Axios` được cấu hình trước đó, các yêu cầu `API` trên các trang khác nhau sẽ sử dụng cùng một cấu hình, điều này sẽ giảm thiểu việc lặp lại cấu hình và giảm thiểu số lượng mã cần phải được viết.
+
+- Ngoài ra, sử dụng một `instance` của `Axios` cũng có thể giúp cải thiện hiệu suất của ứng dụng bằng cách giảm thiểu số lượng kết nối được thiết lập và đóng lại với máy chủ, đồng thời cũng giảm thiểu lưu lượng mạng của ứng dụng.
+
+- Vì vậy, sử dụng một `instance` của `Axios` thông qua lớp `Http` đã được cấu hình trước đó là một cách tiếp cận tốt để tăng tính hiệu quả và tối ưu hóa ứng dụng của bạn.
