@@ -3,7 +3,9 @@ import blogReducer from 'pages/blog/blog.slice'
 import { useDispatch } from 'react-redux'
 
 export const store = configureStore({
-  reducer: { blog: blogReducer }
+  reducer: {
+    blog: blogReducer
+  }
 })
 
 // Lấy RootState và AppDispatch từ store của chúng ta
