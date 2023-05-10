@@ -6,6 +6,7 @@ interface PostItemProps {
 
 export default function PostItem(props: PostItemProps) {
   const { post } = props
+
   return (
     <div className='flex flex-col items-center overflow-hidden rounded-lg border md:flex-row'>
       <div className='group relative block h-48 w-full shrink-0 self-start overflow-hidden bg-gray-100 md:h-full md:w-32 lg:w-48'>
