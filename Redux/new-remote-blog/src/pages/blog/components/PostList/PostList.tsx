@@ -1,9 +1,11 @@
 import { useGetPostsQuery } from 'pages/blog/blog.service'
-import PostItem from '../PostItem'
 import { Fragment } from 'react'
+import PostItem from '../PostItem'
 import SkeletonPost from '../SkeletonPost'
 
 export default function PostList() {
+  // isLoading chỉ dành cho lần fetch đầu tiên
+  // isFetching là cho mỗi lần gọi API
   const { data, isLoading, isFetching } = useGetPostsQuery()
   console.log(data, isLoading, isFetching)
 
@@ -23,7 +25,6 @@ export default function PostList() {
               <SkeletonPost />
             </Fragment>
           )}
-
           {!isFetching && data?.map((post) => <PostItem key={post.id} post={post} />)}
         </div>
       </div>
