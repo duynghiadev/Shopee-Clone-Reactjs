@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface BlogState {
   postId: string
@@ -11,9 +11,19 @@ const initialState: BlogState = {
 const blogSlice = createSlice({
   name: 'blog',
   initialState,
-  reducers: {}
+  reducers: {
+    startEditPost: (state, action: PayloadAction<string>) => {
+      state.postId = action.payload
+    },
+
+    cancelEditPost: (state) => {
+      state.postId = ''
+    }
+  }
 })
 
 const blogReducer = blogSlice.reducer
+
+export const { cancelEditPost, startEditPost } = blogSlice.actions
 
 export default blogReducer
