@@ -24,6 +24,13 @@ server.use((req, res, next) => {
       });
     }
   }
+
+  if (req.body.title === "admin") {
+    return res.status(500).send({
+      error: "❌❌❌ Server bị lỗi ❌❌❌",
+    });
+  }
+
   setTimeout(() => {
     next();
   }, 3000);

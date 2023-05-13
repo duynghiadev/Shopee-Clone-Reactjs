@@ -2,13 +2,13 @@
 
 ## Quy ước lỗi trả về với từ server
 
-Server phải trả về một kiểu lỗi thống nhất, không thể trả về tùy tiện được.
+- Server phải trả về một kiểu lỗi thống nhất, không thể trả về tùy tiện được.
 
-Ở đây Server của mình (JSON Server) cấu hình để trả về 2 kiểu lỗi
+- Ở đây Server của mình (JSON Server) cấu hình để trả về 2 kiểu lỗi
 
-1. Lỗi liên quan đến việc gửi data như POST, PUT thì error là một object kiểu `EntityError`
+1. Lỗi liên quan đến việc gửi data như POST, PUT thì `error` là một `object` kiểu `EntityError`
 
-```ts
+```jsx
 {
   "error": {
     "publishDate": "Không được publish vào thời điểm trong quá khứ"
@@ -16,17 +16,17 @@ Server phải trả về một kiểu lỗi thống nhất, không thể trả v
 }
 ```
 
-```ts
+```jsx
 interface EntityError {
-  [key: string | number]: string | EntityError | EntityError[]
+  [key: string | number]: string | EntityError | EntityError[];
 }
 ```
 
-Có thể nâng cao hơn `key: string` là `key: object` hoặc `key: array` nếu form phức tạp
+- Có thể nâng cao hơn `key: string` là `key: object` hoặc `key: array` nếu form phức tạp
 
 2. Các lỗi còn lại sẽ trả về một thông báo dạng `error: string`
 
-```ts
+```jsx
 {
   "error": '❌❌❌Lỗi rồi bạn ơi ❌❌❌'
 }
@@ -34,9 +34,9 @@ Có thể nâng cao hơn `key: string` là `key: object` hoặc `key: array` n�
 
 ## Lỗi từ RTK Query
 
-Sẽ có 2 kiểu: FetchBaseQueryError | SerializedError
+- Sẽ có 2 kiểu: FetchBaseQueryError | SerializedError
 
-Tham khảo: [https://redux-toolkit.js.org/rtk-query/usage-with-typescript#type-safe-error-handling](https://redux-toolkit.js.org/rtk-query/usage-with-typescript#type-safe-error-handling)
+=> Tham khảo: [https://redux-toolkit.js.org/rtk-query/usage-with-typescript#type-safe-error-handling](https://redux-toolkit.js.org/rtk-query/usage-with-typescript#type-safe-error-handling)
 
 ## Cache data
 
