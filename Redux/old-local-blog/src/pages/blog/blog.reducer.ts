@@ -26,14 +26,14 @@ export const cancelEditingPost = createAction('/blog/cancelEditingPost')
 export const finishEditingPost = createAction<Post>('/blog/finishEditingPost')
 
 /**
- * Nếu cod project bằng TypeScript thì cứ dùng theo kiểu này thì sẽ ngắn gọn hơn và dễ hiểu hơn
- * Mặc dù hơi dài 1 tí
+ * Nếu code project bằng TypeScript thì cứ dùng theo kiểu (Builder Callback) này thì sẽ dễ hiểu hơn
+ * Mặc dù hơi dài 1 tí. Nhưng mà được cái là nó hỗ trợ đầy đủ kiểu TypeScript cho chúng ta
  */
 
 const blogReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(addPost, (state, action) => {
-      // immerjs
+      // Ở đây chúng ta sử dụng immerjs
       // immerjs giúp chúng ta mutate một state an toàn
       const post = action.payload
       state.postList.push(post)
@@ -47,6 +47,7 @@ const blogReducer = createReducer(initialState, (builder) => {
       if (foundPostIndex !== -1) {
         state.postList.splice(foundPostIndex, 1)
       }
+
       console.log('finish', current(state))
     })
     .addCase(startEditingPost, (state, action) => {
