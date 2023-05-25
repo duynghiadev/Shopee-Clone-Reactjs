@@ -114,6 +114,26 @@ export const finishEditingPost = createAction < Post > '/blog/finishEditingPost'
 
 2. Mỗi action creator sẽ tạo ra một action object với cấu trúc phù hợp, bao gồm `type` (kiểu action) và `payload` (dữ liệu đi kèm). Các action này sẽ được sử dụng trong reducer để thay đổi trạng thái của ứng dụng.
 
+**❌❌ 👇👇👇 LƯU Ý CHỖ NÀY 👇👇👇 ❌❌**
+
+```jsx
+const blogReducer = createReducer(initialState, (builder) => {})
+```
+
+❌❌**Tại sao trong hàm này ta không sử dụng `createAction` mà phải sử dụng `createReducer`. Hãy giải thích lý do vì sao ?**❌❌
+
+- Hàm `createAction` và `createReducer` đều là các hàm được cung cấp bởi `Redux Toolkit` để giúp viết mã `Redux` dễ dàng hơn. Tuy nhiên, chúng có mục đích và sử dụng khác nhau.
+
+- Hàm `createAction` được sử dụng để tạo ra một action creator - một hàm trả về một action object với một định danh (type) và một payload. Action creator này sau đó được sử dụng để gửi các action đến store của `Redux` bằng cách sử dụng hàm `dispatch`.
+
+- Trong khi đó, hàm `createReducer` được sử dụng để tạo ra một `reducer` - một hàm xử lý các `action` và trả về một `state` mới tương ứng. `Reducer` này sau đó được sử dụng để xác định cách thức cập nhật `state` của ứng dụng khi nhận được các `action` từ `store` của `Redux`.
+
+- Trong dòng code ở trên, thì code của bạn đã sử dụng `createReducer` để tạo ra một `reducer` cho `state` của ứng dụng `blog`. Hàm này đã định nghĩa cách thức cập nhật `state` của ứng dụng khi nhận được các `action` từ `store` của Redux, bao gồm thêm bài viết (`addPost`), xóa bài viết (`deletePost`), chỉnh sửa bài viết (`startEditingPost`) và hủy chỉnh sửa bài viết (`cancelEditingPost`).
+
+- Về việc tại sao trong hàm này không sử dụng `createAction`, có thể là do các `action` được sử dụng trong `reducer` đã được định nghĩa trước đó bằng cách sử dụng `createAction` hoặc được cung cấp từ các thư viện hoặc các thành phần khác trong ứng dụng. Nếu bạn đã định nghĩa các `action` trước đó bằng cách sử dụng `createAction`, bạn có thể truyền chúng vào `reducer` tương ứng để xử lý các `action` đó.
+
+- Tuy nhiên, nếu bạn muốn tạo mới các `action` trong `reducer`, bạn có thể sử dụng `createAction` để tạo ra các `action creator` tương ứng và sử dụng chúng để gửi các `action` đến `store` của `Redux`. Vì vậy, việc sử dụng `createAction` và `createReducer` phụ thuộc vào cách bạn tổ chức và quản lý mã của mình trong ứng dụng.
+
 ```jsx
 const blogReducer = createReducer(initialState, (builder) => {
   builder.addCase(addPost, (state, action) => {
