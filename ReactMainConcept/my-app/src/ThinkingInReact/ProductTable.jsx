@@ -39,28 +39,38 @@ export class ProductTable extends Component {
      * Cách 2: Sử dụng Map
      */
 
-    // const rows = productList.map((productItem) => {
-    //   if (productItem.category !== lastCategory) {
-    //     lastCategory = productItem.category
-    //     return (
-    //       <Fragment key={productItem.name}>
-    //         <ProductCategoryRow category={productItem.category} />
-    //         <ProductRow product={productItem} />
-    //       </Fragment>
-    //     )
-    //   }
-    //   return <ProductRow product={productItem} key={productItem.name} />
-    // })
+    const rows1 = productList.map((productItem) => {
+      if (productItem.category !== lastCategory) {
+        lastCategory = productItem.category;
+        return (
+          <Fragment key={productItem.name}>
+            <ProductCategoryRow category={productItem.category} />
+            <ProductRow product={productItem} />
+          </Fragment>
+        );
+      }
+      return <ProductRow product={productItem} key={productItem.name} />;
+    });
 
     return (
       <table>
         <thead>
+          <h2>👉List Product Use forEach👈</h2>
           <tr>
             <th>Name</th>
             <th>Price</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
+
+        <thead>
+          <h2>👉List Product Use Map👈</h2>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{rows1}</tbody>
       </table>
     );
   }
