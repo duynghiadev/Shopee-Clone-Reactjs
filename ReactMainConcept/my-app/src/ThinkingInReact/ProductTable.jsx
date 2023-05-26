@@ -55,7 +55,7 @@ export class ProductTable extends Component {
     return (
       <table>
         <thead>
-          <h2>👉List Product Use forEach👈</h2>
+          <h2>👉List Product forEach👈</h2>
           <tr>
             <th>Name</th>
             <th>Price</th>
@@ -64,7 +64,7 @@ export class ProductTable extends Component {
         <tbody>{rows}</tbody>
 
         <thead>
-          <h2>👉List Product Use Map👈</h2>
+          <h2>👉List Product Map👈</h2>
           <tr>
             <th>Name</th>
             <th>Price</th>
