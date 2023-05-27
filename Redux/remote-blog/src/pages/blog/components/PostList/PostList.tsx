@@ -1,9 +1,8 @@
 import { RootState, useAppDispatch } from 'store'
 import PostItem from '../PostItem'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { deletePost, getPostList, startEditingPost } from 'pages/blog/blog.slice'
 import { Fragment, useEffect } from 'react'
-import http from 'utils/http'
 import SkeletonPost from '../SkeletonPost'
 
 // Gọi API trong useEffect()
@@ -13,7 +12,7 @@ import SkeletonPost from '../SkeletonPost'
 /**
  * Dispatch action type: "blog/getPostList"
  *
- * => Nhưng cách này thì không được dùng
+ * => Nhưng cách này thì không được dùng ❌❌❌
  * */
 
 export default function PostList() {
@@ -24,6 +23,7 @@ export default function PostList() {
 
   useEffect(() => {
     const promise = dispatch(getPostList())
+    // cleanup function
     return () => {
       promise.abort()
     }

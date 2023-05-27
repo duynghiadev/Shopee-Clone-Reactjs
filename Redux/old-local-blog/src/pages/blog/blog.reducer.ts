@@ -1,4 +1,4 @@
-import { createReducer, createAction, current, PayloadAction, nanoid } from '@reduxjs/toolkit'
+import { createReducer, createAction, current, nanoid } from '@reduxjs/toolkit'
 import { initialPostList } from 'constants/blog'
 import { Post } from 'types/blog.type'
 
