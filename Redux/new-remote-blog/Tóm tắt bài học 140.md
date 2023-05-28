@@ -1,10 +1,8 @@
-## Sau khi học xong bài học `140. Xử lý lỗi trong RTK Query` ta tóm tắt lại bài học như sau:
+## Sau khi học xong bài học `139. Dùng mutation để POST, PUT, DELETE trong RTK Query` ta tóm tắt lại bài học như sau:
 
-- Xử lý lỗi là một phần rất quan trọng trong việc phát triển phần mềm, video này chúng ta sẽ thực hiện việc handle error liên quan đến add post và update post nhé
+- Ở video trước thì chúng ta đã biết được cách dùng query để get api trong RTK Query rồi, video này chúng ta sẽ học cách dùng mutation để thực hiện những chức năng còn thiếu như Add Post, Update Post, Delete Post nhé
 
-- Trong video này các bạn sẽ học được:
+- Trong bài này chúng ta sẽ học:
 
-  - Mô hình phân chia và xử lý lỗi trong React như thế nào
-  - Học được cách sử dụng type predicate
-  - Xử lý lỗi trong RTK Query theo từng case: Từ server, từ lỗi code
-  - Fix vấn đề bị gọi lại API khi submit error
+  - Cách dùng mutation trong RTK Query
+  - Cơ chế auto-refetch của RTK Query dựa vào tags

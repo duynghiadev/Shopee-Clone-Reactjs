@@ -1,3 +1,5 @@
+## (❌❌❌❌file àny giải thích code từ 3 tuần trước, đọc lại xem thử hiểu không nhé ❌❌❌❌)
+
 ## Giải thích code trong file PostList.tsx
 
 - Đoạn code trên có chức năng hiển thị danh sách các bài viết trong `blog` được đặt tên là `PostList`.
