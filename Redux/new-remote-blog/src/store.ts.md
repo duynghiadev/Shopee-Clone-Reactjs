@@ -88,13 +88,14 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 ```
 
-- Trong đoạn code trên, chúng ta đang sử dụng TypeScript để định nghĩa hai kiểu dữ liệu mới: RootState và AppDispatch.
+- Trong đoạn code trên, chúng ta đang sử dụng `TypeScript` để định nghĩa hai kiểu dữ liệu mới: `RootState` và `AppDispatch`.
 
-- `RootState`: Là kiểu dữ liệu đại diện cho trạng thái (state) toàn bộ của ứng dụng trong Redux. Nó được xác định bằng cách sử dụng phương thức `getState()` từ store. Kiểu dữ liệu RootState sẽ chứa các thuộc tính tương ứng với các reducer đã được định nghĩa trong hàm configureStore.
-- Ví dụ: Nếu chúng ta có một reducer có tên là "counterReducer" trong hàm configureStore, thì RootState sẽ chứa một thuộc tính có tên "counter" tương ứng với trạng thái của reducer đó.
+- `RootState`: Là kiểu dữ liệu đại diện cho trạng thái (state) toàn bộ của ứng dụng trong Redux. Nó được xác định bằng cách sử dụng phương thức `getState()` từ store. Kiểu dữ liệu `RootState` sẽ chứa các thuộc tính tương ứng với các `reducer` đã được định nghĩa trong hàm `configureStore`.
 
-- `AppDispatch`: Là kiểu dữ liệu đại diện cho đối tượng dispatch của store trong Redux. Nó được xác định bằng cách sử dụng phương thức `dispatch` từ store. Kiểu dữ liệu AppDispatch đại diện cho các hành động (actions) mà chúng ta có thể gửi từ Redux store để thay đổi trạng thái của ứng dụng.
+- Ví dụ: Nếu chúng ta có một reducer có tên là "`counterReducer`" trong hàm `configureStore`, thì `RootState` sẽ chứa một thuộc tính có tên "`counter`" tương ứng với trạng thái của reducer đó.
 
-- Ví dụ: Nếu chúng ta có một action có tên là "increment" để tăng giá trị của "counter", thì AppDispatch sẽ có phương thức `dispatch` để gửi action đó đi.
+- `AppDispatch`: Là kiểu dữ liệu đại diện cho đối tượng `dispatch` của `store` trong Redux. Nó được xác định bằng cách sử dụng phương thức `dispatch` từ `store`. Kiểu dữ liệu `AppDispatch` đại diện cho các hành động (`actions`) mà chúng ta có thể gửi từ Redux store để thay đổi trạng thái của ứng dụng.
+
+- Ví dụ: Nếu chúng ta có một action có tên là "`increment`" để tăng giá trị của "`counter`", thì `AppDispatch` sẽ có phương thức `dispatch` để gửi `action` đó đi.
 
 - Với việc định nghĩa kiểu `RootState` và `AppDispatch`, chúng ta có thể sử dụng chúng trong các thành phần của ứng dụng để đảm bảo kiểm tra kiểu dữ liệu chính xác và sử dụng các phương thức và thuộc tính từ Redux store một cách an toàn và dễ dàng.
