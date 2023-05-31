@@ -1,5 +1,7 @@
 ## Giải thích code chi tiết:
 
+✅✅ Đoạn code 1 ✅✅
+
 ```jsx
 interface BlogState {
   postId: string;
@@ -11,6 +13,8 @@ interface BlogState {
   - `postId`: Kiểu dữ liệu `string`. Đại diện cho ID của bài viết hiện tại đang được chỉnh sửa trong blog. Thuộc tính này lưu trữ giá trị của `postId` để thể hiện trạng thái của việc chỉnh sửa bài viết. Khi một bài viết đang được chỉnh sửa, `postId` sẽ được cập nhật với ID của bài viết đó. Nếu không có bài viết nào đang được chỉnh sửa, giá trị của `postId` sẽ là một chuỗi rỗng (`''`).
 
 - Interface `BlogState` được sử dụng để định nghĩa cấu trúc cho trạng thái liên quan đến blog trong ứng dụng. Nó định nghĩa các thuộc tính và kiểu dữ liệu cho các trạng thái cụ thể. Điều này giúp kiểm tra và đảm bảo tính chính xác của dữ liệu khi sử dụng trạng thái blog trong mã lệnh TypeScript.
+
+✅✅ Đoạn code 2 ✅✅
 
 ```jsx
 const initialState: BlogState = {
@@ -25,6 +29,8 @@ const initialState: BlogState = {
 - Trong trường hợp này, `initialState` được khởi tạo với giá trị mặc định. Thuộc tính `postId` được gán giá trị là `''` (chuỗi rỗng).
 
 - Khi ứng dụng khởi chạy, trạng thái của phần blog sẽ được khởi tạo với `postId` là chuỗi rỗng. Điều này có nghĩa là ban đầu không có bài viết nào được chọn hoặc đang được chỉnh sửa. Giá trị `postId` sẽ thay đổi trong quá trình tương tác (`interact`) với ứng dụng, khi người dùng chọn một bài viết để chỉnh sửa hoặc thực hiện các hành động khác liên quan đến bài viết.
+
+✅✅ Đoạn code 3 ✅✅
 
 ```jsx
 const blogSlice = createSlice({
@@ -69,6 +75,8 @@ const blogSlice = createSlice({
 
 => Cuối cùng, `slice` được tạo ra bởi `createSlice` sẽ tự động tạo ra các action creators tương ứng với các reducers đã định nghĩa, ví dụ như `startEditPost` và `cancelEditPost`.
 
+✅✅ Đoạn code 4 ✅✅
+
 ```jsx
 const blogReducer = blogSlice.reducer
 ```
@@ -81,6 +89,8 @@ const blogReducer = blogSlice.reducer
 
 - Sau khi được tạo, reducer này có thể được sử dụng để cung cấp cho Redux Store và quản lý trạng thái của phần blog trong ứng dụng.
 
+✅✅ Đoạn code 5 ✅✅
+
 ```jsx
 export const { cancelEditPost, startEditPost } = blogSlice.actions
 ```
@@ -90,6 +100,8 @@ export const { cancelEditPost, startEditPost } = blogSlice.actions
 - Trong trường hợp này, `blogSlice.actions` chứa hai action creators là `cancelEditPost` và `startEditPost`. Các action creators này cho phép bạn tạo ra các action có kiểu (`type`) và `payload` tương ứng với định nghĩa trong slice.
 
 - Việc sử dụng action creators giúp đơn giản hóa quá trình tạo action và đảm bảo rằng action được tạo ra có định dạng đúng và chứa đủ thông tin cần thiết. Bằng cách sử dụng các action creators này, bạn có thể gửi các action tương ứng đến reducer để thay đổi trạng thái của phần blog trong ứng dụng.
+
+✅✅ Đoạn code 6 ✅✅
 
 ```jsx
 export default blogReducer

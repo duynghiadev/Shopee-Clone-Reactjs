@@ -1,6 +1,6 @@
 ## Giải thích code trong file `store.ts`:
 
-✅✅✅✅❌❌❌❌✅✅✅✅
+✅✅ Đoạn code 1 ✅✅
 
 ```jsx
 import { configureStore } from '@reduxjs/toolkit'
@@ -23,7 +23,7 @@ import blogReducer from 'pages/blog/blog.slice'
 - `blogApi`: là một instance của RTK Query API, được import từ file `blog.service.ts`. Nó chứa các `endpoints` và `logic` liên quan đến việc giao tiếp với `backend` cho phần `blog`.
 - `blogReducer`: là reducer cho phần blog, được import từ file `blog.slice.ts`. Nó định nghĩa cách thức xử lý các action liên quan đến phần blog trong Redux store.
 
-✅✅✅✅❌❌❌❌✅✅✅✅
+✅✅ Đoạn code 2 ✅✅
 
 ```jsx
 export const store = configureStore({
@@ -43,7 +43,7 @@ export const store = configureStore({
 
 - Trong dòng code:
 
-✅✅✅✅❌❌❌❌✅✅✅✅
+✅✅ Đoạn code 3 ✅✅
 
 ```jsx
 middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(blogApi.middleware, rtkQueryErrorLogger)
@@ -67,7 +67,7 @@ middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(blogApi.midd
 
 => Kết quả là, biến store sẽ chứa Redux store đã được cấu hình với reducers và middleware tương ứng. Chúng ta có thể sử dụng biến store để truy cập vào trạng thái và gửi các action trong ứng dụng của chúng ta.
 
-✅✅✅✅❌❌❌❌✅✅✅✅
+✅✅ Đoạn code 4 ✅✅
 
 ```jsx
 setupListeners(store.dispatch)
@@ -81,7 +81,7 @@ setupListeners(store.dispatch)
 
 - Việc sử dụng `setupListeners` giúp chúng ta không cần phải tự viết các lắng nghe bằng tay cho các sự kiện tái tạo truy vấn, mà nó được xử lý tự động bởi thư viện RTK Query.
 
-✅✅✅✅❌❌❌❌✅✅✅✅
+✅✅ Đoạn code 5 ✅✅
 
 ```jsx
 export type RootState = ReturnType<typeof store.getState>

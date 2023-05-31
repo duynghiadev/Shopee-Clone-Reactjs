@@ -1,5 +1,7 @@
 ## Giải thích code chi tiết:
 
+✅✅ Đoạn code 1 ✅✅
+
 ```jsx
 export interface Post {
   title: string
