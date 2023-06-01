@@ -10,6 +10,14 @@
 
 -
 
+## Quy ước lỗi trả về từ Server và RTK Query ?
+
+-
+
+## Cách hiển thị lỗi message bằng Middleware ?
+
+-
+
 ## Type predicate trong redux được gọi là gì ?
 
 - Trong Redux, các hàm kiểm tra kiểu được sử dụng để thu hẹp kiểu của một biến được gọi là "`type predicate`". `Type predicate` cho phép chúng ta xác định kiểu cụ thể của một biến dựa trên các điều kiện logic.
