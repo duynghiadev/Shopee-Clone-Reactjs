@@ -31,6 +31,18 @@ export default function PostItem(props: PostItemProps) {
             <button
               type='button'
               className='rounded-l-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700'
+              /**
+               * ❌❌ Lưu ý: ❌❌
+               * - Nếu chúng ta truyền kiểu này: onClick ={startEdit()}
+               * => Điều này có nghĩa là chúng ta đang thực thi cái function startEdit()
+               *
+               * - Còn khi chúng ta truyền như thế này: onClick={() => startEdit()}
+               * => Điều đó có nghĩa là chúng ta truyền 1 cái function startEdit() vào trong onClick,
+               * chứ không phải là truyền giá trị return của function
+               *
+               * ✅ Cái chúng ta mong muốn là truyền 1 cái function vào trong onClick,
+               * ✅ chứ không phải là truyền cái giá trị return cảu function
+               */
               onClick={() => startEdit(post.id)}
             >
               Edit
@@ -39,6 +51,18 @@ export default function PostItem(props: PostItemProps) {
             <button
               type='button'
               className='rounded-r-lg border-b border-r border-t border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700'
+              /**
+               * ❌❌ Lưu ý: ❌❌
+               * - Nếu chúng ta truyền kiểu này: onClick ={handleDeletePost()}
+               * => Điều này có nghĩa là chúng ta đang thực thi cái function
+               *
+               * - Còn khi chúng ta truyền như thế này: onClick={() => handleDeletePost()}
+               * => Điều đó có nghĩa là chúng ta truyền 1 cái function vào trong onClick,
+               * chứ không phải là truyền giá trị return của function
+               *
+               * ✅ Cái chúng ta mong muốn là truyền 1 cái function vào trong onClick,
+               * ✅ chứ không phải là truyền cái giá trị return cảu function
+               */
               onClick={() => handleDeletePost(post.id)}
             >
               Delete

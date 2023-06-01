@@ -72,13 +72,15 @@ export const blogApi = createApi({
         /**
          * Cái callback này sẽ chạy mỗi khi getPosts chạy
          * Mong muốn là sẽ return về 1 mảng kiểu
+         *
          * ```jsx
          * interface Tags: {
          *  type: 'Posts',
          *  id: string
          * }[]
          * ```
-         * vì thế phải thêm as const vào để báo hiệu type là Read only, không thể mutate
+         *
+         * ❌❌ vì thế phải thêm as const vào để báo hiệu type là Read only, không thể mutate ❌❌
          */
         if (result) {
           const final = [
@@ -93,8 +95,17 @@ export const blogApi = createApi({
           ]
           return final
         }
+        /**
+         * Chỗ này có 2 cách sử dùng:
+         */
+        // Cách thứ 1: Có vẻ hơi khó hiểu 👇
         // const final = [{type: 'Posts' as const, id: 'LIST'}]
         // return final
+
+        /**
+         * Cách thứ 2: Khi chúng ta dùng cách return này thì nó sẽ return thẳng lun.
+         * Và nó sẽ thành Read Only, không thể sửa được nữa 👇
+         */
         return [
           {
             type: 'Posts' as const,
