@@ -88,7 +88,7 @@ export default function CreatePost() {
       }
       setFormData(initialState)
     } catch (error) {
-      console.log(error)
+      console.error('Here is error: ', error)
     }
   }
 

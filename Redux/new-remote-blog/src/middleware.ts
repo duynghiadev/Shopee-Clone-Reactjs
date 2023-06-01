@@ -1,6 +1,5 @@
 import { AnyAction, isRejectedWithValue, Middleware, isRejected, MiddlewareAPI } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import { isEntityError } from 'utils/helpers'
 
 function isPayloadErrorMessage(payload: unknown): payload is {
   data: {
@@ -22,7 +21,7 @@ export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) =>
    * - RTK Query sử dụng `createAsyncThunk` bên trong nên chúng ta có thể dùng `isRejectedWithValue` để kiểm tra lỗi 🎉
    */
 
-  // Option: Trong thực tế không bắt buộc đến mức này!
+  //❌❌ Option: Trong thực tế không bắt buộc đến mức này!❌❌
   if (isRejected(action)) {
     if (action.error.name === 'CustomError') {
       // Những lỗi liên quan đến quá trình thực thi
