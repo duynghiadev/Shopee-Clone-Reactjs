@@ -204,11 +204,62 @@ const AddPostForm = () => {
 
 ## Quy ước lỗi trả về từ Server và RTK Query ?
 
--
+- RTK Query có quy ước rõ ràng về cách xử lý và truyền các lỗi từ server. Dưới đây là một số quy ước chính:
+
+- Lỗi truy vấn: Khi một yêu cầu truy vấn gặp lỗi trên server, RTK Query sẽ trả về một đối tượng `FetchBaseQueryError`. Đối tượng này chứa các thông tin về lỗi, bao gồm `status`, `statusText`, `data`, và `headers`. Thông thường, `data` chứa chi tiết lỗi trả về từ server.
+
+- Lỗi mutation: Khi một yêu cầu mutation gặp lỗi trên server, RTK Query sẽ trả về một đối tượng `SerializedError`. Đối tượng này có một số trường thông tin chuẩn như `name` và `message`, và bạn có thể tùy chỉnh các trường thông tin khác nếu cần.
+
+- Xử lý lỗi tự định nghĩa: Bạn cũng có thể xử lý các lỗi tự định nghĩa trong RTK Query. Khi bạn gặp một lỗi trong mutation hoặc truy vấn, bạn có thể ném một lỗi tự định nghĩa và RTK Query sẽ xử lý nó như một lỗi thông thường.
+
+- Cấu hình xử lý lỗi toàn cục: Bạn có thể cấu hình xử lý lỗi toàn cục cho tất cả các yêu cầu trong RTK Query bằng cách sử dụng `api.injectEndpoints` hoặc `api.util.baseQuery.middleware`. Điều này cho phép bạn xử lý các lỗi chung, thêm thông tin vào lỗi, hoặc thực hiện các hành động khác một cách tùy chỉnh.
+
+=> Tổng quan, RTK Query cung cấp cơ chế mạnh mẽ để xử lý và truyền lỗi từ server, cho phép bạn tùy chỉnh và quản lý quá trình xử lý lỗi một cách linh hoạt.
 
 ## Cách hiển thị lỗi message bằng Middleware ?
 
--
+- Để hiển thị thông báo lỗi sử dụng Middleware trong RTK Query, bạn có thể làm như sau:
+
+1. Tạo một Middleware mới bằng cách sử dụng `createApi`:
+
+```jsx
+const api = createApi({
+  // Cấu hình endpoints...
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(yourErrorMiddleware)
+  }
+})
+```
+
+2. Định nghĩa Middleware xử lý lỗi:
+
+```jsx
+const yourErrorMiddleware = (api) => (next) => (action) => {
+  if (isRejectedWithValue(action)) {
+    // Xử lý lỗi ở đây
+    const error = action.payload
+    console.log('Error:', error)
+    // Hiển thị thông báo lỗi
+    alert('Đã xảy ra lỗi: ' + error.message)
+  }
+  return next(action)
+}
+```
+
+- Trong Middleware trên, chúng ta sử dụng `isRejectedWithValue` để kiểm tra xem action có phải là một action bị reject (có giá trị payload lỗi) hay không. Nếu là action lỗi, bạn có thể xử lý thông báo lỗi theo ý muốn.
+
+3. Áp dụng Middleware vào cấu hình của RTK Query:
+
+```jsx
+const api = createApi({
+  // Cấu hình endpoints...
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(yourErrorMiddleware)
+  }
+})
+```
+
+- Với việc thêm Middleware xử lý lỗi như trên, mỗi khi có một action bị reject (gặp lỗi), Middleware sẽ được kích hoạt và bạn có thể thực hiện xử lý lỗi, ví dụ như hiển thị thông báo lỗi cho người dùng.
 
 ## Type predicate trong redux được gọi là gì ?
 

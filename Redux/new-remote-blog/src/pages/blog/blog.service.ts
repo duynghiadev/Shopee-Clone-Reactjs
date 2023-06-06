@@ -19,23 +19,24 @@ import { CustomError } from 'utils/helpers'
 // Mutation: Thường dùng cho các trường hợp thay đổi dữ liệu trên server như POST, PUT, DELETE
 
 // Có thể ban đầu mọi người thấy nó phức tạp và khó hiểu
-// Không sao, mình cũng thể, các bạn chỉ cần hiểu là đây là cách setup mà RTK query yêu cầu
+// Không sao, mình cũng thế, các bạn chỉ cần hiểu là đây là cách setup mà RTK query yêu cầu
 // Chúng ta chỉ cần làm theo hướng dẫn là được
 
 /**
  * Mô hình sync dữ liệu danh sách bài post dưới local sau khi thêm 1 bài post
- * Thường thì sẽ có 2 cách tiếp cận:
- * Cách 1: Đây là cách những video trước đây mình dùng
+ * Thường thì sẽ có 2 cách tiếp cận: 🚀
+ *
+ * ✅ Cách 1: Đây là cách những video trước đây mình dùng ✅
  * 1. Sau khi thêm 1 bài post thì server sẽ trả về data của bài post đó
  * 2. Chúng ta sẽ tiến hành lấy data đó thêm vào state redux
  * 3. Lúc này UI của chúng ta sẽ được sync
  *
  * ====> Rủi ro cách này là nếu khi gọi bài viết add post mà server trả về data không đủ các field để
  * chúng ta hiển thị thì sẽ gặp lỗi. Nếu có nhiều người cùng add post thì data sẽ sync thiếu.
- * Chưa kể chúng ta phải quản lý việc cập nhật state nữa, hơi mệt !!! ấ
+ * Chưa kể chúng ta phải quản lý việc cập nhật state nữa, hơi mệt !!!
  *
  *
- * Cách 2: Đây là cách mình thường dùng với RTK Query
+ * ✅ Cách 2: Đây là cách mình thường dùng với RTK Query ✅
  * 1. Sau khi thêm 1 bài post thì server sẽ trả về data của bài post đó
  * 2. Chúng ta sẽ tiến hành fetch lại API get posts để cập nhật lại state redux
  * 3. Lúc này UI của chúng ta sẽ được sync
