@@ -115,7 +115,7 @@ setupListeners(store.dispatch, api)
 
 - Trong ví dụ trên, `setupListeners` được gọi với `store.dispatch` và `api` (được tạo bởi `createApi`). Điều này sẽ thiết lập các listeners để theo dõi các hoạt động của RTK Query và thực hiện các hành động được định nghĩa bởi người dùng.
 
-- Để thực hiện polling trong RTK Query, bạn có thể sử dụng các options như `refetchOnMount`, `refetchOnReconnect`, `refetchOnFocus`, và `refetchOnReconnect` trong endpoint definitions. Các options này cho phép bạn tự động gửi lại các yêu cầu sau một khoảng thời gian hoặc khi xảy ra các sự kiện nhất định.
+- Để thực hiện polling trong RTK Query, bạn có thể sử dụng các options như `refetchOnMount`, `refetchOnReconnect`, và `refetchOnFocus`, trong endpoint definitions. Các options này cho phép bạn tự động gửi lại các yêu cầu sau một khoảng thời gian hoặc khi xảy ra các sự kiện nhất định.
 
 - Ví dụ, để thực hiện polling định kỳ, bạn có thể sử dụng `refetchOnMount` và `refetchInterval`:
 
