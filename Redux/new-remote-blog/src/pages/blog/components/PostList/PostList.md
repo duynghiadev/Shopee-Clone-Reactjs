@@ -11,6 +11,8 @@ import { startEditPost } from 'pages/blog/blog.slice'
 import { useDispatch } from 'react-redux'
 ```
 
+-
+
 ✅✅ Đoạn code 2 ✅✅
 
 ```jsx
@@ -21,11 +23,19 @@ export default function PostList() {
 
   // Log data, isLoading, isFetching to the console
   console.log(data, isLoading, isFetching)
+```
 
-  const startEdit = (id: string) => {
-    dispatch(startEditPost(id))
-  }
+✅✅ Đoạn code 3 ✅✅
 
+```jsx
+const startEdit = (id: string) => {
+  dispatch(startEditPost(id))
+}
+```
+
+✅✅ Đoạn code 4 ✅✅
+
+```jsx
   const handleDeletePost = (id: string) => {
     deletePost(id)
   }
@@ -37,7 +47,7 @@ export default function PostList() {
 }
 ```
 
-✅✅ Đoạn code 3 ✅✅
+✅✅ Đoạn code 5 ✅✅
 
 ```jsx
 return (
