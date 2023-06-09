@@ -117,7 +117,19 @@ export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) =>
 }
 ```
 
--
+- Đoạn mã trên định nghĩa một Middleware (trung gian) trong Redux Toolkit để xử lý lỗi trong RTK Query.
+
+- Middleware trong Redux Toolkit là một hàm đặc biệt được gọi trong quá trình xử lý các action trong Redux. Nó cho phép chúng ta can thiệp vào quá trình xử lý action trước khi nó đến reducer. Middleware nhận vào một hàm gọi là `next`, thực hiện action tiếp theo, và trả về một hàm để xử lý action hiện tại.
+
+- Trong đoạn mã trên:
+
+  - Tham số `api` là đối tượng MiddlewareAPI, cung cấp các phương thức và thuộc tính để tương tác với Redux Store và các Middleware khác.
+  - Hàm `next` là một hàm gọi để thực hiện action tiếp theo trong chuỗi xử lý action.
+  - Tham số `action` là action hiện tại đang được xử lý.
+
+- Trong hàm middleware này, bạn có thể thực hiện xử lý lỗi cho các action gửi từ RTK Query. Ví dụ, bạn có thể sử dụng `isRejected` hoặc `isRejectedWithValue` từ Redux Toolkit để kiểm tra xem action có phải là một action bị reject hay không. Sau đó, bạn có thể thực hiện các xử lý lỗi phù hợp, như hiển thị thông báo lỗi, gửi log lỗi, hoặc thực hiện các tác vụ khác.
+
+- Sau khi xử lý lỗi, middleware này gọi hàm `next(action)` để chuyển action tiếp theo trong chuỗi xử lý action. Nếu không có xử lý đặc biệt, action sẽ được chuyển đến reducer để cập nhật state.
 
 ✅✅ Đoạn code 4: ✅✅
 
@@ -137,8 +149,36 @@ if (isRejectedWithValue(action)) {
 }
 ```
 
+- Trong đoạn mã trên, ta thấy hai điều kiện kiểm tra lỗi được sử dụng để xử lý các trường hợp lỗi khác nhau trong Redux Toolkit.
+
+- Điều kiện `isRejected(action)` kiểm tra xem action có bị reject hay không. Nếu điều kiện này đúng, tức là action đang xử lý đã bị reject, ta tiến hành kiểm tra thêm điều kiện `action.error.name === 'CustomError'`. Nếu tên của lỗi là `'CustomError'`, tức là lỗi do quá trình thực thi, ta hiển thị một thông báo cảnh báo (toast) trên giao diện với nội dung là `action.error.message`. Điều này cho phép ta xử lý các lỗi tùy chỉnh liên quan đến quá trình thực thi của hệ thống.
+
+- Điều kiện `isRejectedWithValue(action)` kiểm tra xem action có bị reject và có giá trị được trả về (rejected with value) hay không. Nếu điều kiện này đúng, tức là action bị reject và có giá trị payload, ta tiến hành kiểm tra thêm điều kiện `isPayloadErrorMessage(action.payload)`. Hàm `isPayloadErrorMessage` kiểm tra xem payload có chứa thông tin về lỗi từ server hay không. Nếu điều kiện này đúng, ta hiển thị một thông báo cảnh báo trên giao diện với nội dung là `action.payload.data.error`. Điều này cho phép ta xử lý các lỗi từ server trả về và hiển thị thông tin lỗi đó cho người dùng.
+
+- Tổng quan, đoạn mã trên cho phép ta xử lý các loại lỗi khác nhau trong Redux Toolkit và thực hiện các hành động phù hợp, như hiển thị thông báo cảnh báo (toast) với nội dung lỗi tương ứng.
+
 ✅✅ Đoạn code 5: ✅✅
 
 ```jsx
 return next(action)
 ```
+
+- Trong Redux Toolkit, một Middleware là một hàm mà Redux sẽ chạy qua mỗi action trước khi chúng được gửi đến reducers. Middleware có quyền tiếp tục gửi action cho middleware tiếp theo trong chuỗi hoặc gửi action trực tiếp đến reducers nếu không có middleware nào nữa.
+
+- Trong đoạn mã trên, `return next(action)` được sử dụng để tiếp tục chuyển action cho middleware tiếp theo hoặc gửi action đến reducers. Điều này đảm bảo rằng action sẽ tiếp tục đi qua các middleware khác trong chuỗi xử lý của Redux và cuối cùng đến reducers để thực hiện việc cập nhật state.
+
+- Khi `next(action)` được gọi, action được chuyển tiếp cho middleware tiếp theo hoặc gửi đến reducers. Trong quá trình này, các middleware khác có thể thực hiện các xử lý bổ sung, như gọi API, xử lý lỗi, hoặc thay đổi action trước khi nó đến reducers.
+
+- Quan trọng là phải gọi `next(action)` để đảm bảo action được chuyển tiếp cho các middleware khác hoặc gửi đến reducers. Nếu không gọi `next(action)`, action sẽ bị chặn và không tiếp tục đi qua chuỗi xử lý của Redux, dẫn đến việc không có cập nhật state hoặc không có các xử lý khác được thực hiện.
+
+- Vì vậy, `return next(action)` trong đoạn mã đảm bảo rằng action sẽ tiếp tục được chuyển tiếp cho các middleware khác hoặc gửi đến reducers để thực hiện các xử lý tiếp theo.
+
+## ❌❌ Khi thực hiện `return next(action)`, thì khi `action` không có lỗi thì nó sẽ tiếp tục được chuyển đến `reducers` để cập nhật lại `state` chứ ? đúng không ? ❌❌
+
+- Đúng, khi thực hiện `return next(action)`, action sẽ tiếp tục được chuyển đến reducers để cập nhật lại state nếu không có lỗi xảy ra. Trong Redux, reducers là nơi xử lý các action và thực hiện các thay đổi vào state.
+
+- Khi action đi qua các middleware và đến reducers, reducers sẽ kiểm tra action và dựa vào type của action để xác định cách thay đổi state. Nếu không có lỗi xảy ra và action được xử lý thành công, reducers sẽ tạo ra một phiên bản mới của state dựa trên các thay đổi được chỉ định trong action.
+
+- Sau khi reducers đã tạo ra phiên bản mới của state, Redux sẽ cập nhật state hiện tại bằng phiên bản mới này. Các component sẽ được thông báo về sự thay đổi trong state và có thể cập nhật lại giao diện của mình dựa trên state mới.
+
+- Vì vậy, `return next(action)` đảm bảo rằng action sẽ tiếp tục được chuyển đến reducers và gây ra các thay đổi trong state nếu không có lỗi xảy ra.
