@@ -376,25 +376,310 @@ const { data, refetch } = useGetPostQuery(postId, {
 const [updatePost, updatePostResult] = useUpdatePostMutation()
 ```
 
--
+- Đoạn code trên sử dụng `useUpdatePostMutation` từ RTK Query để gửi yêu cầu cập nhật bài viết đến API. Nó trả về một mảng gồm hai phần tử: `updatePost` và `updatePostResult`.
+
+  - `updatePost`: Là một hàm có tham số để gửi yêu cầu cập nhật bài viết. Bằng cách gọi hàm này với các tham số tương ứng, yêu cầu cập nhật sẽ được gửi đi.
+  - `updatePostResult`: Là một object chứa các thông tin liên quan đến kết quả của yêu cầu cập nhật bài viết. Các thông tin này bao gồm `data`, `isLoading`, `isError`, `error`, và `refetch`.
+
+- Thông qua việc sử dụng `useUpdatePostMutation`, bạn có thể gọi hàm `updatePost` để cập nhật bài viết và sử dụng `updatePostResult` để theo dõi kết quả của yêu cầu cập nhật, như kiểm tra trạng thái tải, xử lý lỗi và cập nhật lại dữ liệu sau khi yêu cầu thành công.
 
 ✅✅ Đoạn code 8 ✅✅
 
 ```jsx
-  // Error handling
-  const errorForm: FormError = useMemo(() => {
-    // Error handling logic
+const errorForm: FormError = useMemo(() => {
+    const errorResult = postId ? updatePostResult.error : addPostResult.error
+
+    if (isEntityError(errorResult)) {
+      console.log('ErrorResult', errorResult)
+      return errorResult.data.error as FormError
+    }
+
+    return null
   }, [postId, updatePostResult, addPostResult])
-
-  // useEffect and event handlers
-  // ...
-
-  // JSX markup
-  // ...
-
-  return (
-    // Form markup
-    // ...
-  )
-}
 ```
+
+- Đoạn code trên sử dụng hook `useMemo` để tính toán giá trị của biến `errorForm` dựa trên các dependency như `postId`, `updatePostResult.error` và `addPostResult.error`.
+
+- `const errorForm: FormError`: Đây là khai báo biến `errorForm` có kiểu dữ liệu là `FormError`. Điều này cho biết rằng `errorForm` sẽ lưu trữ thông tin về lỗi trong biểu mẫu và tuân thủ theo cấu trúc và các thuộc tính được định nghĩa trong kiểu `FormError`.
+
+- `useMemo(() => {...}, [postId, updatePostResult, addPostResult])`: Đây là hook `useMemo` để tính toán giá trị của `errorForm` dựa trên các dependency như `postId`, `updatePostResult` và `addPostResult`. Khi các dependency thay đổi, hook `useMemo` sẽ thực hiện tính toán lại giá trị của `errorForm`.
+
+- Trong hàm callback của `useMemo`, `errorResult` được gán giá trị từ `updatePostResult.error` nếu `postId` tồn tại, hoặc từ `addPostResult.error` nếu `postId` không tồn tại. Điều này cho phép chúng ta kiểm tra và xử lý lỗi từ việc cập nhật bài viết hoặc thêm bài viết mới.
+
+- `isEntityError(errorResult)`: Đây là một hàm kiểm tra để xác định xem `errorResult` có thuộc kiểu `EntityError` hay không. Nếu đúng, chúng ta tiến hành xử lý lỗi.
+
+- Trong khối điều kiện, chúng ta ghi log giá trị của `errorResult` vào console để kiểm tra và gỡ lỗi.
+
+- `return errorResult.data.error as FormError`: Trong trường hợp `errorResult` thuộc kiểu `EntityError`, chúng ta trả về giá trị `errorResult.data.error` với kiểu `FormError` và gán cho `errorForm`. Chúng ta đã kiểm tra trước đó rằng `errorResult` thuộc kiểu `EntityError`, do đó việc ép kiểu này là an toàn.
+
+- `return null`: Nếu `errorResult` không thuộc kiểu `EntityError`, chúng ta trả về `null` cho `errorForm`.
+
+❌❌ Hãy giải thích vì sao chúng ta phải ép kiểu ? ❌❌
+
+```jsx
+  return errorResult.data.error as FormError // Đây là cách ép kiểu
+```
+
+- Chúng ta phải ép kiểu `errorResult.data.error` về kiểu `FormError` vì biến `errorForm` được khai báo với kiểu `FormError`.
+
+- Trong TypeScript, kiểu dữ liệu của một biến được xác định tại thời điểm khai báo và không thể thay đổi sau đó. Trong trường hợp này, `errorForm` được khai báo với kiểu `FormError`, và chúng ta cần gán giá trị của `errorResult.data.error` cho `errorForm`.
+
+- Tuy nhiên, `errorResult` có thể là có kiểu dữ liệu `FetchBaseQueryError | SerializedError | undefined`, và kiểu `FormError` không phải là một phần của danh sách kiểu này. Do đó, chúng ta cần thực hiện việc ép kiểu để xác định rõ ràng rằng `errorResult.data.error` có kiểu `FormError`.
+
+- Trong trường hợp này, trước khi thực hiện việc ép kiểu, chúng ta đã kiểm tra `errorResult` thuộc kiểu `EntityError` không bằng cách sử dụng hàm `isEntityError`. Điều này đảm bảo rằng khi chúng ta ép kiểu `errorResult.data.error` về kiểu `FormError`, nó sẽ được thực hiện chỉ khi chắc chắn rằng `errorResult` thực sự là một `EntityError`, đồng nghĩa với việc `errorResult.data.error` sẽ có cấu trúc tương tự như `FormError`.
+
+- Vì vậy, việc ép kiểu này được coi là an toàn và cho phép chúng ta gán giá trị từ `errorResult.data.error` về kiểu `FormError` và gán cho `errorForm`, đảm bảo rằng `errorForm` có kiểu dữ liệu đúng và có thể được sử dụng trong các phần khác của mã.
+
+✅✅ Đoạn code 9 ✅✅
+
+```jsx
+useEffect(() => {
+  if (data) {
+    setFormData(data)
+  }
+}, [data])
+```
+
+-
+
+✅✅ Đoạn code 10 ✅✅
+
+```jsx
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    try {
+      if (postId) {
+        await updatePost({
+          body: formData as Post,
+          id: postId
+        }).unwrap()
+      } else {
+        await addPost(formData).unwrap()
+      }
+      setFormData(initialState)
+    } catch (error) {
+      console.error('Here is error: ', error)
+    }
+  }
+```
+
+✅✅ Đoạn code 11 ✅✅
+
+```jsx
+return (
+  <form onSubmit={handleSubmit}>
+    <button
+      className='group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 group-hover:from-purple-600 group-hover:to-blue-500 dark:text-white dark:focus:ring-blue-800'
+      type='button'
+      onClick={() => refetch()}
+    >
+      <span className='relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900'>
+        Force Fetch
+      </span>
+    </button>
+    <div className='mb-6'>
+      <label htmlFor='title' className='mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300'>
+        Title
+      </label>
+      <input
+        type='text'
+        id='title'
+        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500'
+        placeholder='Title'
+        required
+        value={formData.title}
+        onChange={(event) =>
+          setFormData((prev) => ({
+            ...prev,
+            title: event.target.value
+          }))
+        }
+      />
+    </div>
+
+    <div className='mb-6'>
+      <label htmlFor='featuredImage' className='mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300'>
+        Featured Image
+      </label>
+      <input
+        type='text'
+        id='featuredImage'
+        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500'
+        placeholder='Url image'
+        required
+        value={formData.featuredImage}
+        onChange={(event) =>
+          setFormData((prev) => ({
+            ...prev,
+            featuredImage: event.target.value
+          }))
+        }
+      />
+    </div>
+
+    <div className='mb-6'>
+      <div>
+        <label htmlFor='description' className='mb-2 block text-sm font-medium text-gray-900 dark:text-gray-400'>
+          Description
+        </label>
+        <textarea
+          id='description'
+          rows={3}
+          className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-blue-500'
+          placeholder='Your description...'
+          required
+          value={formData.description}
+          onChange={(event) =>
+            setFormData((prev) => ({
+              ...prev,
+              description: event.target.value
+            }))
+          }
+        />
+      </div>
+    </div>
+
+    <div className='mb-6'>
+      <label
+        htmlFor='publishDate'
+        className={classNames('mb-2 block text-sm font-medium dark:text-gray-300', {
+          'text-red-700': Boolean(errorForm?.publishDate),
+          'text-gray-900': !Boolean(errorForm?.publishDate)
+        })}
+      >
+        Publish Date
+      </label>
+      <input
+        type='datetime-local'
+        id='publishDate'
+        className={classNames('block w-56 rounded-lg border  p-2.5 text-sm  focus:outline-none', {
+          'border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-blue-500': Boolean(
+            errorForm?.publishDate
+          ),
+          'border-gray-300 bg-gray-50 text-gray-900 focus:border-blue-500 focus:ring-blue-500': Boolean(
+            errorForm?.publishDate
+          )
+        })}
+        required
+        value={formData.publishDate}
+        onChange={(event) =>
+          setFormData((prev) => ({
+            ...prev,
+            publishDate: event.target.value
+          }))
+        }
+      />
+
+      {errorForm?.publishDate && (
+        <p className='mt-2 text-sm text-red-600'>
+          <span className='font-medium'>Lỗi! </span>
+          {errorForm.publishDate}
+        </p>
+      )}
+    </div>
+
+    <div className='mb-6 flex items-center'>
+      <input
+        id='publish'
+        type='checkbox'
+        className='h-4 w-4 focus:ring-2 focus:ring-blue-500'
+        checked={formData.published}
+        onChange={(event) =>
+          setFormData((prev) => ({
+            ...prev,
+            published: event.target.checked
+          }))
+        }
+      />
+      <label htmlFor='publish' className='ml-2 text-sm font-medium text-gray-900'>
+        Publish
+      </label>
+    </div>
+
+    <div>
+      {Boolean(postId) && (
+        <Fragment>
+          <button
+            type='submit'
+            className='group relative mb-2 mr-2 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-teal-300 to-lime-300 p-0.5 text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-lime-200 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 dark:focus:ring-lime-800'
+          >
+            <span className='relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900'>
+              Update Post
+            </span>
+          </button>
+
+          <button
+            type='reset'
+            className='group relative mb-2 mr-2 inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 p-0.5 text-sm font-medium text-gray-900 focus:outline-none focus:ring-4 focus:ring-red-100 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 dark:focus:ring-red-400'
+          >
+            <span className='relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900'>
+              Cancel
+            </span>
+          </button>
+        </Fragment>
+      )}
+
+      {Boolean(!postId) && (
+        <button
+          className='group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 p-0.5 text-sm font-medium text-gray-900 hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300 group-hover:from-purple-600 group-hover:to-blue-500 dark:text-white dark:focus:ring-blue-800'
+          type='submit'
+        >
+          <span className='relative rounded-md bg-white px-5 py-2.5 transition-all duration-75 ease-in group-hover:bg-opacity-0 dark:bg-gray-900'>
+            Publish Post
+          </span>
+        </button>
+      )}
+    </div>
+  </form>
+)
+```
+
+- Đoạn code trên định nghĩa một biểu mẫu (form) để tạo hoặc cập nhật bài viết. Dưới đây là mô tả chi tiết của từng phần trong đoạn code:
+
+1. `<form onSubmit={handleSubmit}>`: Đây là một phần tử `<form>` với thuộc tính `onSubmit` được gán giá trị là hàm `handleSubmit`. Khi người dùng nhấn nút "Submit" trong biểu mẫu, hàm `handleSubmit` sẽ được gọi để xử lý sự kiện submit.
+
+2. Nút "Force Fetch":
+
+- `<button type='button' onClick={() => refetch()}>`: Đây là một phần tử `<button>` với thuộc tính `type='button'`, chỉ để kích hoạt hành động không liên quan đến việc submit biểu mẫu.
+- Khi người dùng nhấp vào nút này, hàm `refetch()` được gọi để yêu cầu cập nhật dữ liệu từ nguồn dữ liệu.
+
+3. Phần thông tin về tiêu đề:
+
+- `<label htmlFor='title'>`: Đây là một phần tử `<label>` với thuộc tính `htmlFor='title'`, liên kết với phần tử input có id là `'title'`.
+
+- `<input type='text' id='title' ...>`: Đây là một phần tử `<input>` loại `'text'` (type='text'), được liên kết với phần tử `label` trên.
+
+  - `required`: Thuộc tính `required` được sử dụng để chỉ định rằng trường dữ liệu này là bắt buộc và người dùng phải cung cấp giá trị trước khi có thể gửi biểu mẫu.
+
+  - `value={formData.title}`: Thuộc tính `value` được sử dụng để gán giá trị của trường dữ liệu. Trong trường hợp này, giá trị của trường dữ liệu "title" được lấy từ `formData.title`. Khi biểu mẫu được hiển thị, giá trị này sẽ được hiển thị trong phần tử `<input>`.
+
+  - `onChange={(event) => setFormData((prev) => ({...prev, title: event.target.value}))}`: Sự kiện `onChange` được gắn với một hàm xử lý. Khi người dùng thay đổi giá trị của trường dữ liệu, hàm này sẽ được gọi. Trong hàm xử lý này, giá trị mới của trường dữ liệu "title" được lấy từ `event.target.value` và sau đó cập nhật vào `formData` thông qua hàm `setFormData`. Bằng cách này, giá trị của trường dữ liệu "title" sẽ được cập nhật mỗi khi người dùng thay đổi giá trị của phần tử `<input>`.
+
+4. Phần thông tin về ảnh nổi bật (featured image):
+
+- Tương tự phần thông tin về tiêu đề, bao gồm một phần tử `<label>` và một phần tử `<input>`.
+
+5. Phần thông tin về mô tả:
+
+- `<textarea id='description'>`: Đây là một phần tử `<textarea>` để người dùng nhập mô tả của bài viết. Khi người dùng nhập dữ liệu, giá trị của `formData.description` được cập nhật thông qua hàm `setFormData`.
+
+6. Phần thông tin về ngày đăng:
+
+- `<input type='datetime-local' id='publishDate' ...>`: Đây là một phần tử `<input>` loại `'datetime-local'` để người dùng chọn ngày và giờ đăng bài viết. Khi người dùng chọn giá trị, giá trị của `formData.publishDate` được cập nhật thông qua hàm `setFormData`.
+- Nếu có lỗi trong `errorForm.publishDate`, phần tử `label` sẽ có màu đỏ và thông báo lỗi sẽ được hiển thị bên dưới.
+
+7. Phần thông tin về việc đăng bài:
+
+- `<input type='checkbox' id='publish' ...>`: Đây là một phần tử `<input>` loại `'checkbox'` để người dùng chọn trạng thái đăng bài. Khi người dùng thay đổi trạng thái, giá trị của `formData.published` được cập nhật thông qua hàm `setFormData`.
+
+8. Phần nút cập nhật bài viết:
+
+- Trường hợp chỉnh sửa bài viết:
+
+- `<button type='submit'>Update Post</button>`: Đây là một phần tử `<button>` để người dùng cập nhật bài viết. Khi người dùng nhấp vào nút này, sự kiện submit biểu mẫu được kích hoạt và hàm `handleSubmit` được gọi để xử lý cập nhật.
+- `<button type='reset'>Cancel</button>`: Đây là một phần tử `<button>` để người dùng hủy bỏ thay đổi và đặt lại biểu mẫu về trạng thái ban đầu.
+
+9. Trường hợp thêm bài viết mới:
+
+- `<button type='submit'>Publish Post</button>`: Đây là một phần tử `<button>` để người dùng đăng bài viết mới. Khi người dùng nhấp vào nút này, sự kiện submit biểu mẫu được kích hoạt và hàm `handleSubmit` được gọi để xử lý việc đăng bài viết mới.

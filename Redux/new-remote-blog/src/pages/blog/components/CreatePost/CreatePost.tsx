@@ -56,7 +56,7 @@ export default function CreatePost() {
      */
     if (isEntityError(errorResult)) {
       /**
-       * - Có thể ép kiểu một cách an toàn chỗ này, vì chúng ta đã kiểm tra chắc chán rôi
+       * - Có thể ép kiểu một cách an toàn chỗ này, vì chúng ta đã kiểm tra chắc chắn rồi
        * - Nếu không muốn ép kiểu thì có thể khai báo cái interface `EntityError` sao cho data.eror
        * tương đồng với FormError là được
        */
