@@ -25,6 +25,7 @@ function App() {
       element: <NotFound />
     }
   ])
+
   const location = useLocation()
   const [searchParams] = useSearchParams()
 
@@ -35,6 +36,7 @@ function App() {
   useEffect(() => {
     console.log('location', location)
   }, [location])
+
   return (
     <div className='App'>
       <MainLayout>

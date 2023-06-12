@@ -1,4 +1,148 @@
-## Đây là Docs tự research: 👇👇👇
+## Đây là Docs tự Research: 👇👇👇
+
+## Những điều lưu ý khi học react router v6 ?
+
+✅✅ Khi học React Router v6, sau đây là một số điều lưu ý quan trọng:
+
+- Phiên bản mới: React Router v6 đã thay đổi nhiều so với phiên bản trước đó (v5). Hãy đảm bảo bạn đang học và sử dụng phiên bản đúng để tránh nhầm lẫn.
+
+- Không còn component `<Switch>`: Trong React Router v6, không còn sử dụng `<Switch>` component như trong v5. Thay vào đó, chúng ta sử dụng hook `useRoutes` để xác định các định tuyến và component tương ứng.
+
+- Hook mới: React Router v6 giới thiệu một số hook mới như `useRoutes`, `useLocation`, `useSearchParams`, và `useNavigate`. Hãy tìm hiểu kỹ về cách sử dụng các hook này để thao tác với định tuyến (router) và thông tin vị trí.
+
+- Sử dụng `<Routes>` và `<Route>`: Thay thế `<Switch>`, React Router v6 sử dụng `<Routes>` và `<Route>` để định nghĩa các định tuyến (router) và component tương ứng. Các định tuyến được xác định theo cấu trúc cây, giúp quản lý và tổ chức rõ ràng hơn.
+
+- Định tuyến động: Trong React Router v6, bạn có thể xác định định tuyến (router) động bằng cách sử dụng tham số động (`:paramName`). Ví dụ: `/users/:id`.
+
+- Thay đổi cú pháp JSX: Cú pháp JSX trong React Router v6 đã thay đổi. Chúng ta sử dụng các prop như `path`, `element`, và `index` để định nghĩa các định tuyến (router) và component tương ứng.
+
+- Xử lý chuyển hướng: Để chuyển hướng trong ứng dụng, chúng ta sử dụng hook `useNavigate` để truy cập vào hàm `navigate`. Hàm này cho phép chúng ta thực hiện các chuyển hướng trong ứng dụng.
+
+- Tích hợp với React: React Router v6 tích hợp tốt với React và sử dụng hook để quản lý định tuyến (router). Hãy làm quen với cách sử dụng hook và hiểu cách chúng hoạt động trong môi trường React.
+
+- Tài liệu và tài nguyên: Đảm bảo tìm hiểu và đọc kỹ tài liệu chính thức của React Router v6 để nắm vững cú pháp, API, và các khái niệm quan trọng. Ngoài ra, có thể tham khảo các tài nguyên, bài viết, và ví dụ từ cộng đồng React để hiểu sâu hơn về cách sử dụng React Router v6.
+
+❌❌ Lưu ý rằng React Router v6 có thể còn đang trong quá trình phát triển và có thể có những thay đổi trong tương lai. Vì vậy, hãy kiểm tra tài liệu và thông tin mới nhất từ React Router để đảm bảo bạn áp dụng các phiên bản và phương pháp đúng.
+
+## Hãy nêu các khái niệm về useRoutes ?
+
+- Trong React Router v6, `useRoutes` là một hook được cung cấp để xác định và xử lý các định tuyến trong ứng dụng. Dưới đây là một số khái niệm liên quan đến `useRoutes`:
+
+- `Đối tượng định tuyến (Route object)`: Đây là một đối tượng mô tả một đường dẫn cụ thể và component tương ứng sẽ được hiển thị khi đường dẫn đó khớp. Đối tượng định tuyến bao gồm các thuộc tính sau:
+
+  - `path`: Đường dẫn của định tuyến. Nó có thể là một đường dẫn tĩnh (`'/about'`) hoặc một đường dẫn động với tham số (`'/users/:id'`).
+  - `element`: Đây là truyền vào component và nó sẽ được hiển thị khi đường dẫn khớp.
+  - Các thuộc tính khác như `children`, `index`, `caseSensitive`, `guard`,... để xử lý các trường hợp đặc biệt.
+
+2. `Hook useRoutes`: Là một hook dùng để xác định các đối tượng định tuyến và trả về component tương ứng với đường dẫn hiện tại. `useRoutes` nhận vào một mảng các đối tượng định tuyến và trả về component đầu tiên có đường dẫn khớp với đường dẫn hiện tại.
+
+3. `Đường dẫn tĩnh (Static path)`:
+
+- Là một đường dẫn cố định không chứa các tham số động.
+  - Ví dụ: `'/about'`, `'/dashboard'`.
+
+4. `Đường dẫn động (Dynamic path)`:
+
+- Là một đường dẫn chứa các tham số động được đánh dấu bằng dấu hai chấm `:`.
+  - Ví dụ: `'/users/:id'`, `'/products/:category/:id'`. Các giá trị của các tham số này sẽ được trích xuất và truyền cho component tương ứng khi đường dẫn khớp.
+
+5. `Định tuyến mặc định (Default route)`:
+
+- Là một định tuyến được xác định cho trường hợp khi không có đường dẫn nào khớp với các định tuyến trước đó. Định tuyến mặc định thường được đặt ở cuối danh sách các định tuyến.
+  - Ví dụ: `'*'`.
+
+6. `Tham số định tuyến (Route parameter)`:
+
+- Đó là các giá trị có ý nghĩa trong đường dẫn động, được trích xuất từ URL và được truyền cho component tương ứng.
+  - Ví dụ: trong đường dẫn `'/users/:id'`, tham số `:id` có thể có giá trị như `'1'`, `'2'`,...
+
+7. `Trang không tìm thấy (Not Found page)`:
+
+- Là một component đại diện cho trường hợp khi không có đường dẫn nào khớp với các định tuyến đã xác định. Thông thường, trang này được sử dụng để hiển thị thông báo lỗi hoặc nội dung tương tự.
+
+✅✅ Các khái niệm trên giúp bạn hiểu rõ hơn về việc sử dụng `useRoutes` và làm việc với định tuyến trong React Router v6.
+
+## Ví dụ về sử dụng useRoutes ?
+
+## Hãy nêu các khái niệm về useLocation ?
+
+- Trong React Router v6, `useLocation` là một hook được cung cấp bởi thư viện `react-router-dom` để lấy thông tin về vị trí hiện tại của ứng dụng. Dưới đây là các khái niệm liên quan đến `useLocation`:
+
+1. Vị trí (Location):
+
+- Vị trí đại diện cho đường dẫn hiện tại trong ứng dụng. Nó bao gồm các thông tin như địa chỉ URL, các tham số truy vấn, và các thuộc tính khác liên quan đến vị trí.
+- Vị trí được sử dụng để xác định định tuyến và hiển thị các component tương ứng với địa chỉ URL.
+
+2. `useLocation`:
+
+- `useLocation` là một hook trong React Router v6, cho phép bạn truy cập thông tin về vị trí hiện tại trong ứng dụng.
+- Khi sử dụng `useLocation`, bạn có thể lấy thông tin về địa chỉ URL, các tham số truy vấn, và các thuộc tính khác của vị trí.
+- Khi vị trí thay đổi (do người dùng điều hướng hoặc thao tác khác), các component sử dụng `useLocation` sẽ được tự động cập nhật để phản ánh vị trí mới.
+
+3. Cách sử dụng `useLocation`:
+
+- Đầu tiên, bạn cần import `useLocation` từ thư viện `react-router-dom`.
+- Sau đó, trong component của bạn, sử dụng `useLocation` như một hook để lấy đối tượng `location` hiện tại.
+- Bạn có thể truy cập các thuộc tính của `location` như `pathname` (đường dẫn URL), `search` (tham số truy vấn), `state` (trạng thái liên quan đến vị trí), và nhiều thuộc tính khác.
+- Khi vị trí thay đổi, component sử dụng `useLocation` sẽ tự động render lại để phản ánh vị trí mới.
+
+✅✅ Với `useLocation`, bạn có thể dễ dàng truy cập và sử dụng thông tin về vị trí hiện tại trong ứng dụng React của bạn để điều hướng và xử lý logic tương ứng.
+
+## Ví dụ về sử dụng useLocation ?
+
+## Hãy nêu các khái niệm về useSearchParams ?
+
+- Trong React Router v6, `useSearchParams` là một hook được cung cấp bởi thư viện `react-router-dom` để truy cập và quản lý thông tin truy vấn (query parameters) trong URL. Dưới đây là các khái niệm liên quan đến `useSearchParams`:
+
+1. Thông tin truy vấn (Query parameters):
+
+- Thông tin truy vấn là các tham số được chèn vào URL sau dấu `"?"` để truyền thông tin hoặc thực hiện các tác vụ tùy chỉnh.
+- Ví dụ: Trong URL `"https://example.com/search?q=react&page=1"`, tham số truy vấn là "q=react" và "page=1".
+
+2. `useSearchParams`:
+
+- `useSearchParams` là một hook trong React Router v6, cho phép bạn truy cập và quản lý thông tin truy vấn trong URL.
+- Khi sử dụng `useSearchParams`, bạn có thể lấy giá trị của các tham số truy vấn, thay đổi giá trị của chúng và cập nhật URL tương ứng.
+- `useSearchParams` trả về một mảng gồm hai phần tử. Phần tử đầu tiên là đối tượng (object) `SearchParams` để truy cập các phương thức và thuộc tính liên quan đến thông tin truy vấn. Phần tử thứ hai là một hàm (function) `updateSearchParams` để cập nhật thông tin truy vấn.
+
+3. Cách sử dụng `useSearchParams`:
+
+- Đầu tiên, bạn cần import `useSearchParams` từ thư viện `react-router-dom`.
+- Sau đó, trong component của bạn, sử dụng `useSearchParams` như một hook để lấy đối tượng (object) `SearchParams` và hàm (function) `updateSearchParams`.
+- Bạn có thể sử dụng các phương thức của `SearchParams` như `get()`, `getAll()`, `has()`, `set()`, `delete()`, và `toString()` để thao tác với thông tin truy vấn.
+- Bằng cách gọi hàm (function) `updateSearchParams` với các tham số tương ứng, bạn có thể cập nhật thông tin truy vấn và cập nhật URL hiện tại.
+- Khi thông tin truy vấn thay đổi, component sử dụng `useSearchParams` sẽ tự động render lại để phản ánh thông tin mới.
+
+✅✅ Với `useSearchParams`, bạn có thể dễ dàng truy cập và quản lý thông tin truy vấn trong URL, giúp bạn thực hiện các tác vụ tương
+tác và tùy chỉnh trong ứng dụng React của bạn.
+
+## Ví dụ về sử dụng useSearchParams ?
+
+## Hãy nêu các khái niệm về useNavigate ?
+
+- Trong React Router v6, `useNavigate` là một hook được cung cấp bởi thư viện `react-router-dom` để điều hướng (`navigate`) trong ứng dụng. Dưới đây là các khái niệm liên quan đến `useNavigate`:
+
+1. Điều hướng (Navigation):
+
+- Điều hướng là quá trình chuyển hướng từ một trang (page) hoặc thành phần (component) trong ứng dụng web sang một trang (page) hoặc thành phần (component) khác.
+- Thông qua việc điều hướng, người dùng có thể chuyển đổi giữa các trang, thực hiện các hành động và tương tác với các phần của ứng dụng.
+
+2. `useNavigate`:
+
+- `useNavigate` là một hook trong React Router v6, cho phép bạn điều hướng trong ứng dụng.
+- Khi sử dụng `useNavigate`, bạn có thể gọi hàm `navigate` để thực hiện việc điều hướng đến một địa chỉ URL cụ thể hoặc tới một đối tượng vị trí.
+- `useNavigate` cung cấp một hàm `navigate` để thực hiện các tác vụ điều hướng.
+
+3. Cách sử dụng `useNavigate`:
+
+- Đầu tiên, bạn cần import `useNavigate` từ thư viện `react-router-dom`.
+- Sau đó, trong component của bạn, sử dụng `useNavigate` như một hook để lấy hàm `navigate`.
+- Bằng cách gọi hàm `navigate` với địa chỉ URL hoặc đối tượng vị trí tương ứng, bạn có thể thực hiện việc điều hướng.
+  - Ví dụ: `navigate('/about')` sẽ chuyển hướng đến trang `"/about"`, và `navigate({ pathname: '/dashboard', state: { loggedIn: true } })` sẽ chuyển hướng đến trang `"/dashboard"` và truyền trạng thái `"loggedIn"` qua đối tượng vị trí.
+
+✅✅ Với `useNavigate`, bạn có thể thực hiện việc điều hướng trong ứng dụng React của bạn, cho phép người dùng chuyển đổi giữa các trang và tương tác với ứng dụng của bạn một cách linh hoạt.
+
+## Ví dụ về sử dụng useNavigate ?
 
 ## Dưới đây là Docs của Được Dev: 👇👇👇
 
