@@ -1,4 +1,4 @@
-import { NavLink, Routes, Route } from 'react-router-dom'
+import { NavLink, Routes, Route, Outlet } from 'react-router-dom'
 import AddStaff from 'components/AddStaff'
 import StaffItem from 'components/StaffItem'
 import StaffList from 'components/StaffList'
@@ -45,7 +45,7 @@ export default function Staff() {
         <Route path='add' element={<AddStaff />} />
         <Route index element={<StaffList />} />
       </Routes>
-      {/* <Outlet context={{ profile: { name: 'Duoc' } }} /> */}
+      <Outlet context={{ profile: { name: 'Duoc' } }} />
     </div>
   )
 }
