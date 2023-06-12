@@ -64,6 +64,44 @@
 
 ## Ví dụ về sử dụng useRoutes ?
 
+- Dưới đây là một ví dụ về cách sử dụng useRoutes trong React Router:
+
+```jsx
+import { useRoutes } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+import NotFound from "./components/NotFound";
+
+const App = () => {
+  const routeElements = useRoutes([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ]);
+
+  return <div>{routeElements}</div>;
+};
+
+export default App;
+```
+
+- Trong ví dụ trên, chúng ta sử dụng `useRoutes` để xác định định tuyến trong ứng dụng. Các đối tượng `route` được khai báo như một mảng đối tượng, mỗi đối tượng đại diện cho một đường dẫn cụ thể và một thành phần tương ứng để render khi đường dẫn được truy cập.
+
+- Đối tượng route đầu tiên có `path` là `'/'` và element là `<Home />`. Điều này có nghĩa là khi đường dẫn truy cập là `'/'`, component `<Home />` sẽ được render.
+- Đối tượng route thứ hai có `path` là `'/about'` và element là `<About />`. Điều này có nghĩa là khi đường dẫn truy cập là `'/about'`, component `<About />` sẽ được render.
+- Đối tượng route cuối cùng có `path` là `'*'` để xác định các trường hợp không khớp với bất kỳ đường dẫn nào ở trên. element được đặt là `<NotFound />`, vì vậy khi có một đường dẫn không khớp, component `<NotFound />` sẽ được render.
+
+- Cuối cùng, chúng ta render các thành phần định tuyến bằng cách sử dụng biến `routeElements` trong JSX. Nếu đường dẫn truy cập khớp với bất kỳ đối tượng `route` nào, thành phần tương ứng sẽ được render.
+
 ## Hãy nêu các khái niệm về useLocation ?
 
 - Trong React Router v6, `useLocation` là một hook được cung cấp bởi thư viện `react-router-dom` để lấy thông tin về vị trí hiện tại của ứng dụng. Dưới đây là các khái niệm liên quan đến `useLocation`:
@@ -89,6 +127,28 @@
 ✅✅ Với `useLocation`, bạn có thể dễ dàng truy cập và sử dụng thông tin về vị trí hiện tại trong ứng dụng React của bạn để điều hướng và xử lý logic tương ứng.
 
 ## Ví dụ về sử dụng useLocation ?
+
+- Dưới đây là một ví dụ về cách sử dụng `useLocation` trong React Router:
+
+```jsx
+import { useLocation } from "react-router-dom";
+
+const MyComponent = () => {
+  const location = useLocation();
+
+  return (
+    <div>
+      <h1>Current Location: {location.pathname}</h1>
+      <p>Search Params: {location.search}</p>
+      <p>Hash: {location.hash}</p>
+    </div>
+  );
+};
+```
+
+- Trong ví dụ trên, chúng ta sử dụng `useLocation` để lấy thông tin vị trí hiện tại trong ứng dụng. Biến `location` sẽ chứa thông tin về vị trí, bao gồm đường dẫn (`pathname`), các tham số tìm kiếm (`search`) và hash (`hash`).
+
+- Trong JSX, chúng ta có thể sử dụng các thuộc tính `pathname`, `search` và `hash` của biến `location` để hiển thị thông tin tương ứng. Trong ví dụ trên, chúng ta hiển thị đường dẫn hiện tại, các tham số tìm kiếm và hash trong các phần tử HTML.
 
 ## Hãy nêu các khái niệm về useSearchParams ?
 
@@ -118,6 +178,33 @@ tác và tùy chỉnh trong ứng dụng React của bạn.
 
 ## Ví dụ về sử dụng useSearchParams ?
 
+- Dưới đây là một ví dụ về cách sử dụng `useSearchParams` trong React Router:
+
+```jsx
+import { useSearchParams } from "react-router-dom";
+
+const MyComponent = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleSearch = () => {
+    setSearchParams({ query: "example" });
+  };
+
+  return (
+    <div>
+      <button onClick={handleSearch}>Search</button>
+      <p>Search Query: {searchParams.get("query")}</p>
+    </div>
+  );
+};
+```
+
+- Trong ví dụ trên, chúng ta sử dụng `useSearchParams` để lấy thông tin truy vấn từ URL và cập nhật nó. Biến `searchParams` là một đối tượng (object) có thể thay đổi, chứa các thông tin truy vấn từ URL.
+
+- Chúng ta sử dụng `get()` để truy cập giá trị của trường `query` trong truy vấn. Trong ví dụ trên, khi người dùng nhấp vào nút `"Search"`, chúng ta sử dụng hàm `setSearchParams()` để cập nhật trường `query` thành giá trị `"example"`.
+
+- Trong JSX, chúng ta sử dụng `searchParams.get()` để hiển thị giá trị của trường `query` trong phần tử HTML.
+
 ## Hãy nêu các khái niệm về useNavigate ?
 
 - Trong React Router v6, `useNavigate` là một hook được cung cấp bởi thư viện `react-router-dom` để điều hướng (`navigate`) trong ứng dụng. Dưới đây là các khái niệm liên quan đến `useNavigate`:
@@ -143,6 +230,32 @@ tác và tùy chỉnh trong ứng dụng React của bạn.
 ✅✅ Với `useNavigate`, bạn có thể thực hiện việc điều hướng trong ứng dụng React của bạn, cho phép người dùng chuyển đổi giữa các trang và tương tác với ứng dụng của bạn một cách linh hoạt.
 
 ## Ví dụ về sử dụng useNavigate ?
+
+- Dưới đây là một ví dụ về cách sử dụng `useNavigate` trong React Router:
+
+```jsx
+import { useNavigate } from "react-router-dom";
+
+const MyComponent = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/about");
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Go to About</button>
+    </div>
+  );
+};
+```
+
+- Trong ví dụ trên, chúng ta sử dụng `useNavigate` để lấy hàm `navigate`, cho phép chúng ta điều hướng đến các địa chỉ khác trong ứng dụng.
+
+- Khi người dùng nhấp vào nút `"Go to About"`, chúng ta gọi `navigate('/about')` để chuyển hướng đến trang `"About"`. Điều này sẽ thay đổi URL và hiển thị nội dung của trang `"About"` trên giao diện người dùng.
+
+- Lưu ý rằng `useNavigate` chỉ có thể được sử dụng trong thành phần nằm trong một `<Router>` (ví dụ như `<BrowserRouter>`, `<HashRouter>`, hoặc `<MemoryRouter>`).
 
 ## Dưới đây là Docs của Được Dev: 👇👇👇
 
