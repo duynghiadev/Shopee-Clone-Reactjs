@@ -1,4 +1,4 @@
-import { Outlet, NavLink, Routes, Route } from 'react-router-dom'
+import { NavLink, Routes, Route } from 'react-router-dom'
 import AddStaff from 'components/AddStaff'
 import StaffItem from 'components/StaffItem'
 import StaffList from 'components/StaffList'
