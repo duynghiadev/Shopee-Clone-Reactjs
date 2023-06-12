@@ -1,8 +1,16 @@
 import React from 'react'
+import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
 
 interface Props {
   children?: React.ReactNode
 }
+
+const ExtraContent = () => {
+  const location = useLocation()
+  console.log(location)
+  return <div className='text-red-800'>Url is /about</div>
+}
+
 export default function MainLayout({ children }: Props) {
   return (
     <div className='grid min-h-screen grid-cols-4'>
@@ -10,30 +18,44 @@ export default function MainLayout({ children }: Props) {
         <div className='h-full overflow-y-auto bg-gray-100 py-4 px-3 shadow-lg'>
           <ul className='space-y-2'>
             <li>
-              <a
-                href=''
-                className='flex items-center rounded-lg bg-gray-300 p-2 text-base font-normal text-gray-900 hover:bg-gray-300'
+              <NavLink
+                to='/'
+                end
+                // style={({ isActive }) => ({
+                //   fontWeight: isActive ? 800 : undefined
+                // })}
+                className={({ isActive }) => {
+                  const activeClass = isActive ? 'bg-gray-300' : ''
+                  return `flex items-center rounded-lg ${activeClass} p-2 text-base font-normal text-gray-900 hover:bg-gray-300`
+                }}
               >
-                <span className='ml-3 font-bold'>Dashboard</span>
-              </a>
+                {({ isActive }) => <span className={`ml-3 ${isActive ? 'font-bold' : ''}`}>Dashboard</span>}
+              </NavLink>
             </li>
             <li>
-              <a
-                href=''
-                className='flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-300'
+              <NavLink
+                to='/staff'
+                className={({ isActive }) => {
+                  const activeClass = isActive ? 'bg-gray-300' : ''
+                  return `flex items-center rounded-lg ${activeClass} p-2 text-base font-normal text-gray-900 hover:bg-gray-300`
+                }}
               >
-                <span className='ml-3'>Staff</span>
-              </a>
+                {({ isActive }) => <span className={`ml-3 ${isActive ? 'font-bold' : ''}`}>Staff</span>}
+              </NavLink>
             </li>
             <li>
-              <a
-                href=''
+              <NavLink
+                to='/about'
                 className='flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-300'
               >
-                <span className='ml-3'>About</span>
-              </a>
+                {({ isActive }) => <span className={`ml-3 ${isActive ? 'font-bold' : ''}`}>About</span>}
+              </NavLink>
             </li>
           </ul>
+
+          <Routes location='/about'>
+            <Route path='/about' element={<ExtraContent />} />
+          </Routes>
         </div>
       </aside>
       <main className='col-span-3 h-full py-4 px-3'>{children}</main>

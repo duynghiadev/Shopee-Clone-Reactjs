@@ -1,5 +1,32 @@
 # React Router
 
+Video này là 99% kiến thức thực chiến các bạn cần biết về React Router v6 - một phiên bản hoàn toàn mới (vì trước v6 cách code rất khác)
+
+💓Kiến thức các bạn sẽ được học trong video này:
+
+🎉 Sự khác nhau giữa các Router Component trong React Router
+🎉 Cách chia route, nested route, dynamic route
+🎉 Cách xử lý param, query string trên url
+🎉 Cách navigate giữa các route
+🎉 Cách giao tiếp bằng state giữa các route
+
+🕰️Nội dung chính
+
+00:00 - Giới thiệu các kiến thức trong video
+00:34 - Chia Route cơ bản
+08:38 - Các loại Router component
+16:34 - Link component
+18:04 - NavLink component
+25:10 - Dynamic Route với id
+30:55 - Not Found 404 Route
+32:30 - Nested Route
+46:11 - Tách Nested Route vào một component khác
+52:45 - Chia route với useRoutes hook
+56:10 - Navigate component
+57:07 - useNavigate hook
+59:13 - Giao tiếp các page với nhau qua state
+01:01:24 - 2 cách xử lý query string trên url
+
 ## Phân biệt một số loại Router Component
 
 ### BrowsersRouter
