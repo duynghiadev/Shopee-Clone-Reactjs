@@ -7,10 +7,10 @@ export default function NotFound() {
   useEffect(() => {
     setTimeout(() => {
       navigate('/', {
-        state: 'Redirect from NotFound'
+        state: 'Redirect from notfound'
       })
     }, 2000)
   }, [navigate])
 
-  return <div>Not Fount</div>
+  return <div>Not Found</div>
 }

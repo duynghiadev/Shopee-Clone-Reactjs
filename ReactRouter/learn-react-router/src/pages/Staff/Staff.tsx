@@ -1,8 +1,7 @@
-import { NavLink, Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet, NavLink, Routes, Route } from 'react-router-dom'
 import AddStaff from 'components/AddStaff'
 import StaffItem from 'components/StaffItem'
 import StaffList from 'components/StaffList'
-
 export default function Staff() {
   return (
     <div>
@@ -16,8 +15,8 @@ export default function Staff() {
               className={({ isActive }) =>
                 `inline-block rounded-t-lg border-b-2 p-4 ${
                   isActive
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent hover:border-gray-300 hover:text-gray-600'
+                    ? 'border-blue-600  text-blue-600'
+                    : 'border-transparent  hover:border-gray-300 hover:text-gray-600'
                 } `
               }
             >
@@ -30,8 +29,8 @@ export default function Staff() {
               className={({ isActive }) =>
                 `inline-block rounded-t-lg border-b-2 p-4 ${
                   isActive
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent hover:border-gray-300 hover:text-gray-600'
+                    ? 'border-blue-600  text-blue-600'
+                    : 'border-transparent  hover:border-gray-300 hover:text-gray-600'
                 } `
               }
               aria-current='page'
@@ -41,13 +40,11 @@ export default function Staff() {
           </li>
         </ul>
       </div>
-
       <Routes>
         <Route path=':id' element={<StaffItem />} />
         <Route path='add' element={<AddStaff />} />
         <Route index element={<StaffList />} />
       </Routes>
-
       {/* <Outlet context={{ profile: { name: 'Duoc' } }} /> */}
     </div>
   )

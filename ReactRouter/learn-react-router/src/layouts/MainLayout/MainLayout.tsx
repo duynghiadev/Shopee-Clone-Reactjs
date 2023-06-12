@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 interface Props {
   children?: React.ReactNode
@@ -46,16 +46,18 @@ export default function MainLayout({ children }: Props) {
             <li>
               <NavLink
                 to='/about'
-                className='flex items-center rounded-lg p-2 text-base font-normal text-gray-900 hover:bg-gray-300'
+                className={({ isActive }) => {
+                  const activeClass = isActive ? 'bg-gray-300' : ''
+                  return `flex items-center rounded-lg ${activeClass} p-2 text-base font-normal text-gray-900 hover:bg-gray-300`
+                }}
               >
                 {({ isActive }) => <span className={`ml-3 ${isActive ? 'font-bold' : ''}`}>About</span>}
               </NavLink>
             </li>
           </ul>
-
-          <Routes location='/about'>
+          {/* <Routes>
             <Route path='/about' element={<ExtraContent />} />
-          </Routes>
+          </Routes> */}
         </div>
       </aside>
       <main className='col-span-3 h-full py-4 px-3'>{children}</main>
