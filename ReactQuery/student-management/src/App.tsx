@@ -5,6 +5,8 @@ import Dashboard from 'pages/Dashboard'
 import NotFound from 'pages/NotFound'
 import Students from 'pages/Students'
 import { useRoutes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const elements = useRoutes([
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <div className='App'>
+      <ToastContainer />
       <MainLayout>{elements}</MainLayout>
     </div>
   )
