@@ -311,7 +311,65 @@ return (
 
 - Đoạn code trên sử dụng React Query để lấy danh sách bài viết từ API, lưu kết quả vào cache, và cung cấp các trạng thái và kết quả tương ứng để hiển thị trong giao diện người dùng. Ngoài ra, nó cũng xử lý việc làm mới dữ liệu tự động với Fetch ngầm và xóa cache khi component bị unmount để tối ưu tài nguyên và tránh việc lấy dữ liệu không cần thiết.
 
-- Hãy lấy ví dụ: Giả sử chúng ta dùng `cacheTime` mặc định là **5 phút** và `staleTime` là `0`.
+## Hãy lấy ví dụ: Giả sử chúng ta dùng `cacheTime` mặc định là `5 phút` và `staleTime` là `0`.
+
+- Giả sử chúng ta dùng `cacheTime` mặc định là 5 phút và `staleTime` là 0, điều này có nghĩa rằng dữ liệu được lấy từ server sẽ được lưu vào cache và sẽ được coi là hết hạn sau 5 phút.
+
+- Khi một query được gọi và dữ liệu được lấy từ cache, React Query sẽ kiểm tra thời gian hết hạn (`cacheTime`). Nếu dữ liệu chưa hết hạn, React Query sẽ trả về dữ liệu từ cache ngay lập tức mà không thực hiện một request mới đến server.
+
+- Tuy nhiên, nếu `staleTime` được đặt là 0, khi thời gian hết hạn cache, React Query sẽ đánh dấu query là `"stale"` (cũ) và tiếp tục trả về dữ liệu từ cache trong lần render đầu tiên. Trong lần render đầu tiên sau khi query trở thành `"stale"`, React Query sẽ tự động bắt đầu gửi một request mới đến server để lấy dữ liệu mới nhất. Khi request hoàn thành và dữ liệu mới được trả về từ server, React Query sẽ cập nhật cache và cung cấp dữ liệu mới cho các component đã sử dụng query đó.
+
+- Ví dụ:
+
+```jsx
+import { useQuery } from "react-query";
+
+const fetchPosts = async () => {
+  const response = await fetch("api/posts");
+  const data = await response.json();
+  return data;
+};
+
+function PostList() {
+  const { data } = useQuery("posts", fetchPosts, {
+    cacheTime: 1000 * 60 * 5, // 5 phút
+    staleTime: 0,
+  });
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>Post List</h1>
+      <ul>
+        {data.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+- Trong ví dụ trên, khi component `PostList` được render lần đầu tiên, React Query sẽ gọi `fetchPosts` để lấy dữ liệu từ server và lưu vào cache. Khi `PostList` được render lại sau 5 phút, React Query sẽ trả về dữ liệu từ cache và bắt đầu gửi request mới đến server để lấy dữ liệu mới nhất.
+
+## ❌❌ Hãy hiểu rõ dòng này: React Query sẽ trả về dữ liệu từ cache và bắt đầu gửi request mới đến server để lấy dữ liệu mới nhất.
+
+- Đúng, khi `PostList` được render lại sau 5 phút và dữ liệu từ cache đã hết hạn (`cacheTime`), React Query sẽ trả về dữ liệu từ cache trong lần render đầu tiên và tự động bắt đầu gửi một request mới đến server để lấy dữ liệu mới nhất. Quá trình này được gọi là "Fetch ngầm" (`background fetching`) vì nó xảy ra trong nền mà không làm gián đoạn giao diện người dùng.
+
+- Khi request mới được gửi đến server và dữ liệu mới nhất được trả về, React Query sẽ cập nhật cache với dữ liệu mới và cung cấp dữ liệu này cho các component đã sử dụng query tương ứng. Điều này giúp đồng bộ dữ liệu của ứng dụng với server mà không làm gián đoạn trải nghiệm người dùng.
+
+- Quá trình `fetch ngầm` là một tính năng mạnh mẽ của React Query, nó giúp tối ưu hiệu suất và đồng bộ dữ liệu tự động trong ứng dụng của bạn.
+
+## ❌❌ Sau khi nó lấy dữ liệu mới nhất từ server và nó tiếp tục lưu trữ trong cache 5 phút. Sau khi hết 5 phút thì nó lại gửi yêu cầu đến server lại để lấy data mới. Vòng lặp nó là thế hả ?
+
+- Đúng, bạn hiểu đúng. Sau khi React Query đã lấy dữ liệu mới nhất từ `server` và cập nhật vào `cache`, nó sẽ lưu trữ dữ liệu đó trong `cache` trong khoảng thời gian được chỉ định (trong trường hợp này là `5 phút`). Trong thời gian đó, khi các component sử dụng query tương ứng được render, React Query sẽ trả về dữ liệu từ `cache` ngay lập tức.
+
+- Tuy nhiên, khi 5 phút trôi qua (vượt qua `cacheTime`), dữ liệu trong `cache` sẽ được coi là hết hạn. Khi các component được render lại và yêu cầu dữ liệu từ query đó, React Query sẽ tự động gửi yêu cầu mới đến `server` để lấy dữ liệu mới nhất thay vì trả về dữ liệu từ `cache`. Sau khi nhận được dữ liệu mới, nó sẽ cập nhật `cache` và cung cấp dữ liệu mới cho các component.
+
+- Điều này tạo ra một `vòng lặp tự động`, trong đó React Query tự động làm mới dữ liệu từ `server` sau khi `cache` hết hạn. Vòng lặp này giúp đồng bộ dữ liệu của ứng dụng với `server` và đảm bảo rằng dữ liệu hiển thị luôn là phiên bản mới nhất.
 
 ## Đây là Docs của Được Dev: 👇👇👇
 
