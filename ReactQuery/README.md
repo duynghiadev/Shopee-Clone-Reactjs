@@ -1,5 +1,15 @@
 ## Đây là Docs tự Research: 👇👇👇
 
+## React Query là gì?
+
+## Lưu ý trước khi học
+
+## Một số khái niệm quan trọng
+
+### Nếu thấy quá rối vì quá nhiều trạng thái, sự khác nhau giữa `status` và `fetchStatus` là như thế nào?
+
+## Cơ chế caching
+
 ## Đây là Docs của Được Dev: 👇👇👇
 
 ## React Query
@@ -62,10 +72,6 @@ Những state về data
 - `isFetching` or `fetchStatus === 'fetching'` - Đang fetching API.
 - `isPaused` or `fetchStatus === 'paused'` - Query muốn fetch API nhưng bị tạm dừng vì một lý do nào đó.
 - `fetchStatus === 'idle'` - Query không làm gì cả
-
-## Đây là Docs tự Research:
-
--
 
 ### Nếu thấy quá rối vì quá nhiều trạng thái, sự khác nhau giữa `status` và `fetchStatus` là như thế nào?
 

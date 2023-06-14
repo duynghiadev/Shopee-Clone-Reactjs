@@ -35,6 +35,7 @@ export default function AddStudent() {
   const isAddMode = Boolean(addMatch)
   const { id } = useParams()
   const queryClient = useQueryClient()
+
   const addStudentMutation = useMutation({
     mutationFn: (body: FormStateType) => {
       return addStudent(body)
