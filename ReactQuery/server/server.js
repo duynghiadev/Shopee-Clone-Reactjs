@@ -4,7 +4,7 @@ const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 
 const PORT = 4000;
-const DELAY = 1000;
+const DELAY = 2000;
 
 const validateEmail = (email) => {
   return String(email)
@@ -29,12 +29,14 @@ server.use((req, res, next) => {
         },
       });
     }
+
     if (req.body.last_name === "admin") {
       return res.status(500).send({
         error: "Server bị lỗi",
       });
     }
   }
+
   setTimeout(() => {
     next();
   }, DELAY);
@@ -43,6 +45,7 @@ server.use((req, res, next) => {
 router.render = (req, res) => {
   let data = res.locals.data;
   const { originalUrl } = req;
+
   if (
     req.method === "GET" &&
     (originalUrl === "/students" || /^\/students\?.*$/.test(originalUrl))
@@ -54,6 +57,7 @@ router.render = (req, res) => {
       email: student.email,
     }));
   }
+
   res.jsonp(data);
 };
 

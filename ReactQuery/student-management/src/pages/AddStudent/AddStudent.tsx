@@ -1,5 +1,6 @@
 import { useMatch, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import http from 'utils/http'
 import { addStudent, getStudent, updateStudent } from 'apis/students.api'
 import { Student } from 'types/students.type'
 import { useEffect, useMemo, useState } from 'react'
@@ -7,7 +8,6 @@ import { isAxiosError } from 'utils/utils'
 import { toast } from 'react-toastify'
 
 type FormStateType = Omit<Student, 'id'> | Student
-
 const initialFormState: FormStateType = {
   avatar: '',
   email: '',
@@ -29,15 +29,12 @@ const gender = {
   female: 'Female',
   other: 'Other'
 }
-
 export default function AddStudent() {
   const [formState, setFormState] = useState<FormStateType>(initialFormState)
-
   const addMatch = useMatch('/students/add')
   const isAddMode = Boolean(addMatch)
   const { id } = useParams()
   const queryClient = useQueryClient()
-
   const addStudentMutation = useMutation({
     mutationFn: (body: FormStateType) => {
       return addStudent(body)
@@ -66,14 +63,13 @@ export default function AddStudent() {
 
   const errorForm: FormError = useMemo(() => {
     const error = isAddMode ? addStudentMutation.error : updateStudentMutation.error
-
     if (isAxiosError<{ error: FormError }>(error) && error.response?.status === 422) {
       return error.response?.data.error
     }
     return null
   }, [addStudentMutation.error, isAddMode, updateStudentMutation.error])
 
-  // Dùng currying trong Javascript
+  // Dùng currying
   const handleChange = (name: keyof FormStateType) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [name]: event.target.value }))
     if (addStudentMutation.data || addStudentMutation.error) {
@@ -83,39 +79,20 @@ export default function AddStudent() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
     if (isAddMode) {
       addStudentMutation.mutate(formState, {
         onSuccess: () => {
           setFormState(initialFormState)
-          toast.success('Add thành công!!✅✅✅')
+          toast.success('Add thành công!')
         }
       })
     } else {
       updateStudentMutation.mutate(undefined, {
         onSuccess: (_) => {
-          toast.success('Update thành công!!✅✅✅')
+          toast.success('Update thành công!')
         }
       })
     }
-
-    /**
-     *✅✅ Cách 1: Lấy data bằng try catch
-     */
-
-    // try {
-    //   const data = await mutateAsync(formState)
-    //   console.log('data', data)
-    //   setFormState(initialFormState)
-    // } catch (error) {
-    //   console.log('error', error)
-    // }
-
-    /**
-     *✅✅ Cách 2: Lấy data bằng mutate
-     */
-
-    // console.log(formState)
   }
 
   return (
