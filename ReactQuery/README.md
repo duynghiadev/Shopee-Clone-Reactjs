@@ -63,6 +63,10 @@ Những state về data
 - `isPaused` or `fetchStatus === 'paused'` - Query muốn fetch API nhưng bị tạm dừng vì một lý do nào đó.
 - `fetchStatus === 'idle'` - Query không làm gì cả
 
+## Đây là Docs tự Research:
+
+-
+
 ### Nếu thấy quá rối vì quá nhiều trạng thái, sự khác nhau giữa `status` và `fetchStatus` là như thế nào?
 
 Chỉ cần nhớ
