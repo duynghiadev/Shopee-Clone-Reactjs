@@ -373,6 +373,14 @@ function PostList() {
 
 ## Đây là Docs của Được Dev: 👇👇👇
 
+- ❌❌ Thắc mắc Mutate và Mutation trong React Query và cũng như trong ReactJS:
+
+![Mutate và Mutation](Mutate-Mutation.png)
+
+- ✅✅ Giải đáp thắc mắc:
+
+![Giải đáp Mutate và Mutation](Mutate-Mutation-1.png)
+
 ## React Query
 
 ## Giới thiệu series React Query
@@ -449,6 +457,28 @@ Một data mà đã `stale` thì khi gọi lại query của data đó, nó sẽ
 > Ví dụ: `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 10*1000 })` xuất hiện 5s trước, bây giờ chúng ta gọi lại `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 2*1000 })` thì rõ ràng cái data của lần 1 dù nó chưa được cho là stale nhưng nó xuất hiện 5s trước và lâu hơn thời gian staleTime là 2s nên nó sẽ bị gọi lại ở lần 2.
 
 Một data mà bị xóa khỏi bộ nhớ (tức là quá thời gian `cacheTime`) thì khi gọi lại query của data đó, nó sẽ fetch lại api. Nếu còn chưa bị xóa khỏi bộ nhớ nhưng đã `stale` thì nó sẽ trả về data cached và fetch api ngầm, sau khi fetch xong nó sẽ update lại data cached và trả về data mới cho bạn.
+
+## ✅✅ Bổ sung:
+
+- ❌❌ Nếu còn chưa bị xóa khỏi bộ nhớ nhưng đã `stale` thì nó sẽ trả về data cached và fetch api ngầm, sau khi fetch xong nó sẽ update lại data cached và trả về data mới cho bạn. Tức là nó sẽ lấy data cũ render lên màn hình, rồi sau đó nó lấy data mới render lên màn hình lần nữa hả ?
+
+  - Đúng, bạn hiểu đúng cách hoạt động của React Query trong trường hợp cache đã hết hạn (`stale`). Khi cache đã hết hạn nhưng vẫn tồn tại trong bộ nhớ, React Query sẽ trả về dữ liệu cached từ lần render đầu tiên. Điều này có nghĩa là ban đầu, nội dung sẽ được hiển thị trên màn hình sử dụng dữ liệu đã lưu trong cache.
+
+  - Sau khi trả về dữ liệu cached và hiển thị trên màn hình, React Query sẽ tiếp tục gửi một request mới đến server để lấy dữ liệu mới nhất. Khi dữ liệu mới được trả về từ server, React Query sẽ cập nhật cache với dữ liệu mới và sau đó thông báo cho các component đã sử dụng query tương ứng.
+
+  - Điều này đồng nghĩa rằng component sẽ được render lại và hiển thị nội dung mới với dữ liệu đã được cập nhật. Tức là ban đầu nó hiển thị dữ liệu cũ, sau đó nó sẽ hiển thị lại với dữ liệu mới nhận được từ server.
+
+  - Quá trình này giúp đảm bảo rằng người dùng sẽ thấy nội dung cũ (dữ liệu cached) ngay lập tức và sau đó được cập nhật với dữ liệu mới để đảm bảo tính đồng bộ và hiệu suất của ứng dụng.
+
+- ❌❌ render lại 2 lần nó có làm cho page bị reload không ?
+
+  - Không, việc render lại 2 lần không làm cho trang web bị reload. React Query hoạt động trong phạm vi ứng dụng React và không gây ra sự reload của toàn bộ trang web.
+
+  - Khi React Query fetch dữ liệu mới từ server và cập nhật lại component, nó chỉ làm render lại các phần tử bị ảnh hưởng bởi sự thay đổi đó. Điều này đồng nghĩa với việc React chỉ cập nhật và render lại các phần tử DOM liên quan đến dữ liệu mới được trả về, không làm reload trang web hoàn toàn.
+
+  - Việc render lại 2 lần có thể tạo ra sự xuất hiện tạm thời của dữ liệu cũ và dữ liệu mới trên giao diện, nhưng không làm reload trang web. Trang web vẫn duy trì trạng thái của các thành phần khác và không mất đi các trạng thái và dữ liệu đã được lưu trữ trước đó.
+
+  - Do đó, việc sử dụng React Query không gây reload trang web, mà chỉ làm render lại các phần tử liên quan đến dữ liệu mới và duy trì các trạng thái và dữ liệu của các thành phần khác trong ứng dụng React.
 
 Caching là một vòng đời của:
 
