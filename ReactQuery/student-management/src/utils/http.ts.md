@@ -71,6 +71,16 @@ constructor() {
 }
 ```
 
+- Trong phương thức khởi tạo `constructor` của lớp `Http`, đoạn code này tạo một instance Axios và cấu hình nó với các tùy chọn như sau:
+
+  - `baseURL`: Đây là URL cơ sở cho tất cả các yêu cầu HTTP sẽ được gửi đến. Trong trường hợp này, nó được đặt là `'http://localhost:4000/'`, tức là địa chỉ của server mục tiêu.
+  - `timeout`: Đây là thời gian tối đa (tính bằng mili giây) mà một yêu cầu có thể chờ đợi phản hồi trước khi bị hủy bỏ.
+  - `headers`: Đây là các tiêu đề (headers) sẽ được gửi cùng với các yêu cầu HTTP. Trong trường hợp này, chỉ có một tiêu đề được đặt là `'Content-Type': 'application/json'`, đảm bảo rằng dữ liệu gửi đi và nhận về sẽ được xử lý dưới dạng JSON.
+
+- Sau khi cấu hình các tùy chọn, `axios.create()` trả về một instance Axios mới đã được khởi tạo và được gán vào thuộc tính `instance` của lớp `Http`. Điều này cho phép chúng ta truy cập và sử dụng instance Axios này để gửi các yêu cầu HTTP từ client tới server.
+
+- ✅ Tóm lại: Trong phương thức này, `axios.create()` được sử dụng để tạo ra một đối tượng Axios với các cấu hình như `baseURL`, `timeout`, và `headers`, và được lưu trữ trong thuộc tính `instance` của class `Http`.
+
 ---
 
 👉 Đoạn 5:
@@ -79,6 +89,26 @@ constructor() {
 const http = new Http().instance
 ```
 
+- ✅ Đây là cách giải thích thứ 1:
+
+- Dòng code này tạo một instance của lớp `Http` bằng cách gọi constructor của lớp đó và sau đó truy cập thuộc tính `instance` của đối tượng `Http` được tạo ra. Kết quả là `http` là một biến đại diện cho instance Axios đã được cấu hình trong lớp `Http`.
+
+- Trong context này, `http` có thể được sử dụng để gửi các yêu cầu HTTP từ client tới server. Bằng cách sử dụng `http`, ta có thể gọi các phương thức như `get`, `post`, `put`, `delete` để thực hiện các yêu cầu tương ứng và truyền các thông tin cần thiết như URL, tham số, dữ liệu và các tùy chọn khác.
+
+- ✅ Đây là cách giải thích thứ 2 (dễ hiểu hơn):
+
+- Dòng code `const http = new Http().instance` thực hiện các bước sau:
+
+- Tạo một đối tượng mới từ lớp `Http` bằng cách gọi constructor của lớp đó: `new Http()`. Điều này khởi tạo một instance của lớp `Http` và thực hiện các thao tác cấu hình.
+
+- Truy cập thuộc tính `instance` của đối tượng `Http` đã tạo ra: `.instance`. Thuộc tính này đại diện cho một đối tượng Axios đã được cấu hình sẵn để thực hiện các yêu cầu HTTP. (Cấu hình sẵn có nghĩa là khai báo baseURL, timeout, header)
+
+  - `"cấu hình sẵn"` trong trường hợp này nghĩa là đã khai báo sẵn các giá trị cho baseURL, timeout và header trong constructor của lớp Http. Khi tạo instance của lớp Http, một đối tượng Axios được tạo ra và đã được cấu hình sẵn với các giá trị này.
+
+- Gán đối tượng Axios đã cấu hình vào biến `http`: `const http = ...`. Bây giờ, biến `http` trở thành một đại diện cho đối tượng Axios đã được cấu hình và sẵn sàng để sử dụng để gửi các yêu cầu HTTP từ client tới server.
+
+- Điều này cho phép chúng ta sử dụng biến `http` để gọi các phương thức như `get`, `post`, `put`, `delete` và truyền các thông tin cần thiết để thực hiện các yêu cầu HTTP, chẳng hạn như URL, tham số, dữ liệu và các tùy chọn khác.
+
 ---
 
 👉 Đoạn 6:
@@ -86,5 +116,15 @@ const http = new Http().instance
 ```jsx
 export default http
 ```
+
+- Dòng mã `export default http` được sử dụng để xuất (export) giá trị `http` là một đối tượng Axios đã được cấu hình từ module hiện tại.
+
+- Khi một module khác import module chứa dòng mã trên, giá trị được xuất (export) sẽ là giá trị của biến `http`, tức là đối tượng Axios đã được cấu hình. Điều này cho phép module khác có thể sử dụng và gửi các yêu cầu HTTP thông qua biến `http` đã được cấu hình trước đó.
+
+- ✅ Tóm lại:
+
+- Trong đoạn mã trên, chúng ta đã tạo một lớp `Http` để đóng gói việc tạo và cấu hình một instance của Axios. Instance này được tạo bằng cách sử dụng phương thức `axios.create` và cung cấp các cấu hình như `baseURL`, `timeout`, và `headers`. Sau đó, chúng ta xuất giá trị của instance thông qua dòng mã `export default http`.
+
+- Điều này cho phép chúng ta sử dụng biến `http` trong các module khác để gửi các yêu cầu HTTP từ client tới server mà không cần phải tạo và cấu hình một instance Axios mới. Bằng cách này, chúng ta tiết kiệm thời gian và mã lệnh và đảm bảo rằng chúng ta sử dụng cùng một instance Axios với các cấu hình nhất quán trong toàn bộ ứng dụng.
 
 ---
