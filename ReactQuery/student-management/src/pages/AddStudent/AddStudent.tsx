@@ -28,6 +28,7 @@ const gender = {
   female: 'Female',
   other: 'Other'
 }
+
 export default function AddStudent() {
   const [formState, setFormState] = useState<FormStateType>(initialFormState)
   const addMatch = useMatch('/students/add')
