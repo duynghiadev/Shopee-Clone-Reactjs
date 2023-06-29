@@ -1,6 +1,5 @@
 import { useMatch, useParams } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import http from 'utils/http'
 import { addStudent, getStudent, updateStudent } from 'apis/students.api'
 import { Student } from 'types/students.type'
 import { useEffect, useMemo, useState } from 'react'
