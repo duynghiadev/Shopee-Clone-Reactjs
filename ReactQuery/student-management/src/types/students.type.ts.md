@@ -32,7 +32,42 @@ export interface Student {
 
 ## Bổ sung thêm: Hãy định nghĩa khái niệm interface trong TypeScript ?
 
--
+- Trong TypeScript, `interface` là một cách để định nghĩa cấu trúc dữ liệu của một đối tượng. Nó mô tả các thuộc tính, phương thức và kiểu dữ liệu mà một đối tượng cần phải có.
+
+- `Interface` định nghĩa một hợp đồng (contract) cho các đối tượng. Nó chỉ định rõ những gì một đối tượng nên có, nhưng không quan tâm đến việc đối tượng đó sẽ được triển khai như thế nào. `Interface` có thể được sử dụng để kiểm tra xem một đối tượng có tuân thủ theo hợp đồng đã định nghĩa hay không.
+
+- Một `interface` có thể chứa các thuộc tính và phương thức, mỗi thuộc tính và phương thức đều có tên và kiểu dữ liệu được xác định. `Interface` cũng có thể kế thừa từ một hoặc nhiều `interface` khác, cho phép sử dụng lại các đặc điểm đã được định nghĩa trước đó.
+
+- Dưới đây là một ví dụ đơn giản về việc định nghĩa một `interface` trong TypeScript:
+
+```jsx
+interface Person {
+  name: string;
+  age: number;
+  sayHello(): void;
+}
+
+class Student implements Person {
+  name: string
+  age: number
+
+  constructor(name: string, age: number) {
+    this.name = name
+    this.age = age
+  }
+
+  sayHello() {
+    console.log(`Hello, my name is ${this.name} and I'm ${this.age} years old.`)
+  }
+}
+
+const john: Person = new Student('John', 20)
+john.sayHello() // Output: Hello, my name is John and I'm 20 years old.
+```
+
+- Trong ví dụ trên, interface `Person` định nghĩa cấu trúc của một đối tượng `Person`, bao gồm thuộc tính `name` và `age` có kiểu dữ liệu `string` và `number`, và phương thức `sayHello` không có giá trị trả về (`void`).
+
+- Lớp `Student` triển khai interface `Person` và thực hiện các thuộc tính và phương thức đã được định nghĩa trong interface. Cuối cùng, ta khởi tạo một đối tượng `Student` với tên "John" và tuổi 20, và gọi phương thức `sayHello` để in ra thông báo.
 
 👉 Đoạn 2:
 
