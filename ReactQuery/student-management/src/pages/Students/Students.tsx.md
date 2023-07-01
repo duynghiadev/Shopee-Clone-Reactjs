@@ -132,11 +132,44 @@ const queryClient = useQueryClient()
 👉 Đoạn 5:
 
 ```jsx
-const queryString: { page?: string } = useQueryString()
+const queryString: {
+  page?: string
+} = useQueryString()
+
 const page = Number(queryString.page) || 1
 ```
 
+- Trong đoạn mã trên, `useQueryString()` là một custom hook được sử dụng để lấy giá trị của tham số truy vấn (query parameters) từ URL. Kết quả trả về của hook này là một đối tượng `queryString` chứa các tham số truy vấn được trích xuất từ URL.
+
+- Đoạn mã `const queryString: { page?: string } = useQueryString()` khai báo một biến `queryString` và gán giá trị trả về của `useQueryString()` cho biến này. Kiểu dữ liệu của `queryString` được định nghĩa là `{ page?: string }`, có nghĩa là `queryString` là một đối tượng có thuộc tính `page` kiểu `string` hoặc có thể không có thuộc tính `page` (được đánh dấu với `?` -> optional).
+
+- Tiếp theo, đoạn mã `const page = Number(queryString.page) || 1` gán giá trị của thuộc tính `page` trong `queryString` cho biến `page`. Bằng cách sử dụng `Number()` để chuyển đổi giá trị `queryString.page` từ kiểu `string` sang kiểu `number`. Nếu giá trị không hợp lệ (không phải số), hoặc thuộc tính `page` không tồn tại trong `queryString`, giá trị của `page` sẽ được gán mặc định là 1.
+
 ---
+
+## ❌❌ Bổ sung: ❌❌
+
+```jsx
+const queryString: {
+  page?: string
+} = useQueryString()
+```
+
+- ❓ Tại sao chỗ này `const queryString:` không phải là dấu `=` mà là dấu `:` làm như vậy có nghĩa là gì ?
+
+- 👉 Trong đoạn mã bạn đã cung cấp, `const queryString` không phải là một phần của JavaScript cơ bản, mà có vẻ như là một đoạn mã TypeScript. TypeScript là một ngôn ngữ phụ thuộc vào JavaScript, nhưng cung cấp thêm kiểu dữ liệu tĩnh và các tính năng mở rộng khác.
+
+- 👉 Trong TypeScript, cú pháp `const queryString: { page?: string }` được sử dụng để khai báo một biến có tên là `queryString` với kiểu dữ liệu là một đối tượng (`object`). Trong đối tượng đó, có một thuộc tính có tên là `page`, và thuộc tính này có kiểu dữ liệu là chuỗi (`string`). Ký tự dấu `:` được sử dụng trong TypeScript để chỉ định kiểu dữ liệu cho biến hoặc thuộc tính.
+
+- 👉 Nếu bạn đã chắc chắn rằng đoạn mã của bạn là JavaScript thuần túy, không phải TypeScript, thì việc sử dụng `:` thay vì `=` có thể là một lỗi hoặc dấu hiệu của một vấn đề khác trong mã của bạn.
+
+- ✅ Giải thích dễ hiểu hơn:
+
+- Trong đoạn mã JavaScript của bạn, chỗ `const queryString: { page?: string } = useQueryString()`, ký tự `":"` được sử dụng để chỉ định kiểu dữ liệu của biến `queryString`. Đây là cú pháp của TypeScript, một ngôn ngữ phụ thuộc vào JavaScript được sử dụng để kiểm tra kiểu dữ liệu trong quá trình phát triển ứng dụng JavaScript lớn và phức tạp hơn.
+
+- Trong TypeScript, chúng ta có thể chỉ định kiểu dữ liệu của biến hoặc hằng số bằng cách sử dụng `":"` sau tên biến, theo sau là kiểu dữ liệu được chỉ định. Trong trường hợp này, `{ page?: string }` là kiểu dữ liệu được chỉ định cho biến `queryString`. Ký tự `":"` sau const `queryString` cho phép chúng ta chỉ định kiểu dữ liệu của biến `queryString` mà biến này sẽ có, trong trường hợp này là một đối tượng có thuộc tính `"page"` có kiểu dữ liệu là string, và thuộc tính này có thể có hoặc không (optional).
+
+- Tóm lại, `":"` trong câu lệnh `const queryString: { page?: string } = useQueryString()` là cú pháp của TypeScript để chỉ định kiểu dữ liệu của biến `queryString` và không phải là dấu `"="` để gán giá trị.
 
 👉 Đoạn 6:
 

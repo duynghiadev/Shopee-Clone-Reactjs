@@ -21,8 +21,13 @@ export default function Students() {
   //       setIsLoading(false)
   //     })
   // }, [])
+
   const queryClient = useQueryClient()
-  const queryString: { page?: string } = useQueryString()
+
+  const queryString: {
+    page?: string
+  } = useQueryString()
+
   const page = Number(queryString.page) || 1
 
   const studentsQuery = useQuery({
