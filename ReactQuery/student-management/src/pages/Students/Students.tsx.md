@@ -171,6 +171,8 @@ const queryString: {
 
 - Tóm lại, `":"` trong câu lệnh `const queryString: { page?: string } = useQueryString()` là cú pháp của TypeScript để chỉ định kiểu dữ liệu của biến `queryString` và không phải là dấu `"="` để gán giá trị.
 
+---
+
 👉 Đoạn 6:
 
 ```jsx
@@ -188,6 +190,34 @@ const studentsQuery = useQuery({
   retry: 0
 })
 ```
+
+- Trong đoạn mã trên, `useQuery` là một hook được cung cấp bởi thư viện React Query. Nó được sử dụng để thực hiện một truy vấn dữ liệu từ server.
+
+  - `queryKey` là một mảng chứa các giá trị dùng để xác định truy vấn hiện tại. Trong trường hợp này, `['students', page]` được sử dụng làm khóa truy vấn, với `'students'` là tên truy vấn và `page` là giá trị của trang hiện tại.
+
+  - `queryFn` là một hàm thực hiện truy vấn dữ liệu thực tế. Trong đoạn mã này, hàm này được xác định dưới dạng hàm vô danh (anonymous function) và được gọi để lấy danh sách sinh viên từ server bằng cách sử dụng hàm `getStudents(page, LIMIT, controller.signal)`. Đồng thời, một `AbortController` cũng được tạo và sử dụng để hủy truy vấn sau 5 giây.
+
+  - `keepPreviousData` là một cờ (boolean) cho phép giữ lại dữ liệu trước đó khi thực hiện truy vấn mới. Trong trường hợp này, giá trị được đặt là `true`, cho phép giữ lại dữ liệu trước đó khi chuyển trang.
+
+  - `retry` là số lần thử lại (retry) truy vấn khi gặp lỗi. Trong trường hợp này, giá trị được đặt là 0, tức là không thử lại truy vấn nếu gặp lỗi.
+
+- Kết quả của hook `useQuery` là một đối tượng `studentsQuery` chứa các thông tin về trạng thái của truy vấn, kết quả truy vấn, và các hàm liên quan khác để tương tác với quá trình truy vấn dữ liệu.
+
+## ❌❌ Bổ sung: ❌❌
+
+- Đây là cách giải thích dễ hiểu hơn:
+
+- Trong đoạn mã trên, `useQuery` là một hook của thư viện React Query được sử dụng để thực hiện một truy vấn dữ liệu từ server.
+
+  - `queryKey` là một mảng chứa các giá trị dùng để xác định truy vấn hiện tại. Trong trường hợp này, truy vấn có tên `'students'` và trang hiện tại `page` được sử dụng làm khóa truy vấn.
+
+  - `queryFn` là một hàm thực hiện truy vấn dữ liệu. Trong đoạn mã này, hàm này được định nghĩa để lấy danh sách sinh viên từ server bằng cách gọi hàm `getStudents(page, LIMIT, controller.signal)`. Hàm này cũng tạo ra một `AbortController` để hủy truy vấn sau 5 giây.
+
+  - `keepPreviousData` là một cờ (boolean) cho phép giữ lại dữ liệu trước đó khi thực hiện truy vấn mới. Trong trường hợp này được đặt là `true`, cho nên dữ liệu trước đó sẽ được giữ lại khi chuyển trang.
+
+  - `retry` là số lần thử lại truy vấn khi gặp lỗi. Trong đoạn mã này, không có sự thử lại nào được thực hiện nếu truy vấn gặp lỗi.
+
+- Kết quả trả về từ hook `useQuery` là một đối tượng (object) `studentsQuery` chứa thông tin về trạng thái của truy vấn (`loading`, `error`, `success`), kết quả truy vấn, và các hàm liên quan để tương tác với quá trình truy vấn dữ liệu.
 
 ---
 
