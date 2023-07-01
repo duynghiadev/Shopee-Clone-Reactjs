@@ -252,7 +252,7 @@ const deleteStudentMutation = useMutation({
 
   - Gọi `queryClient.invalidateQueries()` để gửi yêu cầu làm mới các truy vấn liên quan đến danh sách sinh viên. Trong trường hợp này, truy vấn có `queryKey` là `['students', page]` (đại diện cho danh sách sinh viên trên trang hiện tại). Yêu cầu làm mới này giúp đảm bảo rằng sau khi xóa sinh viên thành công, danh sách sinh viên sẽ được cập nhật và hiển thị thông tin mới nhất.
 
-- Kết quả trả về từ hook `useMutation` là một đối tượng `deleteStudentMutation` chứa các thông tin và hàm liên quan đến quá trình mutation. Các trạng thái như `isLoading` (đang tải), `isError` (gặp lỗi), `isSuccess` (hoàn thành thành công) được cung cấp để quản lý trạng thái của mutation. Các hàm như `mutate` để gọi thực hiện mutation, `reset` để đặt lại trạng thái mutation, và nhiều hàm khác để tương tác với quá trình mutation.
+- ✅ Kết quả trả về từ hook `useMutation` là một đối tượng `deleteStudentMutation` chứa các thông tin và hàm liên quan đến quá trình mutation. Các trạng thái như `isLoading` (đang tải), `isError` (gặp lỗi), `isSuccess` (hoàn thành thành công) được cung cấp để quản lý trạng thái của mutation. Các hàm như `mutate` để gọi thực hiện mutation, `reset` để đặt lại trạng thái mutation, và nhiều hàm khác để tương tác với quá trình mutation.
 
 ---
 
@@ -262,6 +262,34 @@ const deleteStudentMutation = useMutation({
 const totalStudentsCount = Number(studentsQuery.data?.headers['x-total-count'] || 0)
 const totalPage = Math.ceil(totalStudentsCount / LIMIT)
 ```
+
+- ❌❌ Giải thích dòng code thứ 1: ❌❌
+
+- 👉 `const totalStudentsCount = Number(studentsQuery.data?.headers['x-total-count'] || 0)`, giải thích từng phần như sau:
+
+- `studentsQuery.data`: Đây là dữ liệu trả về từ một truy vấn (query) được gọi `studentsQuery`. Đối tượng `data` chứa dữ liệu được trả về từ truy vấn đó.
+
+- `studentsQuery.data?.headers`: Đây là thuộc tính `headers` trong đối tượng `data`. Có thể có hoặc không (nullable), (còn có tên gọi khác là optional), tuỳ thuộc vào trạng thái của `studentsQuery.data`. Nếu `data` tồn tại, thuộc tính `headers` sẽ được truy cập.
+
+- `studentsQuery.data?.headers['x-total-count']`: Đây là giá trị của thuộc tính `'x-total-count'` trong đối tượng `headers`. Tương tự như trước đó, nếu `data` tồn tại và thuộc tính `headers` tồn tại, thì giá trị của `'x-total-count'` sẽ được truy cập.
+
+- `studentsQuery.data?.headers['x-total-count'] || 0`: Nếu giá trị của `'x-total-count'` tồn tại, nó sẽ được sử dụng. Nếu không tồn tại (hoặc có giá trị là undefined), thì giá trị `0` sẽ được sử dụng thay thế.
+
+- `Number(studentsQuery.data?.headers['x-total-count'] || 0)`: Đoạn mã này chuyển đổi giá trị của `'x-total-count'` thành kiểu số (number). Nếu giá trị không tồn tại, nó sẽ được chuyển đổi thành số `0`. Kết quả sẽ là `totalStudentsCount`, là biến chứa số lượng sinh viên tổng cộng.
+
+- ❌❌ Giải thích dòng code thứ 2: ❌❌
+
+- 👉 `const totalPage = Math.ceil(totalStudentsCount / LIMIT)`, giải thích dòng code như sau:
+
+- `totalStudentsCount`: Đây là biến chứa tổng số lượng sinh viên (`totalStudentsCount` được giả định là đã được khai báo và gán giá trị, và biến này đã được khai báo ở trên).
+
+- `LIMIT`: Đây là một hằng số hoặc biến chứa giới hạn số lượng sinh viên được hiển thị trên mỗi trang.
+
+- `Math.ceil(totalStudentsCount / LIMIT)`: Đoạn mã này tính toán số trang cần thiết để hiển thị tất cả sinh viên dựa trên tổng số sinh viên và giới hạn số lượng sinh viên trên mỗi trang. Hàm `Math.ceil` làm tròn lên (làm tròn lên gần nhất) để đảm bảo rằng số trang là một số nguyên.
+
+- ✅ Kết quả của phép tính trên sẽ được gán cho biến `totalPage`, biến chứa số lượng trang tổng cộng cần thiết để hiển thị tất cả sinh viên.
+
+🚀 Tóm lại: Cả hai dòng code đó liên quan đến việc tính toán và lấy thông tin về tổng số sinh viên và tổng số trang dựa trên kết quả của `studentsQuery`.
 
 ---
 
