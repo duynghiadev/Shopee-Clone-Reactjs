@@ -301,6 +301,92 @@ const handleDelete = (id: number) => {
 }
 ```
 
+- Dòng code này khai báo một hàm `handleDelete` với tham số `id` là một số nguyên. Hàm này được sử dụng để xử lý việc xóa sinh viên.
+
+- Trong hàm `handleDelete`, `deleteStudentMutation.mutate(id)` được gọi. `deleteStudentMutation` là một biến đại diện cho mutation (thay đổi dữ liệu) của việc xóa sinh viên. Phương thức `mutate()` được gọi với tham số `id`, nhằm khởi động quá trình xóa sinh viên thông qua mutation.
+
+- Khi `mutate()` được gọi, thư viện React Query sẽ thực hiện việc gửi một request xóa sinh viên tới server và xử lý kết quả. Quá trình này có thể bao gồm việc cập nhật cache, gửi các request tương tác khác (ví dụ: cập nhật danh sách sinh viên), và cung cấp thông tin về trạng thái của mutation (như đang thực thi, thành công, lỗi, vv.) thông qua các giá trị như `isLoading`, `isError`, `isSuccess`, `error`, vv.
+
+- ✅ Tóm lại, dòng code này định nghĩa hàm `handleDelete` để thực hiện việc xóa sinh viên thông qua mutation `deleteStudentMutation.mutate()`.
+
+- 🚀 Đây là cách giải thích dễ hiểu hơn:
+
+- Dòng code trên khai báo một hàm có tên là `handleDelete` với một tham số `id` là một số nguyên. Mục đích của hàm này là để xử lý việc xóa một sinh viên.
+
+- Khi hàm `handleDelete` được gọi, nó sẽ thực hiện một mutation gọi là `deleteStudentMutation`. Một mutation trong React Query là một hoạt động thay đổi dữ liệu, trong trường hợp này là xóa sinh viên.
+
+- Gọi phương thức `mutate()` trên `deleteStudentMutation` với tham số `id` sẽ kích hoạt quá trình thực thi mutation để xóa sinh viên có ID tương ứng. Trong quá trình này, React Query sẽ gửi một yêu cầu HTTP tới máy chủ để xóa sinh viên, và sau đó xử lý kết quả trả về.
+
+- Cách sử dụng `mutate()` trong mutation cho phép bạn kích hoạt các hoạt động thay đổi dữ liệu một cách dễ dàng và tự động, trong khi React Query quản lý quá trình thực thi, cache và cung cấp thông tin về trạng thái của mutation.
+
+- Tóm lại, đoạn code trên định nghĩa một hàm `handleDelete` để xử lý việc xóa sinh viên bằng cách sử dụng mutation `deleteStudentMutation.mutate()`.
+
+## ❓ Nhắc lại kiến thức cũ: Hàm `mutate()` trong react query có chức năng gì ?
+
+- Trong React Query, hàm `mutate()` được sử dụng để thực hiện các thay đổi dữ liệu (mutate data) bằng cách gọi các hàm API tương ứng. Hàm này cho phép bạn gửi các yêu cầu HTTP như POST, PUT, DELETE để thay đổi dữ liệu trên máy chủ.
+
+- `mutate()` có thể được sử dụng để gửi yêu cầu tạo, cập nhật hoặc xóa một tài nguyên trên máy chủ. Nó là một phương thức cung cấp bởi React Query để quản lý việc cập nhật dữ liệu và tự động cập nhật UI khi dữ liệu thay đổi.
+
+- Cú pháp cơ bản của hàm `mutate()` như sau:
+
+```jsx
+mutate(mutationKey, updatedData, options)
+```
+
+- Trong đó:
+
+- `mutationKey` là khóa xác định loại mutation (thay đổi) dữ liệu. Nó thường là một chuỗi định danh duy nhất, ví dụ: `'createUser'`, `'updatePost'`, `'deleteComment'`, vv. Mutation key được sử dụng để phân biệt các mutations khác nhau trong hệ thống của bạn.
+- `updatedData` là dữ liệu cần được cập nhật hoặc gửi đi. Đây có thể là một object chứa thông tin mới để tạo hoặc cập nhật tài nguyên.
+- `options` (tùy chọn) là một đối tượng chứa các tùy chọn cho mutation, ví dụ: `onSuccess`, `onError`, `onSettled`, vv. Các tùy chọn này cho phép bạn định nghĩa hành vi sau khi mutation được thực hiện thành công, xảy ra lỗi hoặc khi hoàn tất (bao gồm cả thành công và lỗi).
+
+- Khi gọi `mutate()`, React Query sẽ tự động gửi yêu cầu tương ứng đến máy chủ, và sau đó cập nhật bộ đệm (cache) dữ liệu và cập nhật UI dựa trên kết quả trả về từ yêu cầu. Bạn có thể sử dụng các hàm callback như `onSuccess`, `onError`, `onSettled` trong options để thực hiện các tác vụ bổ sung sau khi mutation hoàn thành.
+
+- Ví dụ:
+
+```jsx
+import { useMutation } from 'react-query'
+
+const updateUser = async (userId, userData) => {
+  // Gửi yêu cầu cập nhật thông tin người dùng với userId và userData
+  const response = await fetch(`/api/users/${userId}`, {
+    method: 'PUT',
+    body: JSON.stringify(userData),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  const data = await response.json()
+  return data
+}
+
+const UserProfile = ({ userId }) => {
+  const { mutate } = useMutation(updateUser)
+
+  const handleUpdateUser = (userData) => {
+    mutate(userId, userData, {
+      onSuccess: (updatedUser) => {
+        // Xử lý khi cập nhật thành công
+        console.log('User updated:', updatedUser)
+      },
+      onError: (error) => {
+        // Xử lý khi có lỗi xảy ra
+        console.error('Error updating user:', error)
+      }
+    })
+  }
+
+  return (
+    <div>
+      {/* Form để cập nhật thông tin người dùng */}
+      {/* Gọi handleUpdateUser() khi người dùng ấn nút lưu */}
+    </div>
+  )
+}
+```
+
+- Trong ví dụ trên, chúng ta sử dụng `useMutation` để khởi tạo mutation hook và lấy ra hàm `mutate` từ hook đó. Khi người dùng thực hiện cập nhật thông tin người dùng, chúng ta gọi `mutate()` để gửi yêu cầu cập nhật dữ liệu và định nghĩa các hàm callback `onSuccess` và `onError` để xử lý kết quả trả về.
+
 ---
 
 👉 Đoạn 10:
@@ -310,6 +396,8 @@ const handlePrefetchStudent = (id: number) => {
   // Các đoạn mã khác trong handlePrefetchStudent
 }
 ```
+
+- Bắt đầu từ đây nhé 👇👇👇
 
 ---
 
