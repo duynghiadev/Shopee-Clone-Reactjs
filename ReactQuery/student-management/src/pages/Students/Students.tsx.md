@@ -117,6 +117,18 @@ export default function Students() {
 const queryClient = useQueryClient()
 ```
 
+- Trong đoạn mã trên, chúng ta sử dụng hook `useQueryClient` từ thư viện `react-query` để lấy một instance của `queryClient`.
+
+- `queryClient` là một đối tượng quan trọng trong React Query, nó đại diện cho một phiên làm việc với các truy vấn dữ liệu. Với `queryClient`, chúng ta có thể thực hiện các tác vụ như lấy dữ liệu từ cache, gửi các truy vấn mới đến API, cập nhật dữ liệu trong cache, hoặc xóa dữ liệu khỏi cache.
+
+- Bằng cách sử dụng `useQueryClient`, chúng ta có thể truy cập `queryClient` từ bất kỳ thành phần nào trong ứng dụng để thực hiện các hoạt động liên quan đến quản lý dữ liệu và truy vấn.
+
+- Trong đoạn mã trên, việc sử dụng `useQueryClient` có thể được áp dụng để lấy `queryClient` trong phạm vi của functional component hiện tại. Điều này cho phép chúng ta sử dụng `queryClient` để thực hiện các tác vụ quan trọng liên quan đến dữ liệu trong React Query như khởi động truy vấn, gửi mutations, hoặc làm mới dữ liệu từ cache.
+
+- ✅ Trong đoạn mã trên, chúng ta gán giá trị trả về của `useQueryClient` vào biến `queryClient`. Điều này cho phép chúng ta sử dụng `queryClient` để thực hiện các hoạt động liên quan đến dữ liệu trong phạm vi của hàm `Students()`.
+
+---
+
 👉 Đoạn 5:
 
 ```jsx
