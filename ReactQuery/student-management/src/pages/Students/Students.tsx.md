@@ -12,7 +12,33 @@ import classNames from 'classnames'
 import { toast } from 'react-toastify'
 ```
 
+- Đoạn code trên sử dụng các thư viện và module như `react-query`, `react-router-dom`, `classnames`, và `react-toastify` để thực hiện các tác vụ như truy vấn dữ liệu từ máy chủ, điều hướng trang, quản lý trạng thái dữ liệu, và hiển thị thông báo.
+
+- `deleteStudent`, `getStudent`, và `getStudents` là các hàm được import từ module `apis/students.api` để giao tiếp với API và lấy dữ liệu về sinh viên.
+- `Fragment` là một thành phần của React được sử dụng để nhóm các phần tử JSX mà không cần bọc chúng trong một thẻ gốc nào.
+- `Link` là một thành phần của React Router, dùng để tạo các liên kết trong ứng dụng để chuyển đổi giữa các trang.
+- `useMutation`, `useQuery`, và `useQueryClient` là các hook được cung cấp bởi thư viện `react-query`, dùng để quản lý và thực hiện các truy vấn và thay đổi dữ liệu từ máy chủ.
+- `useQueryString` là một custom hook để trích xuất thông tin từ query string trong URL.
+- `classNames` là một công cụ tiện ích để tạo các class name dựa trên điều kiện hoặc thuộc tính đầu vào. Nó giúp xây dựng các class name động và linh hoạt cho các phần tử JSX.
+- `toast` cung cấp các phương thức để hiển thị các thông báo (toast) trong ứng dụng. Nó được sử dụng để cung cấp thông báo cho người dùng trong các tình huống cụ thể.
+
+- ✅ Các thư viện và module này đóng vai trò quan trọng trong việc xây dựng và mở rộng các tính năng của ứng dụng React.
+
 ---
+
+## Hãy giải thích những import này là gì: module, component, utility trong reactjs ?
+
+- Trong ReactJS, các thuật ngữ "module", "component" và "utility" được sử dụng để miêu tả các khái niệm và phần tử khác nhau trong quá trình phát triển ứng dụng web. Dưới đây là giải thích cho từng thuật ngữ này:
+
+1. `Module`: Trong ngữ cảnh ReactJS, "module" thường được sử dụng để chỉ các tệp tin JavaScript độc lập hoặc nhóm các thành phần có liên quan vào một gói. Một module có thể chứa một hoặc nhiều thành phần, các hàm tiện ích và các khối mã JavaScript khác. Việc sử dụng module giúp tổ chức mã nguồn, tăng tính tổ chức và khả năng tái sử dụng.
+
+2. `Component`: Trong ReactJS, "component" là một khái niệm quan trọng và cơ bản. Một component đại diện cho một phần giao diện người dùng (UI) độc lập và tái sử dụng được. Component trong React được xây dựng bằng cách sử dụng các khối mã JavaScript, có thể chứa HTML, CSS và logic xử lý để hiển thị và quản lý các phần tử giao diện người dùng. Các component có thể nhúng vào nhau để tạo thành cấu trúc giao diện phức tạp.
+
+3. `Utility`: "Utility" trong ReactJS thường ám chỉ đến các hàm tiện ích (utility functions) hoặc các công cụ hỗ trợ trong quá trình phát triển ứng dụng. Các hàm tiện ích là những hàm JavaScript có chức năng cụ thể, thường được viết để thực hiện một nhiệm vụ nhỏ mà có thể được sử dụng lại ở nhiều nơi trong mã nguồn. Các hàm tiện ích có thể giúp xử lý dữ liệu, thao tác với chuỗi, tính toán hoặc cung cấp các chức năng hỗ trợ khác cho các component và module trong ứng dụng React.
+
+- Trong đoạn code trên, phần code của `utility` được trích dẫn từ file `utils/utils`.
+
+- ✅ Những thuật ngữ này không chỉ áp dụng trong ReactJS mà còn được sử dụng rộng rãi trong phát triển ứng dụng web nói chung.
 
 👉 Đoạn 2:
 
