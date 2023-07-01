@@ -99,6 +99,14 @@ export default function Students() {
 }
 ```
 
+- Đoạn code trên khai báo một React functional component có tên là `Students`. Đây là một component đơn giản được sử dụng để hiển thị danh sách sinh viên.
+
+- Trong component này, có thể có các đoạn mã khác (được lược bỏ trong phần giải thích) để xử lý logic, giao tiếp với API hoặc render các phần tử giao diện khác.
+
+- Component `Students` có thể chứa các props (các thuộc tính) được truyền vào từ component cha thông qua JSX khi sử dụng component này. Tuy nhiên, trong đoạn mã trên không định nghĩa bất kỳ prop nào, do đó, nó không sử dụng các props truyền vào và chỉ chứa các đoạn mã khác liên quan đến xử lý dữ liệu và giao diện.
+
+- Component này có thể được sử dụng trong một cấu trúc giao diện lớn hơn hoặc được kết hợp với các thành phần khác để xây dựng trang web hoàn chỉnh.
+
 ---
 
 👉 Đoạn 4:
