@@ -36,15 +36,58 @@ import { toast } from 'react-toastify'
 
 3. `Utility`: "Utility" trong ReactJS thường ám chỉ đến các hàm tiện ích (utility functions) hoặc các công cụ hỗ trợ trong quá trình phát triển ứng dụng. Các hàm tiện ích là những hàm JavaScript có chức năng cụ thể, thường được viết để thực hiện một nhiệm vụ nhỏ mà có thể được sử dụng lại ở nhiều nơi trong mã nguồn. Các hàm tiện ích có thể giúp xử lý dữ liệu, thao tác với chuỗi, tính toán hoặc cung cấp các chức năng hỗ trợ khác cho các component và module trong ứng dụng React.
 
+- ✅ Những thuật ngữ này không chỉ áp dụng trong ReactJS mà còn được sử dụng rộng rãi trong phát triển ứng dụng web nói chung.
+
 - Trong đoạn code trên, phần code của `utility` được trích dẫn từ file `utils/utils`.
 
-- ✅ Những thuật ngữ này không chỉ áp dụng trong ReactJS mà còn được sử dụng rộng rãi trong phát triển ứng dụng web nói chung.
+## Vì sao gọi đoạn code này 👇 là utility ? Hãy giải thích lý do ?
+
+- Đoạn code này được trích từ file `utils.ts`:
+
+```jsx
+import axios, { AxiosError } from 'axios'
+import { useSearchParams } from 'react-router-dom'
+
+export const useQueryString = () => {
+  const [searchParams] = useSearchParams()
+  const searchParamsObject = Object.fromEntries([...searchParams])
+  return searchParamsObject
+}
+
+export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
+  return axios.isAxiosError(error)
+}
+```
+
+- Đoạn mã trên được gọi là `utility` vì nó cung cấp các chức năng hữu ích và tái sử dụng được trong nhiều phần của ứng dụng. Đoạn code này chứa hai hàm: `useQueryString` và `isAxiosError`.
+
+- `useQueryString`: Đây là một custom hook dùng để trích xuất các tham số truy vấn từ URL trong React Router. Nó sử dụng `useSearchParams` để lấy giá trị của tham số truy vấn và chuyển đổi nó thành một object.
+
+- `isAxiosError`: Đây là một hàm kiểm tra kiểu dữ liệu sử dụng generic type. Nó kiểm tra xem một đối tượng có phải là `AxiosError` hay không. `AxiosError` là một lỗi đặc biệt được trả về bởi thư viện Axios khi gửi các yêu cầu HTTP không thành công.
+
+- Cả hai hàm này đều cung cấp các chức năng hữu ích và có thể được sử dụng lại trong nhiều phần của ứng dụng, vì vậy chúng được gọi là `utility`.
 
 👉 Đoạn 2:
 
 ```jsx
 const LIMIT = 10
 ```
+
+- ❌❌ Đây là lý thuyết: ❌❌
+
+- Đoạn code trên định nghĩa một hằng số `LIMIT` có giá trị là 10. Hằng số này được sử dụng để giới hạn số lượng phần tử hoặc kết quả trong một phạm vi nào đó.
+
+- Việc sử dụng hằng số `LIMIT` giúp tăng tính linh hoạt và dễ dàng thay đổi giá trị giới hạn nếu cần thiết. Bằng cách sử dụng hằng số này, ta có thể thay đổi giá trị `LIMIT` một lần duy nhất tại nơi khai báo, và tất cả các vị trí sử dụng `LIMIT` sẽ được áp dụng giá trị mới mà không cần chỉnh sửa từng địa điểm một.
+
+- Ví dụ, trong trường hợp này, giá trị `LIMIT` được sử dụng để giới hạn số lượng phần tử hoặc kết quả trong một truy vấn hoặc chức năng nào đó. Nếu muốn thay đổi giới hạn này, ta chỉ cần thay đổi giá trị của `LIMIT` một lần duy nhất tại khai báo, và tất cả các vị trí sử dụng `LIMIT` sẽ áp dụng giá trị mới mà không cần chỉnh sửa từng chỗ sử dụng.
+
+- ✅✅ Đây là thực tế trong dự án của mình: ✅✅
+
+- Nếu `LIMIT` là hằng số được sử dụng để giới hạn số lượng dữ liệu trong một trang, và số lượng trang được tự động tính toán dựa trên số lượng dữ liệu.
+
+- Khi có một danh sách dữ liệu lớn và muốn hiển thị chúng theo từng trang, ta có thể sử dụng giá trị `LIMIT` để xác định số lượng dữ liệu hiển thị trên mỗi trang. Ví dụ, nếu `LIMIT` được đặt là 10, thì mỗi trang sẽ hiển thị tối đa 10 phần tử.
+
+- Số lượng trang sẽ được tính toán dựa trên tổng số lượng dữ liệu và `LIMIT`. Ví dụ, nếu có tổng cộng 50 phần tử dữ liệu và `LIMIT` được đặt là 10, thì sẽ có 5 trang để hiển thị tất cả dữ liệu. Điều này giúp người dùng dễ dàng điều hướng và xem các phần tử dữ liệu theo trang.
 
 ---
 
