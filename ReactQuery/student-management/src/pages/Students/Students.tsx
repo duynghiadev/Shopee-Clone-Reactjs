@@ -49,7 +49,10 @@ export default function Students() {
     mutationFn: (id: number | string) => deleteStudent(id),
     onSuccess: (_, id) => {
       toast.success(`Xóa thành công student với id là ${id}`)
-      queryClient.invalidateQueries({ queryKey: ['students', page], exact: true })
+      queryClient.invalidateQueries({
+        queryKey: ['students', page],
+        exact: true
+      })
     }
   })
 

@@ -228,10 +228,31 @@ const deleteStudentMutation = useMutation({
   mutationFn: (id: number | string) => deleteStudent(id),
   onSuccess: (_, id) => {
     toast.success(`Xóa thành công student với id là ${id}`)
-    queryClient.invalidateQueries({ queryKey: ['students', page], exact: true })
+    queryClient.invalidateQueries({
+      queryKey: ['students', page],
+      exact: true
+    })
   }
 })
 ```
+
+- Trong đoạn mã trên, `useMutation` là một hook được sử dụng để thực hiện một mutation (thay đổi dữ liệu) và quản lý trạng thái của quá trình mutation.
+
+- Dòng code `mutationFn: (id: number | string) => deleteStudent(id)` khai báo một hàm `mutationFn` là hàm thực hiện mutation. Trong trường hợp này, hàm này nhận đầu vào là một giá trị `id` có kiểu dữ liệu là `number` hoặc `string`. Hàm này gọi hàm `deleteStudent(id)` để thực hiện việc xóa sinh viên với `id` tương ứng.
+
+  - Tóm lại: `mutationFn` là một hàm thực hiện mutation, trong trường hợp này là hàm `deleteStudent(id)` để xóa một sinh viên với `id` được truyền vào.
+
+- `onSuccess` là một hàm callback được gọi khi mutation hoàn thành thành công. Trong đoạn mã này, hàm này được sử dụng để hiển thị một thông báo thành công bằng `toast.success` và sau đó gọi `queryClient.invalidateQueries` để làm mới truy vấn danh sách sinh viên. Điều này đảm bảo rằng sau khi xóa một sinh viên, danh sách sinh viên được cập nhật tức thì.
+
+  - Dòng code này khai báo một hàm `onSuccess` được gọi khi mutation thành công. Hàm này nhận hai đối số là `_` và `id`. Thường thì `_` được sử dụng để bỏ qua đối số không cần thiết.
+
+  - Trong phần thực thi của hàm `onSuccess`, có hai hoạt động được thực hiện:
+
+  - Hiển thị một thông báo thành công sử dụng `toast.success()`. Thông báo này sẽ thông báo cho người dùng rằng sinh viên có `id` tương ứng đã được xóa thành công.
+
+  - Gọi `queryClient.invalidateQueries()` để gửi yêu cầu làm mới các truy vấn liên quan đến danh sách sinh viên. Trong trường hợp này, truy vấn có `queryKey` là `['students', page]` (đại diện cho danh sách sinh viên trên trang hiện tại). Yêu cầu làm mới này giúp đảm bảo rằng sau khi xóa sinh viên thành công, danh sách sinh viên sẽ được cập nhật và hiển thị thông tin mới nhất.
+
+- Kết quả trả về từ hook `useMutation` là một đối tượng `deleteStudentMutation` chứa các thông tin và hàm liên quan đến quá trình mutation. Các trạng thái như `isLoading` (đang tải), `isError` (gặp lỗi), `isSuccess` (hoàn thành thành công) được cung cấp để quản lý trạng thái của mutation. Các hàm như `mutate` để gọi thực hiện mutation, `reset` để đặt lại trạng thái mutation, và nhiều hàm khác để tương tác với quá trình mutation.
 
 ---
 
