@@ -34,17 +34,15 @@ import { toast } from 'react-toastify'
 type FormStateType = Omit<Student, 'id'> | Student
 ```
 
-- Đoạn code đó định nghĩa một type mới có tên là `FormStateType`. `FormStateType` được sử dụng để đại diện cho trạng thái của một biểu mẫu (form) trong ứng dụng. Nó là một phiên bản của kiểu dữ liệu `Student`, nhưng bỏ đi thuộc tính `id`.
+- `FormStateType` là một kiểu dữ liệu mới được định nghĩa.
 
-- ✅ Trong ngữ cảnh này, `Student` có thể là một đối tượng chứa thông tin của một sinh viên trong hệ thống. Với `FormStateType`, chúng ta có thể sử dụng nó để đại diện cho dữ liệu trong biểu mẫu khi thêm hoặc cập nhật thông tin sinh viên. Bằng cách loại bỏ thuộc tính `id`, chúng ta chỉ quan tâm đến các thuộc tính khác như tên, tuổi, giới tính, v.v. khi xử lý dữ liệu trong biểu mẫu.
+- Kiểu dữ liệu này có thể đại diện cho hai kiểu khác nhau:` Omit<Student, 'id'>` và `Student`.
 
-## Giải thích dễ hiểu hơn:
+- `Omit<Student, 'id'>` là một kiểu dữ liệu mới được tạo ra từ kiểu `Student` bằng cách loại bỏ thuộc tính `'id'` khỏi nó. Điều này đại diện cho thông tin của một sinh viên mới (không có `'id'`).
 
-- Đoạn code đó định nghĩa một loại dữ liệu mới có tên là `FormStateType`. Nó được sử dụng để biểu diễn trạng thái của một biểu mẫu (form) trong ứng dụng.
+- `Student` là kiểu dữ liệu chứa thông tin của một sinh viên đã tồn tại (bao gồm cả `'id'` và các thuộc tính khác).
 
-- Trong ngữ cảnh này, `Student` là một đối tượng chứa thông tin về một sinh viên. `FormStateType` là một phiên bản của `Student`, nhưng không bao gồm thuộc tính `id`. Nó chỉ chứa các thuộc tính khác như tên, tuổi, giới tính, v.v.
-
-- ✅ Việc sử dụng `FormStateType` giúp xác định loại dữ liệu cho trạng thái của biểu mẫu, đồng thời chỉ ra rằng trong trường hợp này, ta không quan tâm đến thuộc tính `id` khi làm việc với dữ liệu trong biểu mẫu.
+- ✅ Với việc sử dụng `|` (union) có thể chứa thông tin của hai trường hợp trên, ta tạo ra một kiểu hợp nhất cho `FormStateType`. Điều này cho phép `FormStateType` có thể chứa cả thông tin của một sinh viên mới (không có `'id'`) và thông tin của một sinh viên đã tồn tại, tùy thuộc vào ngữ cảnh sử dụng trong mã nguồn.
 
 ---
 
