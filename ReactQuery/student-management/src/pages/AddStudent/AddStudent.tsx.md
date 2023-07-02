@@ -293,17 +293,27 @@ const gender = {
 }
 ```
 
+- Đoạn code trên khai báo một đối tượng `gender` trong TypeScript. Đối tượng này có ba thuộc tính: `male`, `female`, và `other`. Mỗi thuộc tính là một chuỗi (string), đại diện cho giới tính tương ứng.
+
+- Ví dụ:
+
+- `gender.male` có giá trị là `'Male'`
+- `gender.female` có giá trị là `'Female'`
+- `gender.other` có giá trị là `'Other'`
+
+- ✅ Đoạn code này có thể được sử dụng để định nghĩa các giá trị cho thuộc tính `gender` trong một hệ thống, cho phép lựa chọn giới tính từ một tập hợp cố định.
+
 ---
 
 👉 Đoạn 6:
 
 ```jsx
 export default function AddStudent() {
-  const [formState, setFormState] = useState<FormStateType>(initialFormState);
-  const addMatch = useMatch('/students/add');
-  const isAddMode = Boolean(addMatch);
-  const { id } = useParams();
-  const queryClient = useQueryClient();
+  const [formState, setFormState] = useState<FormStateType>(initialFormState); // Dòng 1
+  const addMatch = useMatch('/students/add'); // Dòng 2
+  const isAddMode = Boolean(addMatch); // Dòng 3
+  const { id } = useParams(); // Dòng 4
+  const queryClient = useQueryClient(); // Dòng 5
 ```
 
 ---
