@@ -483,6 +483,20 @@ const cancelRequestStudents = () => {
 
 - Điều này có thể hữu ích trong trường hợp muốn ngừng yêu cầu truy vấn hiện tại hoặc tránh việc lấy dữ liệu lỗi thời từ các yêu cầu truy vấn trước đó.
 
+## Giải thích dễ hiểu hơn:
+
+- Hàm `cancelRequestStudents` được sử dụng để hủy bỏ các yêu cầu truy vấn liên quan đến danh sách sinh viên và trang cụ thể. Khi được gọi, hàm này thực hiện các bước sau:
+
+- `queryClient.cancelQueries()`: `cancelQueries()` là phương thức của đối tượng `queryClient` được cung cấp bởi React Query. Đây là phương thức dùng để hủy bỏ các yêu cầu truy vấn.
+
+- Đối số truyền vào là một đối tượng có thuộc tính `queryKey`, đại diện cho khóa truy vấn của danh sách sinh viên và trang cụ thể. Đối số này giúp xác định các yêu cầu truy vấn cần bị hủy bỏ.
+
+- `queryKey` được cung cấp dưới dạng một mảng, bao gồm các thành phần liên quan đến truy vấn. Trong trường hợp này, `['students', page]` là khóa truy vấn sử dụng để xác định danh sách sinh viên và trang cụ thể.
+
+- Khi `queryClient.cancelQueries()` được gọi với `queryKey` tương ứng, tất cả các yêu cầu truy vấn liên quan đến khóa truy vấn này sẽ bị hủy bỏ. Điều này có nghĩa là nếu có các yêu cầu đang chờ xử lý hoặc đang được thực hiện liên quan đến danh sách sinh viên và trang đó, chúng sẽ bị dừng lại.
+
+- Hàm `cancelRequestStudents` hữu ích khi ta muốn hủy bỏ các yêu cầu truy vấn không cần thiết hoặc không còn cần thiết, chẳng hạn khi người dùng chuyển sang một trang khác hoặc thực hiện một hành động khác. Điều này giúp tránh việc lấy dữ liệu không cần thiết và giảm tải cho máy chủ.
+
 ---
 
 👉 Đoạn 14:
