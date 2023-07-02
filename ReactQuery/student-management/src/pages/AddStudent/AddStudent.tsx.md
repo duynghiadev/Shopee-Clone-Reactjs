@@ -309,11 +309,64 @@ const gender = {
 
 ```jsx
 export default function AddStudent() {
-  const [formState, setFormState] = useState<FormStateType>(initialFormState); // Dòng 1
-  const addMatch = useMatch('/students/add'); // Dòng 2
-  const isAddMode = Boolean(addMatch); // Dòng 3
-  const { id } = useParams(); // Dòng 4
-  const queryClient = useQueryClient(); // Dòng 5
+  const [formState, setFormState] = useState < FormStateType > initialFormState // Dòng 1
+  const addMatch = useMatch('/students/add') // Dòng 2
+  const isAddMode = Boolean(addMatch) // Dòng 3
+  const { id } = useParams() // Dòng 4
+  const queryClient = useQueryClient() // Dòng 5
+}
+```
+
+- 👉 Giải thích dòng code 1:
+
+```js
+export default function AddStudent() {
+  const [formState, setFormState] = useState < FormStateType > initialFormState
+} // Dòng 1
+```
+
+- Dòng code trên khai báo một state (trạng thái) `formState` bằng cách sử dụng hook `useState` trong React. Giá trị ban đầu của `formState` được đặt là `initialFormState`, và kiểu dữ liệu của `formState` được xác định là `FormStateType`.
+
+- Giá trị `initialFormState` được truyền vào làm giá trị ban đầu cho state `formState`. `FormStateType` xác định kiểu dữ liệu của `formState`, có thể là một đối tượng có các thuộc tính tương ứng với thông tin của một sinh viên (trừ thuộc tính `id`), hoặc là một đối tượng sinh viên hoàn chỉnh. (`type FormStateType = Omit<Student, 'id'> | Student`)
+
+- Khi state `formState` thay đổi, hàm `setFormState` có thể được sử dụng để cập nhật giá trị của `formState` với giá trị mới.
+
+---
+
+- 👉 Giải thích dòng code 2:
+
+```jsx
+const addMatch = useMatch('/students/add') // Dòng 2
+```
+
+- Dòng code trên sử dụng hook `useMatch` từ thư viện `react-router-dom` để kiểm tra xem URL hiện tại có khớp với một đường dẫn cụ thể hay không. Trong trường hợp này, đường dẫn được kiểm tra là `'/students/add'`.
+
+- Kết quả của hook `useMatch` được gán vào biến `addMatch`. Nếu URL hiện tại khớp với đường dẫn `'/students/add'`, `addMatch` sẽ có giá trị trả về từ hook `useMatch`, đại diện cho thông tin về việc khớp đường dẫn của URL. Ngược lại, nếu URL không khớp, `addMatch` sẽ có giá trị `null`.
+
+- Việc sử dụng `useMatch` giúp chúng ta xác định xem URL hiện tại có khớp với một đường dẫn cụ thể hay không, và ta có thể sử dụng kết quả trả về để thực hiện các hành động phù hợp dựa trên việc khớp đường dẫn.
+
+---
+
+- 👉 Giải thích dòng code 3:
+
+```jsx
+const isAddMode = Boolean(addMatch) // Dòng 3
+```
+
+---
+
+- 👉 Giải thích dòng code 4:
+
+```jsx
+const { id } = useParams() // Dòng 4
+```
+
+---
+
+- 👉 Giải thích dòng code 5:
+
+```jsx
+const queryClient = useQueryClient() // Dòng 5
 ```
 
 ---
