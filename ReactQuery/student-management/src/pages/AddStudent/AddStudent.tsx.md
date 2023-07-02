@@ -64,7 +64,7 @@ const initialFormState: FormStateType = {
 
 - `initialFormState` đại diện cho trạng thái ban đầu của biểu mẫu (form). Đối tượng này chứa các thuộc tính tương ứng với các trường dữ liệu trong biểu mẫu, bao gồm `avatar`, `email`, `btc_address`, `country`, `first_name`, `gender`, và `last_name`.
 
-- Các thuộc tính trong `initialFormState` được khởi tạo với các giá trị rỗng hoặc giá trị mặc định tương ứng, để đảm bảo rằng khi biểu mẫu được hiển thị lần đầu, các trường dữ liệu sẽ không có giá trị định trước.
+- ✅ Các thuộc tính trong `initialFormState` được khởi tạo với các giá trị rỗng hoặc giá trị mặc định tương ứng, để đảm bảo rằng khi biểu mẫu được hiển thị lần đầu, các trường dữ liệu sẽ không có giá trị định trước.
 
 ---
 
@@ -77,6 +77,14 @@ type FormError =
     }
   | null
 ```
+
+- Đoạn code trên định nghĩa kiểu `FormError`, một union type gồm hai phần tử:
+
+- Đầu tiên là một object có các thuộc tính tương ứng với các thuộc tính của `FormStateType`. Mỗi thuộc tính trong `FormError` đại diện cho một trường thông tin của form và có giá trị là một chuỗi (`string`) đại diện cho lỗi của trường đó. Điều này cho phép chúng ta lưu trữ thông tin lỗi tương ứng với từng trường trong form.
+
+- Thứ hai là giá trị `null`. Đây là trường hợp không có lỗi xảy ra trong form.
+
+- ✅ Dùng union type `|` cho phép `FormError` có thể là một `object` chứa thông tin lỗi hoặc có giá trị `null`, tùy thuộc vào ngữ cảnh sử dụng.
 
 ---
 
