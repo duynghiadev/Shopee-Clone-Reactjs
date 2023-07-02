@@ -353,6 +353,10 @@ const addMatch = useMatch('/students/add') // Dòng 2
 const isAddMode = Boolean(addMatch) // Dòng 3
 ```
 
+- Dòng code trên khởi tạo một biến `isAddMode` dựa trên giá trị của biến `addMatch`. Biến `isAddMode` được gán giá trị `true` nếu `addMatch` có giá trị, tức là URL hiện tại khớp với đường dẫn `'/students/add'`. Ngược lại, nếu `addMatch` là `null`, `isAddMode` sẽ có giá trị `false`.
+
+- Bằng cách sử dụng hàm `Boolean` để ép kiểu `addMatch` thành một giá trị boolean, ta có thể kiểm tra xem URL hiện tại có đang trong chế độ "thêm mới" (add mode) hay không. Việc này có thể được sử dụng để điều chỉnh hành vi hoặc hiển thị giao diện tương ứng với trạng thái "thêm mới" trong ứng dụng.
+
 ---
 
 - 👉 Giải thích dòng code 4:
@@ -360,6 +364,12 @@ const isAddMode = Boolean(addMatch) // Dòng 3
 ```jsx
 const { id } = useParams() // Dòng 4
 ```
+
+- Dòng code trên sử dụng hook `useParams()` từ thư viện `react-router-dom` để lấy ra giá trị của tham số động từ URL hiện tại.
+
+- Biến `id` được khai báo bằng cách sử dụng destructuring assignment, trong đó `useParams()` trả về một đối tượng chứa các giá trị của các tham số động trong URL. Bằng cách truyền vào tham số tương ứng (`id` trong trường hợp này), ta có thể lấy ra giá trị của tham số từ URL.
+
+- Ví dụ, nếu URL hiện tại là `'/students/123'`, thì giá trị của `id` sẽ là `'123'`. Ta có thể sử dụng giá trị này để thực hiện các xử lý hoặc truy vấn dữ liệu liên quan đến sinh viên có `id` tương ứng trong ứng dụng.
 
 ---
 
@@ -423,6 +433,7 @@ useEffect(() => {
 ```jsx
 const errorForm: FormError = useMemo(() => {
   const error = isAddMode ? addStudentMutation.error : updateStudentMutation.error
+
   if (isAxiosError < { error: FormError } > error && error.response?.status === 422) {
     return error.response?.data.error
   }

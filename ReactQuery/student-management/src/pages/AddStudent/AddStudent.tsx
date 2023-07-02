@@ -35,6 +35,7 @@ export default function AddStudent() {
   const addMatch = useMatch('/students/add')
   const isAddMode = Boolean(addMatch)
   const { id } = useParams()
+
   const queryClient = useQueryClient()
 
   const addStudentMutation = useMutation({
