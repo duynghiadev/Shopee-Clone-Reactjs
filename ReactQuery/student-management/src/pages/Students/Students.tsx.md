@@ -443,6 +443,12 @@ const refetchStudents = () => {
 }
 ```
 
+- Đoạn mã `refetchStudents` khai báo một hàm có tên là `refetchStudents`. Mục đích của hàm này là để thực hiện lại truy vấn `studentsQuery` và cập nhật dữ liệu sinh viên mới nhất.
+
+- Trong phần thân của hàm `refetchStudents`, sử dụng phương thức `refetch` của đối tượng `studentsQuery`. `studentsQuery` là một truy vấn React Query đã được khai báo trước đó, và phương thức `refetch` được cung cấp bởi React Query để thực hiện lại truy vấn và cập nhật dữ liệu mới nhất.
+
+- Bằng cách gọi `studentsQuery.refetch()`, truy vấn `studentsQuery` sẽ được gửi lại tới máy chủ để lấy dữ liệu sinh viên mới nhất. Sau khi truy vấn hoàn thành, dữ liệu sinh viên sẽ được cập nhật trong bộ đệm và tác động lên giao diện người dùng để hiển thị thông tin mới nhất.
+
 ---
 
 👉 Đoạn 13:
