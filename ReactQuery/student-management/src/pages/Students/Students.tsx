@@ -83,7 +83,9 @@ export default function Students() {
   }
 
   const cancelRequestStudents = () => {
-    queryClient.cancelQueries({ queryKey: ['students', page] })
+    queryClient.cancelQueries({
+      queryKey: ['students', page]
+    })
   }
 
   return (

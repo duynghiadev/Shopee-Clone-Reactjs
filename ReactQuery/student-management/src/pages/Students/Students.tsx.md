@@ -469,9 +469,19 @@ const refetchStudents = () => {
 
 ```jsx
 const cancelRequestStudents = () => {
-  queryClient.cancelQueries({ queryKey: ['students', page] })
+  queryClient.cancelQueries({
+    queryKey: ['students', page]
+  })
 }
 ```
+
+- Đoạn code trên giải thích về hàm `cancelRequestStudents`.
+
+- Hàm `cancelQueries` là một phương thức của đối tượng `queryClient` trong React Query. Khi gọi `queryClient.cancelQueries()`, nó sẽ hủy bỏ các yêu cầu truy vấn liên quan đến một khóa truy vấn cụ thể.
+
+- Trong trường hợp của hàm `cancelRequestStudents`, khi nó được gọi, nó sẽ gọi `queryClient.cancelQueries()` để hủy bỏ các yêu cầu truy vấn liên quan đến danh sách sinh viên hiện tại và trang cụ thể. Điều này có nghĩa là nếu có bất kỳ yêu cầu truy vấn nào đang chờ xử lý hoặc đang được thực hiện liên quan đến danh sách sinh viên và trang đó, thì các yêu cầu đó sẽ bị hủy bỏ.
+
+- Điều này có thể hữu ích trong trường hợp muốn ngừng yêu cầu truy vấn hiện tại hoặc tránh việc lấy dữ liệu lỗi thời từ các yêu cầu truy vấn trước đó.
 
 ---
 
