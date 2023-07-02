@@ -7,6 +7,7 @@ import { isAxiosError } from 'utils/utils'
 import { toast } from 'react-toastify'
 
 type FormStateType = Omit<Student, 'id'> | Student
+
 const initialFormState: FormStateType = {
   avatar: '',
   email: '',

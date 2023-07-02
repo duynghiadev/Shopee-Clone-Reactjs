@@ -31,6 +31,26 @@ import { toast } from 'react-toastify'
 👉 Đoạn 2:
 
 ```jsx
+type FormStateType = Omit<Student, 'id'> | Student
+```
+
+- Đoạn code đó định nghĩa một type mới có tên là `FormStateType`. `FormStateType` được sử dụng để đại diện cho trạng thái của một biểu mẫu (form) trong ứng dụng. Nó là một phiên bản của kiểu dữ liệu `Student`, nhưng bỏ đi thuộc tính `id`.
+
+- ✅ Trong ngữ cảnh này, `Student` có thể là một đối tượng chứa thông tin của một sinh viên trong hệ thống. Với `FormStateType`, chúng ta có thể sử dụng nó để đại diện cho dữ liệu trong biểu mẫu khi thêm hoặc cập nhật thông tin sinh viên. Bằng cách loại bỏ thuộc tính `id`, chúng ta chỉ quan tâm đến các thuộc tính khác như tên, tuổi, giới tính, v.v. khi xử lý dữ liệu trong biểu mẫu.
+
+## Giải thích dễ hiểu hơn:
+
+- Đoạn code đó định nghĩa một loại dữ liệu mới có tên là `FormStateType`. Nó được sử dụng để biểu diễn trạng thái của một biểu mẫu (form) trong ứng dụng.
+
+- Trong ngữ cảnh này, `Student` là một đối tượng chứa thông tin về một sinh viên. `FormStateType` là một phiên bản của `Student`, nhưng không bao gồm thuộc tính `id`. Nó chỉ chứa các thuộc tính khác như tên, tuổi, giới tính, v.v.
+
+- ✅ Việc sử dụng `FormStateType` giúp xác định loại dữ liệu cho trạng thái của biểu mẫu, đồng thời chỉ ra rằng trong trường hợp này, ta không quan tâm đến thuộc tính `id` khi làm việc với dữ liệu trong biểu mẫu.
+
+---
+
+👉 Đoạn 3:
+
+```jsx
 const initialFormState: FormStateType = {
   avatar: '',
   email: '',
@@ -40,14 +60,6 @@ const initialFormState: FormStateType = {
   gender: 'other',
   last_name: ''
 }
-```
-
----
-
-👉 Đoạn 3:
-
-```jsx
-type FormStateType = Omit<Student, 'id'> | Student
 ```
 
 ---
