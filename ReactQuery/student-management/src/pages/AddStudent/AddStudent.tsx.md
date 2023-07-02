@@ -12,6 +12,20 @@ import { isAxiosError } from 'utils/utils'
 import { toast } from 'react-toastify'
 ```
 
+- Trong đoạn code trên, chúng ta import các hook và function từ các module khác để sử dụng trong React component.
+
+- `useMatch` và `useParams` là các hook được cung cấp bởi thư viện `react-router-dom` để truy cập thông tin về URL và các tham số truyền vào trong React Router.
+- `useMutation`, `useQuery`, và `useQueryClient` là các hook được cung cấp bởi thư viện `@tanstack/react-query` để quản lý trạng thái của các hoạt động như truy vấn dữ liệu, cập nhật dữ liệu, hoặc xóa dữ liệu.
+- `addStudent`, `getStudent`, và `updateStudent` là các function được import từ module `apis/students.api` và được sử dụng để thực hiện các yêu cầu HTTP liên quan đến sinh viên, như lấy dữ liệu sinh viên, thêm sinh viên mới, hoặc cập nhật thông tin sinh viên.
+- `Student` là một kiểu dữ liệu được import từ module `types/students.type` và được sử dụng để đại diện cho thông tin về sinh viên.
+- `useEffect` là một hook được cung cấp bởi React để thực hiện các side effect sau khi component được render.
+- `useMemo` là một hook được sử dụng để tối ưu hóa việc tính toán các giá trị phức tạp và tránh việc tính toán lại trong mỗi lần render.
+- `useState` là một hook được sử dụng để quản lý trạng thái (state) của component.
+- `isAxiosError` là một function được import từ module `utils/utils` và được sử dụng để kiểm tra xem một lỗi có phải là lỗi từ thư viện Axios hay không.
+- `toast` là một function được cung cấp bởi thư viện `react-toastify` để hiển thị thông báo (toast) trên giao diện người dùng.
+
+- ✅ Tóm lại: Trong đoạn code đó, chúng ta sử dụng các hook và function từ các thư viện như `react-router-dom`, `@tanstack/react-query`, `react-toastify` để quản lý trạng thái và thực hiện các hoạt động liên quan đến truy vấn dữ liệu và cập nhật dữ liệu. Chúng ta import các function từ module `apis/students.api` để thực hiện các yêu cầu HTTP liên quan đến sinh viên. Các hook `useParams` và `useMatch` được sử dụng để truy cập thông tin từ URL. Chúng ta cũng sử dụng hook `useEffect`, `useMemo` và `useState` để quản lý trạng thái và thực hiện các side effect trong React component.
+
 ---
 
 👉 Đoạn 2:
