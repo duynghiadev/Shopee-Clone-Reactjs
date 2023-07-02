@@ -62,6 +62,12 @@ const initialFormState: FormStateType = {
 }
 ```
 
+- Đoạn code trên khai báo một biến có tên `initialFormState`, được gán một giá trị khởi tạo là một đối tượng thuộc kiểu `FormStateType`.
+
+- `initialFormState` đại diện cho trạng thái ban đầu của biểu mẫu (form). Đối tượng này chứa các thuộc tính tương ứng với các trường dữ liệu trong biểu mẫu, bao gồm `avatar`, `email`, `btc_address`, `country`, `first_name`, `gender`, và `last_name`.
+
+- Các thuộc tính trong `initialFormState` được khởi tạo với các giá trị rỗng hoặc giá trị mặc định tương ứng, để đảm bảo rằng khi biểu mẫu được hiển thị lần đầu, các trường dữ liệu sẽ không có giá trị định trước.
+
 ---
 
 👉 Đoạn 4:
