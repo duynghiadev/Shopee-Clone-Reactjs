@@ -124,7 +124,7 @@ interface FormError {
 type FormErrorOrNull = FormError | null;
 ```
 
-- Ở đây, chúng ta đã sử dụng interface `FormError` để định nghĩa kiểu dữ liệu cho các thuộc tính của `FormStateType` với giá trị là kiểu `string`. Tiếp theo, chúng ta đã sử dụng `FormErrorOrNull` là một kiểu kết hợp (union type) giữa `FormError` và `null` để chỉ định rằng giá trị có thể là một đối tượng `FormError` hoặc `null`.
+- ✅ Ở đây, chúng ta đã sử dụng interface `FormError` để định nghĩa kiểu dữ liệu cho các thuộc tính của `FormStateType` với giá trị là kiểu `string`. Tiếp theo, chúng ta đã sử dụng `FormErrorOrNull` là một kiểu kết hợp (union type) giữa `FormError` và `null` để chỉ định rằng giá trị có thể là một đối tượng `FormError` hoặc `null`.
 
 ## Giữa 2 đoạn code đó, có sự khác nhau là gì ?
 
@@ -134,7 +134,17 @@ type FormErrorOrNull = FormError | null;
 
 - Trong đoạn mã sử dụng `interface`, chúng ta sử dụng `interface` để định nghĩa kiểu dữ liệu `FormError`. Chúng ta sử dụng `interface` vì nó thích hợp cho việc mô tả cấu trúc của đối tượng và các thuộc tính của nó.
 
-- Cả hai đoạn mã đều có cùng mục đích là định nghĩa kiểu dữ liệu cho `FormError`. Sự lựa chọn giữa sử dụng `type alias` hoặc `interface` phụ thuộc vào ngữ cảnh và sở thích của bạn.
+- ✅ Cả hai đoạn mã đều có cùng mục đích là định nghĩa kiểu dữ liệu cho `FormError`. Sự lựa chọn giữa sử dụng `type alias` hoặc `interface` phụ thuộc vào ngữ cảnh và sở thích của bạn.
+
+## Hãy giải thích rõ hơn về các ý trong đoạn trước ?
+
+- ❓ Câu này được trích trong đoạn trên 👆: `...việc mô tả cấu trúc của đối tượng và các thuộc tính của nó...` ?
+
+- ❓ Câu hỏi đặt ra là: Dòng này có nghĩa là việc khai báo kiểu dữ liệu trong TypeScript tương đương với việc mô tả cấu trúc của đối tượng và các thuộc tính của nó, trong đó sử dụng cú pháp `key: value` phải không ?
+
+- Đúng, dòng đó có nghĩa là bạn đang khai báo kiểu cho một đối tượng (object) với các thuộc tính (properties) được xác định bởi `key` và có kiểu dữ liệu là `value`. Điều này giúp bạn mô tả cấu trúc của đối tượng và định nghĩa các thuộc tính của nó cùng với kiểu dữ liệu tương ứng.
+
+- Ví dụ, trong đoạn mã `FormError`, chúng ta khai báo một đối tượng với các thuộc tính là các `key` của `FormStateType` và kiểu dữ liệu là `string`. Điều này cho phép chúng ta gán các giá trị kiểu `string` cho các thuộc tính tương ứng trong đối tượng `FormError`.
 
 ---
 
