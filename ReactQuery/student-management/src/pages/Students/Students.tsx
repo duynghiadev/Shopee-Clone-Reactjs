@@ -221,7 +221,7 @@ export default function Students() {
                       <li key={pageNumber}>
                         <Link
                           className={classNames(
-                            'border border-gray-300   py-2 px-3 leading-tight  hover:bg-gray-100 hover:text-gray-700 ',
+                            'border border-gray-300 py-2 px-3 leading-tight hover:bg-gray-100 hover:text-gray-700 ',
                             {
                               'bg-gray-100 text-gray-700': isActive,
                               'bg-white text-gray-500': !isActive

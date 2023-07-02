@@ -319,7 +319,7 @@ const handleDelete = (id: number) => {
 
 - Cách sử dụng `mutate()` trong mutation cho phép bạn kích hoạt các hoạt động thay đổi dữ liệu một cách dễ dàng và tự động, trong khi React Query quản lý quá trình thực thi, cache và cung cấp thông tin về trạng thái của mutation.
 
-- Tóm lại, đoạn code trên định nghĩa một hàm `handleDelete` để xử lý việc xóa sinh viên bằng cách sử dụng mutation `deleteStudentMutation.mutate()`.
+- ✅ Tóm lại, đoạn code trên định nghĩa một hàm `handleDelete` để xử lý việc xóa sinh viên bằng cách sử dụng mutation `deleteStudentMutation.mutate()`.
 
 ## ❓ Nhắc lại kiến thức cũ: Hàm `mutate()` trong react query có chức năng gì ?
 
@@ -339,7 +339,7 @@ mutate(mutationKey, updatedData, options)
 - `updatedData` là dữ liệu cần được cập nhật hoặc gửi đi. Đây có thể là một object chứa thông tin mới để tạo hoặc cập nhật tài nguyên.
 - `options` (tùy chọn) là một đối tượng chứa các tùy chọn cho mutation, ví dụ: `onSuccess`, `onError`, `onSettled`, vv. Các tùy chọn này cho phép bạn định nghĩa hành vi sau khi mutation được thực hiện thành công, xảy ra lỗi hoặc khi hoàn tất (bao gồm cả thành công và lỗi).
 
-- Khi gọi `mutate()`, React Query sẽ tự động gửi yêu cầu tương ứng đến máy chủ, và sau đó cập nhật bộ đệm (cache) dữ liệu và cập nhật UI dựa trên kết quả trả về từ yêu cầu. Bạn có thể sử dụng các hàm callback như `onSuccess`, `onError`, `onSettled` trong options để thực hiện các tác vụ bổ sung sau khi mutation hoàn thành.
+- ✅ Khi gọi `mutate()`, React Query sẽ tự động gửi yêu cầu tương ứng đến máy chủ, và sau đó cập nhật bộ đệm (cache) dữ liệu và cập nhật UI dựa trên kết quả trả về từ yêu cầu. Bạn có thể sử dụng các hàm callback như `onSuccess`, `onError`, `onSettled` trong options để thực hiện các tác vụ bổ sung sau khi mutation hoàn thành.
 
 - Ví dụ:
 
@@ -385,7 +385,7 @@ const UserProfile = ({ userId }) => {
 }
 ```
 
-- Trong ví dụ trên, chúng ta sử dụng `useMutation` để khởi tạo mutation hook và lấy ra hàm `mutate` từ hook đó. Khi người dùng thực hiện cập nhật thông tin người dùng, chúng ta gọi `mutate()` để gửi yêu cầu cập nhật dữ liệu và định nghĩa các hàm callback `onSuccess` và `onError` để xử lý kết quả trả về.
+- ✅ Trong ví dụ trên, chúng ta sử dụng `useMutation` để khởi tạo mutation hook và lấy ra hàm `mutate` từ hook đó. Khi người dùng thực hiện cập nhật thông tin người dùng, chúng ta gọi `mutate()` để gửi yêu cầu cập nhật dữ liệu và định nghĩa các hàm callback `onSuccess` và `onError` để xử lý kết quả trả về.
 
 ---
 
@@ -403,7 +403,7 @@ const handlePrefetchStudent = (id: number) => {
 
 - Việc prefetch dữ liệu có thể hữu ích trong các tình huống khi bạn muốn tải trước dữ liệu trước khi người dùng thực hiện một hành động nhất định, như khi họ chuẩn bị xem chi tiết của một sinh viên. Điều này giúp tăng trải nghiệm của người dùng bằng cách đảm bảo rằng dữ liệu đã được sẵn sàng và không có sự trễ trong việc hiển thị thông tin.
 
-- Tuy nhiên, do đoạn code chỉ định rõ rằng có các đoạn mã khác trong hàm `handlePrefetchStudent`, chúng ta cần xem xét nội dung của các đoạn mã đó để có một giải thích chi tiết và chính xác hơn về chức năng của hàm `handlePrefetchStudent`.
+- ✅ Tuy nhiên, do đoạn code chỉ định rõ rằng có các đoạn mã khác trong hàm `handlePrefetchStudent`, chúng ta cần xem xét nội dung của các đoạn mã đó để có một giải thích chi tiết và chính xác hơn về chức năng của hàm `handlePrefetchStudent`.
 
 ---
 
@@ -431,7 +431,7 @@ const fetchStudent = (second: number) => {
 
   - `staleTime`: Thuộc tính này xác định thời gian (tính bằng mili giây) mà dữ liệu prefetch được coi là còn mới và không cần phải truy vấn lại từ máy chủ. Trong trường hợp này, `staleTime` được đặt bằng `second * 1000` để xác định thời gian cũ hết hạn của dữ liệu prefetch.
 
-- Việc sử dụng `queryClient.prefetchQuery` giúp tải trước dữ liệu của sinh viên có `id` tương ứng và lưu trữ nó trong bộ đệm (`cache`). Điều này giúp tăng hiệu suất và trải nghiệm người dùng bằng cách đảm bảo rằng dữ liệu đã được sẵn sàng để sử dụng mà không cần phải đợi truy vấn lại từ máy chủ.
+- ✅ Việc sử dụng `queryClient.prefetchQuery` giúp tải trước dữ liệu của sinh viên có `id` tương ứng và lưu trữ nó trong bộ đệm (`cache`). Điều này giúp tăng hiệu suất và trải nghiệm người dùng bằng cách đảm bảo rằng dữ liệu đã được sẵn sàng để sử dụng mà không cần phải đợi truy vấn lại từ máy chủ.
 
 ---
 
@@ -447,7 +447,7 @@ const refetchStudents = () => {
 
 - Trong phần thân của hàm `refetchStudents`, sử dụng phương thức `refetch` của đối tượng `studentsQuery`. `studentsQuery` là một truy vấn React Query đã được khai báo trước đó, và phương thức `refetch` được cung cấp bởi React Query để thực hiện lại truy vấn và cập nhật dữ liệu mới nhất.
 
-- Bằng cách gọi `studentsQuery.refetch()`, truy vấn `studentsQuery` sẽ được gửi lại tới máy chủ để lấy dữ liệu sinh viên mới nhất. Sau khi truy vấn hoàn thành, dữ liệu sinh viên sẽ được cập nhật trong bộ đệm và tác động lên giao diện người dùng để hiển thị thông tin mới nhất.
+- ✅ Bằng cách gọi `studentsQuery.refetch()`, truy vấn `studentsQuery` sẽ được gửi lại tới máy chủ để lấy dữ liệu sinh viên mới nhất. Sau khi truy vấn hoàn thành, dữ liệu sinh viên sẽ được cập nhật trong bộ đệm và tác động lên giao diện người dùng để hiển thị thông tin mới nhất.
 
 ## Giải thích dễ hiểu hơn:
 
@@ -461,7 +461,7 @@ const refetchStudents = () => {
 
 - Trong trường hợp của hàm `refetchStudents`, khi nó được gọi, nó sẽ gọi phương thức `refetch` trên `studentsQuery`. Điều này sẽ kích hoạt việc gửi yêu cầu truy vấn mới và cập nhật danh sách sinh viên với dữ liệu mới nhất.
 
-- Điều này giúp đảm bảo rằng khi gọi hàm `refetchStudents`, danh sách sinh viên sẽ được cập nhật với dữ liệu mới nhất từ máy chủ, đồng thời cung cấp trải nghiệm người dùng liền mạch khi làm mới dữ liệu mà không cần tải lại toàn bộ trang web.
+- ✅ Điều này giúp đảm bảo rằng khi gọi hàm `refetchStudents`, danh sách sinh viên sẽ được cập nhật với dữ liệu mới nhất từ máy chủ, đồng thời cung cấp trải nghiệm người dùng liền mạch khi làm mới dữ liệu mà không cần tải lại toàn bộ trang web.
 
 ---
 
@@ -481,7 +481,7 @@ const cancelRequestStudents = () => {
 
 - Trong trường hợp của hàm `cancelRequestStudents`, khi nó được gọi, nó sẽ gọi `queryClient.cancelQueries()` để hủy bỏ các yêu cầu truy vấn liên quan đến danh sách sinh viên hiện tại và trang cụ thể. Điều này có nghĩa là nếu có bất kỳ yêu cầu truy vấn nào đang chờ xử lý hoặc đang được thực hiện liên quan đến danh sách sinh viên và trang đó, thì các yêu cầu đó sẽ bị hủy bỏ.
 
-- Điều này có thể hữu ích trong trường hợp muốn ngừng yêu cầu truy vấn hiện tại hoặc tránh việc lấy dữ liệu lỗi thời từ các yêu cầu truy vấn trước đó.
+- ✅ Điều này có thể hữu ích trong trường hợp muốn ngừng yêu cầu truy vấn hiện tại hoặc tránh việc lấy dữ liệu lỗi thời từ các yêu cầu truy vấn trước đó.
 
 ## Giải thích dễ hiểu hơn:
 
@@ -495,7 +495,7 @@ const cancelRequestStudents = () => {
 
 - Khi `queryClient.cancelQueries()` được gọi với `queryKey` tương ứng, tất cả các yêu cầu truy vấn liên quan đến khóa truy vấn này sẽ bị hủy bỏ. Điều này có nghĩa là nếu có các yêu cầu đang chờ xử lý hoặc đang được thực hiện liên quan đến danh sách sinh viên và trang đó, chúng sẽ bị dừng lại.
 
-- Hàm `cancelRequestStudents` hữu ích khi ta muốn hủy bỏ các yêu cầu truy vấn không cần thiết hoặc không còn cần thiết, chẳng hạn khi người dùng chuyển sang một trang khác hoặc thực hiện một hành động khác. Điều này giúp tránh việc lấy dữ liệu không cần thiết và giảm tải cho máy chủ.
+- ✅ Hàm `cancelRequestStudents` hữu ích khi ta muốn hủy bỏ các yêu cầu truy vấn không cần thiết hoặc không còn cần thiết, chẳng hạn khi người dùng chuyển sang một trang khác hoặc thực hiện một hành động khác. Điều này giúp tránh việc lấy dữ liệu không cần thiết và giảm tải cho máy chủ.
 
 ---
 
@@ -762,6 +762,6 @@ return (
 
 - Đoạn mã trên hiển thị các nút phân trang để người dùng có thể điều hướng giữa các trang của danh sách sinh viên.
 
-- Trên cơ sở những phần trên, đoạn mã trên tạo ra một giao diện người dùng để hiển thị danh sách sinh viên, cho phép người dùng tải lại dữ liệu, hủy bỏ yêu cầu truy vấn và thực hiện các hành động khác như thêm và sửa đổi sinh viên.
+- ✅ Trên cơ sở những phần trên, đoạn mã trên tạo ra một giao diện người dùng để hiển thị danh sách sinh viên, cho phép người dùng tải lại dữ liệu, hủy bỏ yêu cầu truy vấn và thực hiện các hành động khác như thêm và sửa đổi sinh viên.
 
 ---
