@@ -148,6 +148,141 @@ type FormErrorOrNull = FormError | null;
 
 ---
 
+## hãy cho các ví dụ về kiểu `tuple`, kiểu `function`, kiểu `literal`, kiểu `unions` và kiểu `intersections`, trong typescript ?
+
+1. Kiểu Tuple:
+
+```jsx
+// Khai báo một tuple để biểu diễn một địa chỉ
+type Address = [string, string, string]
+
+// Sử dụng kiểu Address
+const myAddress: Address = ['Street 1', 'City', 'Country']
+
+console.log(myAddress[0]) // 'Street 1'
+console.log(myAddress[1]) // 'City'
+console.log(myAddress[2]) // 'Country'
+```
+
+2. Kiểu Function:
+
+```jsx
+// Khai báo kiểu dữ liệu cho một hàm tính tổng
+type AddFunction = (a: number, b: number) => number
+
+// Định nghĩa hàm tính tổng
+const add: AddFunction = (a, b) => a + b
+
+// Sử dụng hàm tính tổng
+console.log(add(2, 3)) // 5
+```
+
+3. Kiểu Literal:
+
+```jsx
+// Khai báo kiểu dữ liệu literal
+type Status = 'active' | 'inactive' | 'pending'
+
+// Sử dụng kiểu Status
+const userStatus: Status = 'active'
+console.log(userStatus) // 'active'
+
+// Gán giá trị không hợp lệ
+const userStatus: Status = 'disabled' // Lỗi: Type '"disabled"' is not assignable to type 'Status'
+```
+
+- ✅ Trong ví dụ trên, chúng ta sử dụng kiểu dữ liệu `tuple` để biểu diễn một địa chỉ, kiểu dữ liệu `function` để định nghĩa một hàm tính tổng, và kiểu dữ liệu `literal` để giới hạn các giá trị có thể được gán cho một biến.
+
+4. Kiểu Unions:
+
+```jsx
+// Khai báo kiểu dữ liệu unions cho các loại hình học
+type Shape = Square | Circle | Triangle
+
+interface Square {
+  kind: 'square';
+  size: number;
+}
+
+interface Circle {
+  kind: 'circle';
+  radius: number;
+}
+
+interface Triangle {
+  kind: 'triangle';
+  base: number;
+  height: number;
+}
+
+// Sử dụng kiểu Shape
+function getArea(shape: Shape): number {
+  switch (shape.kind) {
+    case 'square':
+      return shape.size * shape.size
+    case 'circle':
+      return Math.PI * shape.radius * shape.radius
+    case 'triangle':
+      return (shape.base * shape.height) / 2
+    default:
+      throw new Error('Invalid shape')
+  }
+}
+
+const square: Square = {
+  kind: 'square',
+  size: 5
+}
+console.log(getArea(square)) // 25
+
+const circle: Circle = {
+  kind: 'circle',
+  radius: 3
+}
+console.log(getArea(circle)) // 28.274333882308138
+
+const triangle: Triangle = {
+  kind: 'triangle',
+  base: 4,
+  height: 6
+}
+console.log(getArea(triangle)) // 12
+```
+
+- Trong ví dụ trên, chúng ta sử dụng kiểu `unions` để biểu diễn các loại hình học (hình vuông, hình tròn, hình tam giác) thông qua các interface `Square`, `Circle` và `Triangle`. Chúng ta sử dụng kiểu unions `Shape` trong hàm `getArea()` để tính diện tích của các hình học khác nhau.
+
+5. Kiểu Intersections:
+
+```jsx
+// Khai báo kiểu dữ liệu intersections (Giao nhau => Lấy tất cả) cho thông tin người dùng
+type User = {
+  id: number,
+  name: string
+}
+
+type DetailedUser = {
+  address: string,
+  age: number
+}
+
+// Sử dụng kiểu intersections (Giao nhau => Lấy tất cả)
+const user: User & DetailedUser = {
+  id: 1,
+  name: 'John Doe',
+  address: 'Street 1',
+  age: 30
+}
+
+console.log(user.id) // 1
+console.log(user.name) // 'John Doe'
+console.log(user.address) // 'Street 1'
+console.log(user.age) // 30
+```
+
+- Trong ví dụ trên, chúng ta sử dụng kiểu `intersections` để kết hợp các thuộc tính từ hai kiểu dữ liệu `User` và `DetailedUser`. Kết quả là ta có một kiểu dữ liệu mới `User & DetailedUser` có chứa tất cả các thuộc tính của cả hai kiểu dữ liệu.
+
+---
+
 👉 Đoạn 5:
 
 ```jsx
