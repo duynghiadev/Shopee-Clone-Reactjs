@@ -86,6 +86,56 @@ type FormError =
 
 - ✅ Dùng union type `|` cho phép `FormError` có thể là một `object` chứa thông tin lỗi hoặc có giá trị `null`, tùy thuộc vào ngữ cảnh sử dụng.
 
+## Trong trường hợp này, tại sao không sử dụng `interface` mà phải sử dụng `type` ?
+
+- Trong TypeScript, cả `interface` và `type` đều có thể được sử dụng để định nghĩa kiểu dữ liệu tùy chỉnh. Tuy nhiên, có một số khác biệt giữa hai loại này:
+
+1. `Interface`: Interface cho phép khai báo một cấu trúc dữ liệu và kiểu dữ liệu cho đối tượng. Nó thường được sử dụng để định nghĩa các hợp đồng (contracts) và cung cấp sự hỗ trợ cho tính kế thừa và mở rộng.
+
+2. `Type`: Type cho phép định nghĩa một kiểu dữ liệu tùy chỉnh, bao gồm các kiểu hợp nhau (union type), kiểu giao nhau (intersection type), và các kiểu khác như kiểu tuple, kiểu function, kiểu literal, v.v. `Type` thường được sử dụng để tạo ra các kiểu dữ liệu phức tạp hơn và thực hiện các phép toán trên các kiểu.
+
+- ✅ Trong trường hợp của đoạn code trên, sử dụng `type` thay vì `interface` cho kiểu `FormError` không có sự khác biệt quan trọng. Cả hai đều có thể được sử dụng để định nghĩa kiểu dữ liệu tương tự. Lựa chọn giữa `interface` và `type` thường là một vấn đề cá nhân hoặc tuỳ thuộc vào quy ước của dự án.
+
+## Sự khác biệt giữa việc sử dụng `interface` và `type` là gì ?
+
+- Sự khác biệt chính giữa việc sử dụng `interface` và `type` trong TypeScript như sau:
+
+1. `Interface`:
+
+- `Interface` trong TypeScript được sử dụng để định nghĩa cấu trúc dữ liệu, nó có thể chứa các phương thức, thuộc tính, kế thừa từ các interface khác, và có thể được triển khai (implement) bởi các đối tượng.
+- `Interface` thường được sử dụng trong việc mô hình hóa cấu trúc dữ liệu và định nghĩa hợp đồng (contract) giữa các thành phần trong code.
+
+2. `Type`:
+
+- `Type` trong TypeScript cũng được sử dụng để định nghĩa cấu trúc dữ liệu, nhưng nó linh hoạt hơn `Interface` và có thể định nghĩa các kiểu dữ liệu tùy chỉnh (custom types) bằng cách kết hợp các kiểu hiện có.
+- `Type` thường được sử dụng trong việc định nghĩa kiểu dữ liệu phức tạp, `unions`, `intersections`, và các trường hợp khác mà `Interface` không thể thực hiện được.
+
+- ✅ Tuy nhiên, sự khác biệt giữa `interface` và `type` không lớn và thường được sử dụng tùy theo sở thích và yêu cầu của từng dự án. Trên thực tế, `interface` và `type` có thể được sử dụng chung và có thể thay thế lẫn nhau trong nhiều tình huống.
+
+## Đoạn code đó đang sử dụng `type`. Hãy sử dụng `interface` để viết lại đoạn code đó ?
+
+- Dưới đây là cách sử dụng `interface` để viết lại đoạn code:
+
+```jsx
+interface FormError {
+  [key in keyof FormStateType]: string;
+}
+
+type FormErrorOrNull = FormError | null;
+```
+
+- Ở đây, chúng ta đã sử dụng interface `FormError` để định nghĩa kiểu dữ liệu cho các thuộc tính của `FormStateType` với giá trị là kiểu `string`. Tiếp theo, chúng ta đã sử dụng `FormErrorOrNull` là một kiểu kết hợp (union type) giữa `FormError` và `null` để chỉ định rằng giá trị có thể là một đối tượng `FormError` hoặc `null`.
+
+## Giữa 2 đoạn code đó, có sự khác nhau là gì ?
+
+- Giữa hai đoạn mã đó, sự khác nhau chính là cách định nghĩa kiểu dữ liệu.
+
+- Trong đoạn mã sử dụng `type`, chúng ta sử dụng `type alias` để định nghĩa kiểu dữ liệu `FormError`. Điều này cho phép chúng ta tạo ra một union type bằng cách kết hợp các thuộc tính của `FormStateType` với kiểu `string`.
+
+- Trong đoạn mã sử dụng `interface`, chúng ta sử dụng `interface` để định nghĩa kiểu dữ liệu `FormError`. Chúng ta sử dụng `interface` vì nó thích hợp cho việc mô tả cấu trúc của đối tượng và các thuộc tính của nó.
+
+- Cả hai đoạn mã đều có cùng mục đích là định nghĩa kiểu dữ liệu cho `FormError`. Sự lựa chọn giữa sử dụng `type alias` hoặc `interface` phụ thuộc vào ngữ cảnh và sở thích của bạn.
+
 ---
 
 👉 Đoạn 5:
