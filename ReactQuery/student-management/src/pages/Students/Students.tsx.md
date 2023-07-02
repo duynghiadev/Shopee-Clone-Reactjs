@@ -419,6 +419,20 @@ const fetchStudent = (second: number) => {
 }
 ```
 
+- Đoạn code trên khai báo một hàm có tên là `fetchStudent` với một tham số `second` là một số nguyên. Mục đích của hàm này là để thực hiện prefetch (tải trước) dữ liệu của một sinh viên có `id` cố định (trong trường hợp này là `'6'`).
+
+- Trong phần thân của hàm `fetchStudent`, có sử dụng `queryClient.prefetchQuery` để thực hiện prefetch dữ liệu của sinh viên. Cụ thể, `queryClient.prefetchQuery` nhận vào hai tham số:
+
+- Tham số thứ nhất là một mảng định danh truy vấn, trong trường hợp này là `['student', id]`. Mảng định danh truy vấn này giúp xác định một truy vấn cụ thể để prefetch. Trong trường hợp này, truy vấn được định danh bằng cách sử dụng chuỗi `'student'` kết hợp với `id` của sinh viên để tạo ra một định danh duy nhất cho truy vấn.
+
+- Tham số thứ hai là một đối tượng (object) cấu hình cho prefetch truy vấn. Trong đoạn code trên, đối tượng cấu hình có hai thuộc tính chính:
+
+  - `queryFn`: Thuộc tính này xác định hàm truy vấn thực tế được gọi để lấy dữ liệu của sinh viên. Trong trường hợp này, `queryFn` được định nghĩa là hàm `getStudent(id)` để lấy dữ liệu của sinh viên có `id` tương ứng.
+
+  - `staleTime`: Thuộc tính này xác định thời gian (tính bằng mili giây) mà dữ liệu prefetch được coi là còn mới và không cần phải truy vấn lại từ máy chủ. Trong trường hợp này, `staleTime` được đặt bằng `second * 1000` để xác định thời gian cũ hết hạn của dữ liệu prefetch.
+
+- Việc sử dụng `queryClient.prefetchQuery` giúp tải trước dữ liệu của sinh viên có `id` tương ứng và lưu trữ nó trong bộ đệm (`cache`). Điều này giúp tăng hiệu suất và trải nghiệm người dùng bằng cách đảm bảo rằng dữ liệu đã được sẵn sàng để sử dụng mà không cần phải đợi truy vấn lại từ máy chủ.
+
 ---
 
 👉 Đoạn 12:
