@@ -671,4 +671,97 @@ return (
 )
 ```
 
+- Đoạn code trên là một phần của một giao diện người dùng trong React. Dưới đây là giải thích từng phần của mã:
+
+1. Hiển thị tiêu đề "Students":
+
+```jsx
+<h1 className='text-lg'>Students</h1>
+```
+
+- Đây là một tiêu đề được hiển thị trên trang.
+
+2. Nút "Click 10s":
+
+```jsx
+<button className='mt-6 rounded bg-blue-500 px-5 py-2 text-white' onClick={() => fetchStudent(10)}>
+  Click 10s
+</button>
+```
+
+- Đây là một nút được sử dụng để gọi hàm `fetchStudent` với đối số `10`.
+
+3. Nút "Click 2s":
+
+```jsx
+<button className='mt-6 rounded bg-blue-500 px-5 py-2 text-white' onClick={() => fetchStudent(2)}>
+  Click 2s
+</button>
+```
+
+- Đây là một nút được sử dụng để gọi hàm `fetchStudent` với đối số `2`.
+
+4. Nút "Refetch Students":
+
+```jsx
+<button className='mt-6 rounded bg-pink-700 px-5 py-2 text-white' onClick={refetchStudents}>
+  Refetch Students
+</button>
+```
+
+- Đây là một nút được sử dụng để gọi hàm `refetchStudents`, để tải lại danh sách sinh viên.
+
+5. Nút "Cancel Request Students":
+
+```jsx
+<button className='mt-6 rounded bg-pink-700 px-5 py-2 text-white' onClick={cancelRequestStudents}>
+  Cancel Request Students
+</button>
+```
+
+- Đây là một nút được sử dụng để gọi hàm `cancelRequestStudents`, để hủy bỏ các yêu cầu truy vấn liên quan đến danh sách sinh viên.
+
+6. Nút "Add Student":
+
+```jsx
+<Link
+  to='/students/add'
+  className=' rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 '
+>
+  Add Student
+</Link>
+```
+
+- Đây là một liên kết (Link) được sử dụng để chuyển hướng đến trang `"Add Student"` khi được nhấp vào.
+
+7. Kiểm tra xem yêu cầu truy vấn đang được tải:
+
+```jsx
+{studentsQuery.isLoading && (
+  // Mã JSX để hiển thị trạng thái đang tải
+)}
+```
+
+- Đoạn mã trên kiểm tra xem biến `studentsQuery.isLoading` có giá trị `true` hay không. Nếu có, nghĩa là đang có yêu cầu truy vấn đang được thực thi và một phần giao diện được hiển thị để biểu thị trạng thái đang tải (loading...).
+
+8. Hiển thị danh sách sinh viên:
+
+```jsx
+{studentsQuery.data?.data.map((student) => (
+  // Mã JSX để hiển thị thông tin của từng sinh viên
+))}
+```
+
+- Đoạn mã trên kiểm tra xem biến `studentsQuery.data` có giá trị hay không và sau đó sử dụng phương thức `map` để lặp qua từng sinh viên trong danh sách và hiển thị thông tin của từng sinh viên.
+
+9. Hiển thị phân trang:
+
+```jsx
+<div className='mt-6 flex justify-center'>// Mã JSX để hiển thị các nút phân trang</div>
+```
+
+- Đoạn mã trên hiển thị các nút phân trang để người dùng có thể điều hướng giữa các trang của danh sách sinh viên.
+
+- Trên cơ sở những phần trên, đoạn mã trên tạo ra một giao diện người dùng để hiển thị danh sách sinh viên, cho phép người dùng tải lại dữ liệu, hủy bỏ yêu cầu truy vấn và thực hiện các hành động khác như thêm và sửa đổi sinh viên.
+
 ---
