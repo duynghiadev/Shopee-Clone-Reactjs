@@ -449,6 +449,20 @@ const refetchStudents = () => {
 
 - Bằng cách gọi `studentsQuery.refetch()`, truy vấn `studentsQuery` sẽ được gửi lại tới máy chủ để lấy dữ liệu sinh viên mới nhất. Sau khi truy vấn hoàn thành, dữ liệu sinh viên sẽ được cập nhật trong bộ đệm và tác động lên giao diện người dùng để hiển thị thông tin mới nhất.
 
+## Giải thích dễ hiểu hơn:
+
+- Hàm `refetchStudents` được sử dụng để làm mới dữ liệu sinh viên. Khi được gọi, nó sẽ thực hiện lại truy vấn `studentsQuery`, từ đó gửi yêu cầu đến máy chủ để lấy dữ liệu mới nhất về danh sách sinh viên.
+
+- Bằng cách gọi `studentsQuery.refetch()`, React Query sẽ tự động gửi yêu cầu tới máy chủ và lấy dữ liệu mới nhất. Kết quả trả về sẽ được cập nhật trong bộ nhớ đệm (cache) của React Query và sau đó được sử dụng để hiển thị thông tin mới nhất trên giao diện người dùng.
+
+- Hàm `refetch` là một phương thức của đối tượng `studentsQuery` được cung cấp bởi React Query. Khi gọi `studentsQuery.refetch()`, nó sẽ gửi yêu cầu truy vấn mới tới máy chủ để lấy dữ liệu mới nhất về danh sách sinh viên.
+
+- Phương thức `refetch` trong React Query sẽ gửi lại yêu cầu truy vấn và cập nhật kết quả mới trong bộ nhớ đệm của React Query. Sau khi yêu cầu được xử lý thành công, kết quả trả về sẽ được cập nhật trong `studentsQuery.data`, từ đó cung cấp dữ liệu mới nhất cho ứng dụng.
+
+- Trong trường hợp của hàm `refetchStudents`, khi nó được gọi, nó sẽ gọi phương thức `refetch` trên `studentsQuery`. Điều này sẽ kích hoạt việc gửi yêu cầu truy vấn mới và cập nhật danh sách sinh viên với dữ liệu mới nhất.
+
+- Điều này giúp đảm bảo rằng khi gọi hàm `refetchStudents`, danh sách sinh viên sẽ được cập nhật với dữ liệu mới nhất từ máy chủ, đồng thời cung cấp trải nghiệm người dùng liền mạch khi làm mới dữ liệu mà không cần tải lại toàn bộ trang web.
+
 ---
 
 👉 Đoạn 13:
