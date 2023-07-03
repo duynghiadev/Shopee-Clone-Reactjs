@@ -66,6 +66,7 @@ export default function AddStudent() {
 
   const errorForm: FormError = useMemo(() => {
     const error = isAddMode ? addStudentMutation.error : updateStudentMutation.error
+
     if (isAxiosError<{ error: FormError }>(error) && error.response?.status === 422) {
       return error.response?.data.error
     }
@@ -75,6 +76,7 @@ export default function AddStudent() {
   // Dùng currying
   const handleChange = (name: keyof FormStateType) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [name]: event.target.value }))
+
     if (addStudentMutation.data || addStudentMutation.error) {
       addStudentMutation.reset()
     }
@@ -82,6 +84,7 @@ export default function AddStudent() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
     if (isAddMode) {
       addStudentMutation.mutate(formState, {
         onSuccess: () => {

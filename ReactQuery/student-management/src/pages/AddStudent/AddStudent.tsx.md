@@ -390,10 +390,30 @@ const queryClient = useQueryClient() // Dòng 5
 👉 Đoạn 7:
 
 ```jsx
-const addStudentMutation = useMutation((body: FormStateType) => {
-  return addStudent(body)
+const addStudentMutation = useMutation({
+  mutationFn: (body: FormStateType) => {
+    return addStudent(body)
+  }
 })
 ```
+
+- Dòng code trên sử dụng hook `useMutation` từ thư viện `react-query` để tạo một mutation (thay đổi dữ liệu) mới. Mutation là một hoạt động thay đổi dữ liệu thông qua gửi yêu cầu HTTP (thường là POST) đến server để thêm, cập nhật hoặc xóa dữ liệu.
+
+- Trong đoạn code trên, `useMutation` nhận đối số là một đối tượng được cấu hình với thuộc tính `mutationFn`. `mutationFn` là một hàm xử lý thực hiện yêu cầu HTTP để thêm sinh viên mới. Trong trường hợp này, `mutationFn` nhận một tham số `body` đại diện cho dữ liệu sinh viên cần thêm.
+
+- Khi mutation được thực thi (thường thông qua một sự kiện như khi người dùng nhấn nút "Thêm sinh viên"), nó sẽ gọi `mutationFn` với dữ liệu `body` đã được truyền vào. Trong trường hợp này, `mutationFn` gọi hàm `addStudent` từ module `students.api` để gửi yêu cầu thêm sinh viên mới đến server.
+
+- `useMutation` trả về một đối tượng `addStudentMutation` chứa thông tin và các hàm liên quan đến quá trình mutation. Điều này bao gồm các thuộc tính như `data` (dữ liệu trả về từ server sau khi mutation thành công), `isLoading` (trạng thái xác định xem mutation đang được thực thi hay không), `error` (lỗi nếu có), và các hàm như `mutate` (thực hiện mutation), `reset` (đặt lại trạng thái mutation), và `onSuccess` (hàm được gọi khi mutation thành công).
+
+## Giải thích dễ hiểu hơn:
+
+- Trong đoạn code trên, `useMutation` là một hook được cung cấp bởi thư viện `react-query`, giúp thực hiện các hoạt động thay đổi dữ liệu (mutation) thông qua yêu cầu HTTP.
+
+- `useMutation` nhận một đối tượng cấu hình với một thuộc tính quan trọng là `mutationFn`. Trong trường hợp này, `mutationFn` là một hàm được định nghĩa để thực hiện yêu cầu HTTP để thêm một sinh viên mới vào hệ thống. Hàm này nhận một tham số `body` đại diện cho dữ liệu của sinh viên cần thêm.
+
+- Khi một sự kiện xảy ra (ví dụ: người dùng nhấn nút "Thêm sinh viên"), mutation sẽ được kích hoạt. Nó sẽ gọi hàm `mutationFn` với dữ liệu `body` đã được truyền vào. Trong trường hợp này, hàm `mutationFn` gọi hàm `addStudent` từ module `students.api` để gửi yêu cầu thêm sinh viên mới đến server.
+
+- Kết quả của việc sử dụng `useMutation` là một đối tượng `addStudentMutation`, chứa các thông tin liên quan đến quá trình mutation. Đối tượng này bao gồm các thuộc tính như `data` (dữ liệu trả về từ server sau khi mutation thành công), `isLoading` (xác định xem mutation đang được thực hiện hay không), `error` (lỗi nếu có), và các hàm như `mutate` (thực hiện mutation), `reset` (đặt lại trạng thái mutation), và `onSuccess` (hàm được gọi khi mutation thành công).
 
 ---
 
