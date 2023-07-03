@@ -434,13 +434,13 @@ const studentQuery = useQuery({
 
   - `queryKey` là một mảng chứa các khóa truy vấn. Trong trường hợp này, chúng ta sử dụng `['student', id]` làm khóa truy vấn. Điều này có nghĩa là kết quả của truy vấn này sẽ được lưu trong bộ nhớ cache dựa trên hai khóa là `'student'` và `id`.
 
-  - `queryFn` là một hàm thực hiện yêu cầu HTTP để lấy thông tin sinh viên từ server. Trong trường hợp này, queryFn gọi hàm getStudent từ module students.api và truyền vào id như là tham số để lấy thông tin của sinh viên có id tương ứng.
+  - `queryFn` là một hàm thực hiện yêu cầu HTTP để lấy thông tin sinh viên từ server. Trong trường hợp này, `queryFn` gọi hàm `getStudent` từ module `students.api` và truyền vào `id` như là tham số để lấy thông tin của sinh viên có `id` tương ứng.
 
-  - enabled là một giá trị boolean xác định xem truy vấn có nên được thực thi hay không. Trong trường hợp này, truy vấn chỉ được kích hoạt (enabled) nếu id đã được xác định (khác undefined).
+  - `enabled` là một giá trị boolean xác định xem truy vấn có nên được thực thi hay không. Trong trường hợp này, truy vấn chỉ được kích hoạt (enabled) nếu `id` đã được xác định (khác `undefined`).
 
-  - staleTime là thời gian (tính bằng mili giây) mà dữ liệu truy vấn được xem là "cũ" trước khi truy vấn mới được thực hiện để cập nhật dữ liệu mới từ server. Trong trường hợp này, staleTime được đặt là 10 giây `(1000 * 10 mili giây)`, điều này có nghĩa là sau khi 10 giây, dữ liệu truy vấn sẽ được coi là "cũ" và một truy vấn mới sẽ được thực hiện để lấy dữ liệu mới nhất từ server.
+  - `staleTime` là thời gian (tính bằng mili giây) mà dữ liệu truy vấn được xem là "cũ" trước khi truy vấn mới được thực hiện để cập nhật dữ liệu mới từ server. Trong trường hợp này, `staleTime` được đặt là 10 giây `(1000 * 10 mili giây)`, điều này có nghĩa là sau khi 10 giây, dữ liệu truy vấn sẽ được coi là "cũ" và một truy vấn mới sẽ được thực hiện để lấy dữ liệu mới nhất từ server.
 
-- Khi truy vấn được thực thi, useQuery sẽ trả về một đối tượng (object) studentQuery chứa thông tin và các hàm liên quan đến quá trình truy vấn. Điều này bao gồm các thuộc tính như data (dữ liệu trả về từ server), isLoading (trạng thái xác định xem truy vấn đang được thực thi hay không), isError (xác định xem truy vấn có gặp lỗi hay không), và các hàm như refetch (thực hiện lại truy vấn), remove (xoá dữ liệu truy vấn khỏi cache), và onSuccess (hàm được gọi khi truy vấn thành công).
+- Khi truy vấn được thực thi, `useQuery` sẽ trả về một đối tượng (object) `studentQuery` chứa thông tin và các hàm liên quan đến quá trình truy vấn. Điều này bao gồm các thuộc tính như `data` (dữ liệu trả về từ server), `isLoading` (trạng thái xác định xem truy vấn đang được thực thi hay không), `isError` (xác định xem truy vấn có gặp lỗi hay không), và các hàm như `refetch` (thực hiện lại truy vấn), `remove` (xoá dữ liệu truy vấn khỏi cache), và `onSuccess` (hàm được gọi khi truy vấn thành công).
 
 ## Giải thích ý nghĩa của tham số trong `queryKey` ?
 
@@ -495,6 +495,14 @@ useEffect(() => {
   }
 }, [studentQuery.data])
 ```
+
+- Trong đoạn code trên, `useEffect` được sử dụng để theo dõi thay đổi của `studentQuery.data`. Khi `studentQuery.data` thay đổi, đoạn mã trong `useEffect` sẽ được thực thi.
+
+- Trong trường hợp này, nếu `studentQuery.data` tồn tại (khác `null` hoặc `undefined`), nghĩa là truy vấn đã hoàn thành và trả về dữ liệu. Trong trường hợp đó, `studentQuery.data.data` chứa dữ liệu của sinh viên được trả về từ server.
+
+- Dòng `setFormState(studentQuery.data.data)` được sử dụng để cập nhật giá trị của state (trạng thái) `formState` với dữ liệu sinh viên từ truy vấn. Điều này đảm bảo rằng khi dữ liệu sinh viên được lấy về thành công, form sẽ được điền với các giá trị tương ứng để chỉnh sửa hoặc hiển thị thông tin.
+
+- Mảng phụ thuộc (dependency) `[studentQuery.data]` trong `useEffect` đảm bảo rằng đoạn mã sẽ chỉ được thực thi khi giá trị `studentQuery.data` thay đổi. Điều này đảm bảo rằng khi có sự thay đổi trong dữ liệu của truy vấn sinh viên, `setFormState` sẽ được gọi để cập nhật `formState` mới.
 
 👉 Đoạn 10:
 
