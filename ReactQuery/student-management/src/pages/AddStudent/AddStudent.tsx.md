@@ -504,17 +504,29 @@ useEffect(() => {
 
 - Mảng phụ thuộc (dependency) `[studentQuery.data]` trong `useEffect` đảm bảo rằng đoạn mã sẽ chỉ được thực thi khi giá trị `studentQuery.data` thay đổi. Điều này đảm bảo rằng khi có sự thay đổi trong dữ liệu của truy vấn sinh viên, `setFormState` sẽ được gọi để cập nhật `formState` mới.
 
+## Giải thích dễ hiểu hơn:
+
+- Trong đoạn code trên, `useEffect` được sử dụng để theo dõi thay đổi của `studentQuery.data`. Khi `studentQuery.data` thay đổi, nghĩa là truy vấn đã hoàn thành và trả về dữ liệu, đoạn mã trong `useEffect` sẽ được thực thi.
+
+- Nếu `studentQuery.data` không `null` hoặc `undefined`, có nghĩa là dữ liệu sinh viên đã được lấy về thành công từ server. Trong trường hợp này, chúng ta muốn cập nhật giá trị của `formState` với dữ liệu sinh viên từ truy vấn để hiển thị thông tin hoặc cho phép chỉnh sửa.
+
+- Dòng `setFormState(studentQuery.data.data)` được sử dụng để gán giá trị dữ liệu sinh viên từ `studentQuery.data.data` cho `formState`. Điều này đảm bảo rằng khi có dữ liệu sinh viên mới, form sẽ được điền với các giá trị tương ứng để hiển thị hoặc chỉnh sửa.
+
+- Mảng phụ thuộc `[studentQuery.data]` trong `useEffect` đảm bảo rằng đoạn mã sẽ chỉ được thực thi khi giá trị `studentQuery.data` thay đổi. Điều này đảm bảo rằng khi có sự thay đổi trong dữ liệu của truy vấn sinh viên, `setFormState` sẽ được gọi để cập nhật `formState` mới và làm kích hoạt lại render để hiển thị dữ liệu mới lên giao diện.
+
 👉 Đoạn 10:
 
 ```jsx
-  const updateStudentMutation = useMutation((_) => {
-    return updateStudent(id as string, formState as Student);
-  }, {
-    onSuccess: (data) => {
-      queryClient.setQueryData(['student', id], data);
-    }
-  });
+const updateStudentMutation = useMutation((_) => {
+  return updateStudent(id as string, formState as Student);
+}, {
+  onSuccess: (data) => {
+    queryClient.setQueryData(['student', id], data);
+  }
+});
 ```
+
+-
 
 ---
 
