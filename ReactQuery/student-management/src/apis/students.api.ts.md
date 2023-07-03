@@ -48,6 +48,16 @@ export const getStudents = (page: number | string, limit: number | string, signa
 export const getStudent = (id: number | string) => http.get < Student > `students/${id}`
 ```
 
+- Đoạn code trên xuất khẩu (export) một hàm có tên `getStudent`. Hàm này được sử dụng để gửi một yêu cầu GET đến một endpoint `students/${id}` trên máy chủ dữ liệu để lấy thông tin của một sinh viên cụ thể.
+
+- Hàm nhận một tham số `id` là số hoặc chuỗi để xác định sinh viên cần lấy thông tin. Đối tượng `http` (được import từ module `utils/http`) được sử dụng để thực hiện yêu cầu GET đến endpoint `students/${id}`.
+
+- Ký tự (dấu huyền trong `students/${id}`) (backtick) được sử dụng để định nghĩa chuỗi template (template string) trong JavaScript. Trong đoạn code trên, chuỗi template được sử dụng để tạo URL endpoint `students/${id}`. Giá trị của biến `id` sẽ được thay thế vào trong chuỗi template khi thực hiện yêu cầu.
+
+- Cú pháp `http.get<Student>` cho biết chúng ta mong đợi dữ liệu trả về từ yêu cầu là một đối tượng có kiểu `Student`, tương ứng với kiểu dữ liệu được định nghĩa trong module `types/students.type`.
+
+- ✅ Hàm `getStudent` trả về một promise (promise of Student) chứa dữ liệu từ yêu cầu GET. Ta có thể sử dụng phương thức `.then()` hoặc `async/await` để xử lý dữ liệu khi nó được trả về từ máy chủ dữ liệu.
+
 ---
 
 👉 Đoạn 4:
@@ -56,11 +66,27 @@ export const getStudent = (id: number | string) => http.get < Student > `student
 export const addStudent = (student: Omit<Student, 'id'>) => http.post < Student > ('/students', student)
 ```
 
+- Đoạn code trên xuất khẩu (export) một hàm có tên `addStudent`. Hàm này được sử dụng để gửi một yêu cầu POST đến endpoint `/students` trên máy chủ dữ liệu để thêm một sinh viên mới.
+
+- Hàm nhận một tham số `student` có kiểu `Omit<Student, 'id'>`. Kiểu `Omit<Student, 'id'>` được sử dụng để chỉ định rằng tham số `student` có cấu trúc giống như đối tượng `Student`, nhưng loại bỏ thuộc tính `id` ra khỏi đối tượng. Điều này đảm bảo rằng khi thêm sinh viên mới, không cần phải cung cấp giá trị cho thuộc tính `id` (vì `id` sẽ được sinh tự động hoặc được xác định bởi máy chủ dữ liệu).
+
+- Đối tượng `http` (được import từ module `utils/http`) được sử dụng để thực hiện yêu cầu POST đến endpoint `/students`. Tham số `student` được truyền vào yêu cầu POST như là dữ liệu cần gửi.
+
+- Ký tự (dấu huyền trong `/students`) (backtick) được sử dụng để định nghĩa chuỗi template (template string) trong JavaScript. Trong đoạn code trên, chuỗi template được sử dụng để chỉ định URL endpoint `/students`.
+
+- Cú pháp `http.post<Student>` cho biết chúng ta mong đợi dữ liệu trả về từ yêu cầu là một đối tượng có kiểu `Student`, tương ứng với kiểu dữ liệu được định nghĩa trong module `types/students.type`.
+
+- ✅ Hàm `addStudent` trả về một promise (promise of Student) chứa dữ liệu từ yêu cầu POST. Ta có thể sử dụng phương thức `.then()` hoặc `async/await` để xử lý dữ liệu khi nó được trả về từ máy chủ dữ liệu.
+
+---
+
 👉 Đoạn 5:
 
 ```jsx
 export const updateStudent = (id: number | string, student: Student) => http.put < Student > (`students/${id}`, student)
 ```
+
+-
 
 ---
 
