@@ -379,6 +379,12 @@ const { id } = useParams() // Dòng 4
 const queryClient = useQueryClient() // Dòng 5
 ```
 
+- Dòng code trên sử dụng hook `useQueryClient()` từ thư viện `react-query` để lấy đối tượng `queryClient`. `queryClient` được sử dụng để thực hiện các hoạt động liên quan đến việc truy vấn dữ liệu và quản lý bộ nhớ cache trong ứng dụng sử dụng React Query.
+
+- `queryClient` có thể được sử dụng để thực hiện các hoạt động như truy vấn dữ liệu, ghi dữ liệu, xóa dữ liệu, và cập nhật cache. Nó cung cấp các phương thức như `query`, `mutate`, `invalidateQueries`, và `setQueryData` để thao tác với dữ liệu.
+
+- Trong đoạn code trên, `queryClient` được sử dụng để thực hiện các hoạt động liên quan đến truy vấn và cập nhật dữ liệu sinh viên, như gửi yêu cầu truy vấn, thêm sinh viên mới, cập nhật thông tin sinh viên, và xóa sinh viên.
+
 ---
 
 👉 Đoạn 7:
