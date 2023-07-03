@@ -75,7 +75,10 @@ export default function AddStudent() {
 
   // Dùng currying
   const handleChange = (name: keyof FormStateType) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((prev) => ({ ...prev, [name]: event.target.value }))
+    setFormState((prev) => ({
+      ...prev,
+      [name]: event.target.value
+    }))
 
     if (addStudentMutation.data || addStudentMutation.error) {
       addStudentMutation.reset()
@@ -84,7 +87,6 @@ export default function AddStudent() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
     if (isAddMode) {
       addStudentMutation.mutate(formState, {
         onSuccess: () => {

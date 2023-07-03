@@ -590,13 +590,51 @@ const errorForm: FormError = useMemo(() => {
 
 ```jsx
 // Dùng currying
-  const handleChange = (name: keyof FormStateType) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState((prev) => ({ ...prev, [name]: event.target.value }))
-    if (addStudentMutation.data || addStudentMutation.error) {
-      addStudentMutation.reset()
-    }
+const handleChange = (name: keyof FormStateType) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  setFormState((prev) => ({
+    ...prev,
+    [name]: event.target.value
+  }))
+
+  if (addStudentMutation.data || addStudentMutation.error) {
+    addStudentMutation.reset()
   }
+}
 ```
+
+- Trong đoạn mã trên, chúng ta khai báo một hàm `handleChange` nhận vào một tham số `name` kiểu `keyof FormStateType`, và trả về một hàm xử lý sự kiện `onChange` của các trường input trong biểu mẫu.
+
+- Hàm `handleChange` được sử dụng để cập nhật trạng thái của biểu mẫu khi người dùng thay đổi giá trị của một trường input. Khi xảy ra sự kiện `onChange`, hàm `handleChange` sẽ được gọi và nhận vào sự kiện `event` kiểu `React.ChangeEvent<HTMLInputElement>`, chứa thông tin về giá trị mới của trường input.
+
+- Trong hàm `handleChange`, chúng ta sử dụng `setFormState` để cập nhật trạng thái của biểu mẫu. Chúng ta sử dụng cú pháp `prev` để truy cập và sao chép trạng thái hiện tại của biểu mẫu, sau đó thay đổi giá trị của trường `name` bằng giá trị mới từ `event.target.value`. Bằng cách này, chúng ta đảm bảo rằng trạng thái của biểu mẫu được cập nhật đúng và an toàn.
+
+- Trong đoạn mã trên, chúng ta kiểm tra xem đã có dữ liệu hoặc lỗi từ mutation `addStudentMutation` (quá trình thêm mới sinh viên) hay chưa. Nếu điều kiện này đúng, tức là đã thực hiện thành công hoặc có lỗi xảy ra trong quá trình thêm mới, chúng ta sử dụng `addStudentMutation.reset()` để thiết lập lại trạng thái của mutation.
+
+- Mục đích của việc reset mutation là để chuẩn bị cho một lần thực hiện mới của quá trình thêm mới. Khi người dùng thay đổi giá trị của các trường input, chúng ta muốn đảm bảo rằng quá trình thêm mới sẽ được thực hiện từ đầu mà không bị ảnh hưởng bởi các lần thêm mới trước đó. Bằng cách reset mutation, chúng ta xóa bỏ dữ liệu và lỗi có sẵn trong mutation để bắt đầu quá trình thêm mới từ đầu.
+
+- ✅ Điều này đảm bảo rằng chúng ta có một trạng thái sạch và đúng đắn cho quá trình thêm mới sinh viên và tránh các xung đột hoặc vấn đề liên quan đến trạng thái trước đó của mutation.
+
+## Khi sử dụng phương thức `reset()` có nghĩa là làm sạch form để chúng ta điền thông tin vào đó hả ?
+
+- Không, phương thức `reset()` của mutation không liên quan đến việc làm sạch form để điền thông tin vào.
+
+- Trong ngữ cảnh của `useMutation`, phương thức `reset()` được sử dụng để đặt lại trạng thái của mutation về trạng thái ban đầu. Điều này có nghĩa là nếu mutation đã có dữ liệu thành công hoặc gặp lỗi trước đó, việc sử dụng `reset()` sẽ xóa bỏ dữ liệu và lỗi đó, trả về trạng thái ban đầu để chuẩn bị cho một lần thực hiện mới.
+
+- Việc làm sạch form để điền thông tin vào là một tác vụ riêng, không liên quan trực tiếp đến mutation. Bạn có thể thực hiện các bước làm sạch form riêng trong hàm `handleChange` hoặc bất kỳ vị trí nào khác trong mã của bạn, tùy thuộc vào logic và yêu cầu cụ thể của ứng dụng của bạn.
+
+## Có nghĩa là nó xoá cache của dữ liệu trước đó. Dù thành công hay thất bại thì nó cũng xoá sạch cache hết, để điền vào dữ liệu mới ?
+
+- Không, phương thức `reset()` của mutation không xoá cache của dữ liệu trước đó. Nó chỉ đặt lại trạng thái của mutation về trạng thái ban đầu, không liên quan đến việc xoá cache hoặc dữ liệu đã lưu trữ trước đó.
+
+- Việc xoá cache hoặc dữ liệu trước đó là một tác vụ riêng, có thể được thực hiện thông qua các phương thức và API của thư viện quản lý trạng thái, chẳng hạn như `queryClient.invalidateQueries()` để xoá cache của một query cụ thể. Nếu bạn muốn làm sạch form để điền vào dữ liệu mới, bạn có thể thực hiện các bước xoá cache hoặc đặt lại dữ liệu trong `handleChange` hoặc các hàm khác tùy thuộc vào yêu cầu của ứng dụng của bạn.
+
+## Đặt lại trạng thái của mutation là sao ? Tôi chưa hiểu lắm ? Hãy giải thích chi tiết hơn ?
+
+- Khi sử dụng thư viện quản lý trạng thái như `react-query`, một mutation là một hoạt động thực hiện một thay đổi trên server, chẳng hạn như thêm, sửa hoặc xóa dữ liệu. Khi một mutation được gọi, thư viện sẽ theo dõi trạng thái của mutation đó, bao gồm `data` (dữ liệu trả về từ server), `isLoading` (đang tải), `isError` (có lỗi xảy ra) và nhiều thuộc tính khác.
+
+- Phương thức `reset()` của mutation được cung cấp bởi thư viện để đặt lại trạng thái của mutation về trạng thái ban đầu. Khi gọi `reset()`, các thuộc tính của mutation sẽ được đặt lại, chẳng hạn như `data` sẽ trở thành `undefined`, `isLoading` và `isError` sẽ trở thành `false`. Điều này cho phép bạn chuẩn bị cho một lần mutation mới, bằng cách xóa bỏ các dữ liệu hoặc trạng thái cũ và bắt đầu một quá trình mutation mới.
+
+- Trong đoạn code mà bạn đưa ra, việc gọi `addStudentMutation.reset()` được thực hiện sau khi xử lý sự kiện `handleChange`. Điều này đảm bảo rằng sau khi người dùng thay đổi giá trị trên form và gọi `addStudentMutation`, trạng thái của mutation sẽ được đặt lại, chuẩn bị cho một lần mutation mới khi người dùng tiếp tục tương tác với form.
 
 ---
 
