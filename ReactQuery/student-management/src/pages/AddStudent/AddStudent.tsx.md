@@ -420,13 +420,69 @@ const addStudentMutation = useMutation({
 👉 Đoạn 8:
 
 ```jsx
-  const studentQuery = useQuery({
-    queryKey: ['student', id],
-    queryFn: () => getStudent(id as string),
-    enabled: id !== undefined,
-    staleTime: 1000 * 10
-  });
+const studentQuery = useQuery({
+  queryKey: ['student', id],
+  queryFn: () => getStudent(id as string),
+  enabled: id !== undefined,
+  staleTime: 1000 * 10
+});
 ```
+
+- Dòng code trên sử dụng hook `useQuery` từ thư viện `react-query` để tạo một query (truy vấn dữ liệu) mới. Query được sử dụng để lấy dữ liệu từ server thông qua gửi yêu cầu HTTP (thường là GET) và nhận lại kết quả.
+
+- Trong đoạn code trên, `useQuery` nhận đối số là một đối tượng (object) cấu hình với các thuộc tính sau:
+
+  - `queryKey` là một mảng chứa các khóa truy vấn. Trong trường hợp này, chúng ta sử dụng `['student', id]` làm khóa truy vấn. Điều này có nghĩa là kết quả của truy vấn này sẽ được lưu trong bộ nhớ cache dựa trên hai khóa là `'student'` và `id`.
+
+  - `queryFn` là một hàm thực hiện yêu cầu HTTP để lấy thông tin sinh viên từ server. Trong trường hợp này, queryFn gọi hàm getStudent từ module students.api và truyền vào id như là tham số để lấy thông tin của sinh viên có id tương ứng.
+
+  - enabled là một giá trị boolean xác định xem truy vấn có nên được thực thi hay không. Trong trường hợp này, truy vấn chỉ được kích hoạt (enabled) nếu id đã được xác định (khác undefined).
+
+  - staleTime là thời gian (tính bằng mili giây) mà dữ liệu truy vấn được xem là "cũ" trước khi truy vấn mới được thực hiện để cập nhật dữ liệu mới từ server. Trong trường hợp này, staleTime được đặt là 10 giây `(1000 * 10 mili giây)`, điều này có nghĩa là sau khi 10 giây, dữ liệu truy vấn sẽ được coi là "cũ" và một truy vấn mới sẽ được thực hiện để lấy dữ liệu mới nhất từ server.
+
+- Khi truy vấn được thực thi, useQuery sẽ trả về một đối tượng (object) studentQuery chứa thông tin và các hàm liên quan đến quá trình truy vấn. Điều này bao gồm các thuộc tính như data (dữ liệu trả về từ server), isLoading (trạng thái xác định xem truy vấn đang được thực thi hay không), isError (xác định xem truy vấn có gặp lỗi hay không), và các hàm như refetch (thực hiện lại truy vấn), remove (xoá dữ liệu truy vấn khỏi cache), và onSuccess (hàm được gọi khi truy vấn thành công).
+
+## Giải thích ý nghĩa của tham số trong `queryKey` ?
+
+- Trong đoạn mã của bạn, `queryKey` là một mảng chứa hai phần tử. Đây là một tham số trong hook `useQuery` của thư viện React Query, và ý nghĩa của hai phần tử trong `queryKey` như sau:
+
+1. Phần tử thứ nhất: `'student'`
+
+- Đây là một chuỗi đại diện cho tên của loại dữ liệu hoặc API endpoint mà bạn muốn truy vấn. Nó giúp xác định loại dữ liệu bạn đang làm việc với.
+- Trong trường hợp này, `'student'` có thể đại diện cho tên của một API endpoint liên quan đến thông tin sinh viên.
+
+2. Phần tử thứ hai: `id`
+
+- Đây là giá trị duy nhất để xác định đối tượng cụ thể mà bạn muốn truy vấn.
+- Trong trường hợp này, `id` có thể là một giá trị số hoặc chuỗi, dùng để xác định sinh viên cụ thể mà bạn muốn lấy thông tin.
+
+- ✅ Với cấu trúc `queryKey` như vậy, React Query sẽ sử dụng nó để xác định một yêu cầu truy vấn cụ thể, dựa trên tên loại dữ liệu và giá trị `id`. Điều này cho phép React Query quản lý cache và tự động thực hiện việc truy vấn lại dữ liệu khi có sự thay đổi trong `queryKey`.
+
+## Giải thích cách khác ? (Cố gắng đọc nhiều lần cho dễ hiểu)
+
+- Trong đoạn code trên, `queryKey` là một thuộc tính của đối tượng cấu hình của `useQuery`. Nó là một mảng chứa các khóa truy vấn (query keys). Mỗi khóa truy vấn đại diện cho một phần cụ thể trong trạng thái của truy vấn.
+
+- Trong trường hợp này, mảng `['student', id]` được sử dụng làm `queryKey`. Có hai phần tử trong mảng này:
+
+1. `'student'`: Đây là một khóa truy vấn chung để định danh loại dữ liệu truy vấn. Nó cho biết rằng đang thực hiện một truy vấn liên quan đến sinh viên.
+
+2. `id`: Đây là một giá trị động và thay đổi, đại diện cho `id` của sinh viên cụ thể. Bằng cách đưa `id` vào trong `queryKey`, chúng ta đảm bảo rằng khi `id` thay đổi, truy vấn sẽ được tự động thực hiện lại để lấy dữ liệu mới cho sinh viên tương ứng.
+
+- ✅ Khi `queryKey` thay đổi, `useQuery` sẽ xem đó là một truy vấn mới và thực hiện lại truy vấn đó để cập nhật dữ liệu. Điều này cho phép chúng ta lấy thông tin sinh viên mới khi id thay đổi.
+
+## Nếu như mình không đặt `id`, mà thay vào đó là đặt tên khác có được không ? Hay là bắt buộc phải đặt `id` để xác định là duy nhất ?
+
+- Trong trường hợp sử dụng hook `useQuery` từ thư viện `'@tanstack/react-query'` cụ thể, bạn không bắt buộc phải sử dụng `id` để xác định duy nhất. Điều quan trọng là bạn cần sử dụng một giá trị duy nhất trong `queryKey` để định danh một truy vấn riêng biệt.
+
+- Thay vì sử dụng `id`, bạn có thể sử dụng bất kỳ giá trị nào khác để xác định truy vấn. Ví dụ: `'student'`, `'username'`, `'email'` hoặc bất kỳ chuỗi nào có ý nghĩa cho truy vấn của bạn. Điều quan trọng là đảm bảo rằng giá trị trong `queryKey` là duy nhất và thay đổi khi bạn muốn thực hiện lại truy vấn.
+
+## Ý của tôi là có cần thiết phải đặt `id` làm tham số trong mảng này không ? `queryKey: ['student', id]`. Mình có thể thay `id` bằng giá trị khác có được không ? Hay là bắt buộc phải đặt `id` để xác định đó là giá trị duy nhất ?
+
+- Trong trường hợp sử dụng hook `useQuery` từ thư viện `'@tanstack/react-query'`, không có yêu cầu bắt buộc phải sử dụng `id` để xác định giá trị duy nhất trong mảng `queryKey`.
+
+- `queryKey` được sử dụng để xác định duy nhất một truy vấn và là một mảng chứa các giá trị. Bạn có thể thay thế `id` bằng bất kỳ giá trị nào khác có ý nghĩa cho truy vấn của bạn. Ví dụ: `['student', 'username']` hoặc `['student', 'email']`. Điều quan trọng là đảm bảo rằng mảng `queryKey` là duy nhất cho mỗi truy vấn và thay đổi khi bạn muốn thực hiện lại truy vấn.
+
+- Vì vậy, bạn không bắt buộc phải sử dụng `id` trong mảng `queryKey`, miễn là giá trị trong mảng đủ duy nhất để xác định một truy vấn riêng biệt.
 
 ---
 
