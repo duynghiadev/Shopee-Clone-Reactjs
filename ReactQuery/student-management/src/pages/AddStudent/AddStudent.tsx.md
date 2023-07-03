@@ -660,6 +660,30 @@ const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 }
 ```
 
+- Đoạn code trên định nghĩa hàm `handleSubmit` để xử lý sự kiện khi người dùng submit form. Khi form được submit, hàm này sẽ được gọi.
+
+- Đầu tiên, hàm này sử dụng `event.preventDefault()` để ngăn chặn hành vi mặc định của form (như refresh trang).
+
+- Tiếp theo, nếu `isAddMode` là `true`, tức là chế độ thêm mới, `addStudentMutation.mutate(formState)` được gọi để thực hiện mutation để thêm một sinh viên mới. Đối số `formState` là dữ liệu được nhập trên form. Bên trong phương thức mutate, bạn cũng có thể truyền một đối tượng cấu hình, ví dụ như `onSuccess`, để xử lý thành công mutation. Trong trường hợp này, sau khi mutation thành công, `setFormState(initialFormState)` được gọi để đặt lại form về trạng thái ban đầu, và `toast.success` được sử dụng để hiển thị thông báo thành công.
+
+- Ngược lại, nếu `isAddMode` là `false`, tức là chế độ cập nhật, `updateStudentMutation.mutate(undefined)` được gọi để thực hiện mutation để cập nhật thông tin sinh viên. Trong trường hợp này, không cần truyền dữ liệu (`formState`), vì dữ liệu đã được cập nhật trong quá trình điền form. Tương tự, bạn cũng có thể sử dụng đối số cấu hình `onSuccess` để xử lý thành công mutation và hiển thị thông báo thành công.
+
+- ✅ Tóm lại, hàm `handleSubmit` dùng để xử lý sự kiện submit form, thực hiện mutation để thêm mới hoặc cập nhật thông tin sinh viên, và sau đó đặt lại form về trạng thái ban đầu hoặc hiển thị thông báo thành công.
+
+## Trích: `...vì dữ liệu đã được cập nhật trong quá trình điền form...`. Có nghĩa là khi ta bấm nút edit là dữ liệu sẽ tự động điền vào form hả ?
+
+- Đúng, khi bạn bấm nút chỉnh sửa (edit), dữ liệu hiện tại của sinh viên sẽ được điền vào form tự động. Điều này được thực hiện bằng cách gán giá trị của đối tượng `studentQuery.data` vào `formState` trong hàm `useEffect`:
+
+```jsx
+useEffect(() => {
+  if (studentQuery.data) {
+    setFormState(studentQuery.data.data)
+  }
+}, [studentQuery.data])
+```
+
+- Khi `studentQuery.data` thay đổi (thông qua các lần query khác nhau), hàm `useEffect` được gọi và `setFormState` được sử dụng để đặt lại giá trị của `formState` bằng giá trị của sinh viên hiện tại. Do đó, khi bạn chuyển đến trang chỉnh sửa (edit), form sẽ tự động được điền với dữ liệu của sinh viên đó.
+
 ---
 
 👉 Đoạn 14:
