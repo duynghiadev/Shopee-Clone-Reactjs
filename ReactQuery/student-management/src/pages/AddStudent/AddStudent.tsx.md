@@ -517,16 +517,31 @@ useEffect(() => {
 👉 Đoạn 10:
 
 ```jsx
-const updateStudentMutation = useMutation((_) => {
-  return updateStudent(id as string, formState as Student);
-}, {
+const updateStudentMutation = useMutation({
+  mutationFn: (_) => updateStudent(id as string, formState as Student),
   onSuccess: (data) => {
-    queryClient.setQueryData(['student', id], data);
+    queryClient.setQueryData(['student', id], data)
   }
-});
+})
 ```
 
--
+- Trong đoạn mã trên, `updateStudentMutation` là một đối tượng mutation (thay đổi dữ liệu) được tạo bằng cách sử dụng hook `useMutation`. Đối tượng mutation này được sử dụng để thực hiện một mutation (thường là một request HTTP PUT hoặc PATCH) để cập nhật thông tin của sinh viên.
+
+- Trong phần `mutationFn`, chúng ta chỉ định hàm sẽ được gọi khi mutation được thực hiện. Trong trường hợp này, chúng ta gọi hàm `updateStudent` từ API với các tham số là `id` và `formState` để cập nhật thông tin sinh viên. `id` được chuyển đổi sang kiểu `string` bằng cách sử dụng `as` để đảm bảo rằng nó có kiểu dữ liệu phù hợp. Và `formState` cũng được ép thành kiểu `Student` bằng cách sử dụng `as`.
+
+- Trong phần `onSuccess`, chúng ta xử lý kết quả thành công của mutation. Khi mutation thành công và trả về dữ liệu mới, chúng ta sử dụng `queryClient.setQueryData` để cập nhật dữ liệu trong bộ đệm truy vấn của React Query. Điều này đảm bảo rằng khi cập nhật thông tin sinh viên thành công, dữ liệu sinh viên trong bộ đệm truy vấn sẽ được cập nhật để đồng bộ với thông tin mới.
+
+- ✅ Việc sử dụng `queryClient.setQueryData` giúp chúng ta cập nhật dữ liệu truy vấn một cách tương thích với React Query, và khi dữ liệu sinh viên được cập nhật, các components khác có liên quan (như form) sẽ được kích hoạt để hiển thị thông tin sinh viên mới.
+
+## Giải thích dễ hiểu hơn:
+
+- Trong đoạn mã trên, `updateStudentMutation` là một đối tượng mutation được tạo bằng cách sử dụng hook `useMutation`. Đối tượng này giúp chúng ta thực hiện việc cập nhật thông tin của một sinh viên.
+
+- Trong phần `mutationFn`, chúng ta chỉ định hàm mà sẽ được gọi khi mutation được thực hiện. Trong trường hợp này, chúng ta gọi hàm `updateStudent` từ API để cập nhật thông tin sinh viên. Để thực hiện việc này, chúng ta truyền vào tham số `id` và `formState`, trong đó `id` là một chuỗi đại diện cho sinh viên cần cập nhật, và `formState` là các thông tin mới của sinh viên.
+
+- Trong phần `onSuccess`, chúng ta xử lý kết quả thành công của mutation. Khi mutation thành công và trả về dữ liệu mới, chúng ta sử dụng `queryClient.setQueryData` để cập nhật dữ liệu trong bộ đệm truy vấn của React Query. Điều này đảm bảo rằng khi cập nhật thông tin sinh viên thành công, dữ liệu sinh viên trong bộ đệm truy vấn sẽ được cập nhật để đồng bộ với thông tin mới.
+
+- ✅ Tóm lại, đoạn mã này giúp chúng ta thực hiện việc cập nhật thông tin của một sinh viên bằng cách sử dụng mutation và sau đó cập nhật dữ liệu trong bộ đệm truy vấn để đảm bảo tính nhất quán giữa dữ liệu và giao diện hiển thị.
 
 ---
 
