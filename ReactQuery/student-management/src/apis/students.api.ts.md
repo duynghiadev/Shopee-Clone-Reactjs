@@ -86,7 +86,17 @@ export const addStudent = (student: Omit<Student, 'id'>) => http.post < Student 
 export const updateStudent = (id: number | string, student: Student) => http.put < Student > (`students/${id}`, student)
 ```
 
--
+- Đoạn code trên xuất khẩu (export) một hàm có tên `updateStudent`. Hàm này được sử dụng để gửi một yêu cầu PUT đến endpoint `/students/:id` trên máy chủ dữ liệu để cập nhật thông tin của một sinh viên.
+
+- Hàm nhận hai tham số: `id` và `student`. Tham số `id` có kiểu `number | string` và đại diện cho ID của sinh viên cần cập nhật. Tham số `student` có kiểu `Student` và đại diện cho thông tin cập nhật của sinh viên.
+
+- Đối tượng `http` (được import từ module `utils/http`) được sử dụng để thực hiện yêu cầu PUT đến endpoint `/students/:id`. Tham số `student` được truyền vào yêu cầu PUT như là dữ liệu cần gửi.
+
+- Ký tự (dấu huyền trong `students/${id}`) (backtick) được sử dụng để định nghĩa chuỗi template (template string) trong JavaScript. Trong đoạn code trên, chuỗi template được sử dụng để chỉ định URL endpoint `/students/${id}` với `id` được thay thế bằng giá trị của tham số `id`.
+
+- Cú pháp `http.put<Student>` cho biết chúng ta mong đợi dữ liệu trả về từ yêu cầu là một đối tượng có kiểu `Student`, tương ứng với kiểu dữ liệu được định nghĩa trong module `types/students.type`.
+
+- ✅ Hàm `updateStudent` trả về một promise (promise of Student) chứa dữ liệu từ yêu cầu PUT. Ta có thể sử dụng phương thức `.then()` hoặc `async/await` để xử lý dữ liệu khi nó được trả về từ máy chủ dữ liệu.
 
 ---
 
@@ -95,5 +105,17 @@ export const updateStudent = (id: number | string, student: Student) => http.put
 ```jsx
 export const deleteStudent = (id: number | string) => http.delete < {} > `students/${id}`
 ```
+
+- Đoạn code trên xuất khẩu (export) một hàm có tên `deleteStudent`. Hàm này được sử dụng để gửi một yêu cầu DELETE đến endpoint `/students/:id` trên máy chủ dữ liệu để xóa một sinh viên.
+
+- Hàm nhận một tham số `id` có kiểu `number | string` và đại diện cho ID của sinh viên cần xóa.
+
+- Đối tượng `http` (được import từ module `utils/http`) được sử dụng để thực hiện yêu cầu DELETE đến endpoint `/students/:id`.
+
+- Ký tự (dấu huyền trong `students/${id}`) (backtick) được sử dụng để định nghĩa chuỗi template (template string) trong JavaScript. Trong đoạn code trên, chuỗi template được sử dụng để chỉ định URL endpoint `/students/${id}` với `id` được thay thế bằng giá trị của tham số `id`.
+
+- Cú pháp `http.delete<{}>` cho biết rằng chúng ta không mong đợi dữ liệu trả về từ yêu cầu DELETE này. Trong trường hợp này, chỉ cần xác nhận rằng yêu cầu DELETE đã thành công (HTTP status code 200) là đủ.
+
+- ✅ Hàm `deleteStudent` trả về một promise (promise of {}) không chứa dữ liệu từ yêu cầu DELETE. Ta có thể sử dụng phương thức `.then()` hoặc `async/await` để xác nhận rằng yêu cầu DELETE đã thành công và thực hiện các hành động phù hợp sau khi xóa sinh viên.
 
 ---
