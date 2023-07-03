@@ -119,3 +119,25 @@ export const deleteStudent = (id: number | string) => http.delete < {} > `studen
 - ✅ Hàm `deleteStudent` trả về một promise (promise of {}) không chứa dữ liệu từ yêu cầu DELETE. Ta có thể sử dụng phương thức `.then()` hoặc `async/await` để xác nhận rằng yêu cầu DELETE đã thành công và thực hiện các hành động phù hợp sau khi xóa sinh viên.
 
 ---
+
+## Giải đáp:
+
+❓ `id` trong này `/students/:id` ? Làm sao ta biết được mà thực hiện nhiệm vụ xoá ?
+
+- Trong đoạn mã `/students/:id`, `:id` là một parameterized route trong URL. Điều này có nghĩa là trong thực tế, nó sẽ được thay thế bằng một giá trị ID cụ thể khi gửi yêu cầu xoá sinh viên.
+
+- Khi bạn gọi hàm `deleteStudent` với một giá trị `id`, nó sẽ được chèn vào URL để tạo thành một URL đầy đủ cho yêu cầu DELETE, ví dụ: `/students/123` hoặc `/students/abc`. Giá trị `id` mà bạn truyền vào sẽ được thay thế vào địa chỉ URL để chỉ định rõ rằng yêu cầu xoá sinh viên có ID tương ứng với giá trị id đó.
+
+- ✅ Khi máy chủ dữ liệu nhận được yêu cầu DELETE với URL `/students/:id`, nó sẽ xử lý yêu cầu bằng cách trích xuất giá trị của `id` từ URL và thực hiện nhiệm vụ xoá sinh viên có ID tương ứng. Điều này cho phép chúng ta xác định rõ ràng rằng yêu cầu DELETE đang thao tác trên sinh viên cụ thể với ID đã được xác định.
+
+❓ Mà `id` đó từ đâu mà ra. Máy chủ tự tạo à ?
+
+- ID trong `/:id` là một tham số động trong URL, nghĩa là nó có thể được cung cấp từ nguồn dữ liệu bên ngoài, chẳng hạn như từ cơ sở dữ liệu hoặc từ người dùng.
+
+- Khi xây dựng ứng dụng, thông thường chúng ta sẽ có một nguồn dữ liệu (ví dụ: cơ sở dữ liệu) chứa thông tin về các sinh viên. Mỗi sinh viên trong nguồn dữ liệu này sẽ có một ID duy nhất để xác định và định danh nó.
+
+- Khi chúng ta tạo một URL để thực hiện các hoạt động CRUD (Create, Read, Update, Delete) trên dữ liệu sinh viên, chúng ta cần cung cấp ID của sinh viên cụ thể mà chúng ta muốn thao tác.
+
+- ID có thể được truyền vào từ nhiều nguồn khác nhau, chẳng hạn như từ người dùng khi họ thực hiện một tương tác trên giao diện người dùng (ví dụ: bấm nút xoá sinh viên), hoặc từ một truy vấn hoặc tham số trong URL khi chúng ta điều hướng đến một trang cụ thể. Tùy thuộc vào cách chúng ta xây dựng ứng dụng, cách lấy ID có thể khác nhau.
+
+- ✅ Tóm lại, ID được truyền vào trong `/:id` là một giá trị duy nhất để xác định sinh viên cụ thể mà chúng ta muốn thao tác. Cách chúng ta lấy ID này phụ thuộc vào ngữ cảnh và triển khai cụ thể của ứng dụng.
