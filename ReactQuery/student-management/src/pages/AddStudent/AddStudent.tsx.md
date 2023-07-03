@@ -558,6 +558,32 @@ const errorForm: FormError = useMemo(() => {
 }, [addStudentMutation.error, isAddMode, updateStudentMutation.error])
 ```
 
+- Trong đoạn mã trên, chúng ta sử dụng hook `useMemo` để tạo một biến `errorForm` có kiểu `FormError`. Biến này chứa thông tin về lỗi của biểu mẫu dựa trên kết quả của hai mutation `addStudentMutation` và `updateStudentMutation`.
+
+- Trong hàm callback của `useMemo`, chúng ta kiểm tra `isAddMode` để xác định xem chúng ta đang trong chế độ thêm mới sinh viên hay chế độ cập nhật sinh viên. Sau đó, chúng ta lấy giá trị lỗi từ mutation tương ứng, nghĩa là `addStudentMutation.error` trong chế độ thêm mới và `updateStudentMutation.error` trong chế độ cập nhật.
+
+- Tiếp theo, chúng ta kiểm tra xem lỗi có phải là một `AxiosError` không và có mã phản hồi là 422 hay không. Nếu điều kiện này đúng, tức là có lỗi xảy ra trong quá trình xác nhận dữ liệu từ phía máy chủ, chúng ta trích xuất thông tin lỗi từ phản hồi và gán vào biến `errorForm`.
+
+- Nếu không có lỗi xảy ra hoặc lỗi không phải là `AxiosError` hoặc mã phản hồi không phải là 422, chúng ta gán `null` cho `errorForm` để biểu thị rằng không có lỗi xảy ra.
+
+- ✅ Điều này cho phép chúng ta có một biến `errorForm` chứa thông tin lỗi của biểu mẫu dựa trên trạng thái và kết quả của hai mutation, và nó sẽ được cập nhật mỗi khi có sự thay đổi trong các giá trị `addStudentMutation.error`, `isAddMode`, và `updateStudentMutation.error`.
+
+## Giải thích dễ hiểu hơn:
+
+- Trong đoạn mã trên, chúng ta sử dụng hook `useMemo` để tạo một biến có tên là `errorForm`. Biến này chứa thông tin về lỗi của biểu mẫu dựa trên kết quả của hai hàm `addStudentMutation` và `updateStudentMutation` trong việc thêm mới và cập nhật sinh viên.
+
+- Trong hàm callback của `useMemo`, chúng ta thực hiện các bước sau:
+
+1. Kiểm tra nếu `isAddMode` là `true`, tức là chúng ta đang trong chế độ thêm mới sinh viên.
+
+2. Nếu `isAddMode` là `true`, chúng ta lấy giá trị lỗi từ `addStudentMutation.error`. Ngược lại, nếu `isAddMode` là `false`, chúng ta lấy giá trị lỗi từ `updateStudentMutation.error`.
+
+3. Kiểm tra nếu giá trị lỗi thuộc kiểu `AxiosError` và mã phản hồi của lỗi là 422. Nếu điều kiện này đúng, tức là có lỗi xảy ra trong quá trình xác nhận dữ liệu từ phía máy chủ, chúng ta trích xuất thông tin lỗi từ phản hồi và gán vào biến `errorForm`.
+
+4. Nếu không có lỗi xảy ra hoặc lỗi không thuộc kiểu `AxiosError` hoặc mã phản hồi không phải là 422, chúng ta gán `null` cho biến `errorForm` để biểu thị rằng không có lỗi xảy ra.
+
+- ✅ Tổng quan, đoạn mã này giúp chúng ta có một biến `errorForm` chứa thông tin về lỗi của biểu mẫu. Nếu có lỗi xảy ra trong quá trình thêm mới hoặc cập nhật sinh viên và lỗi đó là lỗi xác nhận dữ liệu từ phía máy chủ, thì biến `errorForm` sẽ chứa thông tin chi tiết về lỗi. Nếu không có lỗi xảy ra hoặc lỗi không phải là lỗi xác nhận dữ liệu, thì biến `errorForm` sẽ được gán giá trị `null`.
+
 ---
 
 👉 Đoạn 12:
