@@ -7,6 +7,13 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 ```
 
+- Đoạn code trên đang import hai thành phần (component) từ thư viện `react-router-dom`: `React` và `NavLink`.
+
+- `React` được import để sử dụng React framework trong ứng dụng.
+- `NavLink` là một thành phần (component) của `react-router-dom` dùng để tạo các liên kết (link) cho việc điều hướng trong ứng dụng. Nó tạo ra các thành phần (component) `<a>` với tính năng đặc biệt, khi một liên kết được kích hoạt (active), nó có thể áp dụng một lớp CSS hoặc một số hiệu ứng khác để chỉ ra trạng thái hiện tại.
+
+- Việc import `NavLink` cho phép bạn sử dụng nó trong các thành phần (component) React khác trong ứng dụng của bạn, để tạo ra các liên kết có tính năng điều hướng linh hoạt và thuận tiện.
+
 ---
 
 👉 Đoạn 2:
@@ -17,13 +24,35 @@ interface Props {
 }
 ```
 
+- Đoạn code trên định nghĩa một interface có tên là `Props`.
+
+- `Props` là một tên tùy chỉnh, có thể thay đổi thành tên khác tuỳ theo mục đích sử dụng. Đây là một tiêu chuẩn của React để đặt tên cho interface chứa các props của một thành phần (component) React.
+
+- Interface `Props` có một thuộc tính tùy chọn (optional) là `children` với kiểu dữ liệu là `React.ReactNode`.
+
+- `children` là một thuộc tính đặc biệt trong React, được sử dụng để truyền nội dung bên trong một thành phần (component) React dưới dạng các phần tử con (nested elements). Ví dụ: `<Component>Hello World</Component>`, trong đó "Hello World" là nội dung được truyền vào children.
+
+- `React.ReactNode` là kiểu dữ liệu cho `children`, đại diện cho bất kỳ loại dữ liệu nào được cho phép trong React, bao gồm các phần tử JSX, chuỗi, số, hoặc các thành phần (component) React khác.
+
 ---
 
 👉 Đoạn 3:
 
 ```jsx
 export default function MainLayout({ children }: Props) {
+  // do something...
+}
 ```
+
+- Trong đoạn code trên, `MainLayout` là một thành phần React được xuất ra mặc định (`export default`). Nó nhận một tham số có tên là `children`, sử dụng destructuring để trích xuất giá trị của thuộc tính `children` từ đối tượng `Props`.
+
+- `Props` là một interface, định nghĩa các props được truyền vào `MainLayout`.
+
+- `{ children }` là cách viết ngắn gọn cho `{ children: React.ReactNode }`, chỉ định rõ rằng chỉ có thuộc tính `children` được sử dụng và không cần truyền vào các props khác.
+
+- `children` đại diện cho nội dung bên trong của `MainLayout`, như các thành phần con, văn bản, hoặc bất kỳ nội dung nào mà bạn muốn đặt bên trong `MainLayout`.
+
+- `MainLayout` có thể sử dụng giá trị `children` để hiển thị nội dung trong một vị trí cố định hoặc bọc nội dung bên trong một cấu trúc HTML nào đó.
 
 ---
 
