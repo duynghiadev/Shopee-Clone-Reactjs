@@ -20,6 +20,9 @@ root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <App />
+      {/* - Khi cài ReactQueryDevTool thì trên giao diện sẽ xuất hiện cái logo bông hoa màu đỏ.
+       *  - Và đó là cái Dev Tool của React Query
+       */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </BrowserRouter>
