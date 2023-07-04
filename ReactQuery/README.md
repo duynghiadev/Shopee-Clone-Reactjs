@@ -451,7 +451,7 @@ Chỉ cần nhớ
 
 ## Cơ chế caching
 
-Một data mà đã `stale` thì khi gọi lại query của data đó, nó sẽ fetch lại api. Nếu không `stale` thì không fetch lại api (đối với trường hợp `staleTime` giữa các lần giống nhau)
+Một data mà đã `stale` thì khi gọi lại query của data đó, nó sẽ fetch lại api. Nếu data không `stale` thì không fetch lại api (đối với trường hợp `staleTime` giữa các lần giống nhau)
 
 > Còn đối với trường hợp `staleTime` giữa 2 lần khác nhau thì nếu data của lần query thứ 1 xuất hiện lâu hơn thời gian `staleTime` của lần query thứ 2 thì nó sẽ bị gọi lại ở lần thứ 2, dù cho có stale hay chưa.
 > Ví dụ: `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 10*1000 })` xuất hiện 5s trước, bây giờ chúng ta gọi lại `useQuery({ queryKey: ['todos'], queryFn: fetchTodos, staleTime: 2*1000 })` thì rõ ràng cái data của lần 1 dù nó chưa được cho là stale nhưng nó xuất hiện 5s trước và lâu hơn thời gian staleTime là 2s nên nó sẽ bị gọi lại ở lần 2.
@@ -480,9 +480,28 @@ Một data mà bị xóa khỏi bộ nhớ (tức là quá thời gian `cacheTim
 
   - Do đó, việc sử dụng React Query không gây reload trang web, mà chỉ làm render lại các phần tử liên quan đến dữ liệu mới và duy trì các trạng thái và dữ liệu của các thành phần khác trong ứng dụng React.
 
-Caching là một vòng đời của:
+Caching là một vòng đời của: Gồm 4 ý chính
 
 - Query Instance có hoặc không cache data
+
+- Ví dụ: queryInstance là code nằm trong đoạn hook useQuery()
+
+```jsx
+const studentsQuery = useQuery({
+  queryKey: ["students", page],
+  queryFn: () => {
+    const controller = new AbortController();
+
+    setTimeout(() => {
+      controller.abort();
+    }, 5000);
+    return getStudents(page, LIMIT, controller.signal);
+  },
+  keepPreviousData: true,
+  retry: 0,
+});
+```
+
 - Fetch ngầm (background fetching)
 - Các inactive query
 - Xóa cache khỏi bộ nhớ (Garbage Collection)
