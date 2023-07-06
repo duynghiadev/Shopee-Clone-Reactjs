@@ -196,11 +196,18 @@ export default function Students() {
     deleteStudentMutation.mutate(id)
   }
 
+  /**
+   * - 🚀 Đoạn code này có nghĩa là khi mình hover chuột qua các user thì nó
+   * tự động load liệu luôn, để khi người dùng click vào user đó thì dữ liệu đó
+   * đã tải trước rồi
+   * - 🚀 Khi người dùng click vào user nào đó thì nó sẽ load ra dữ liệu luôn chứ
+   * không cần chờ thời gian (timeout) nữa !!
+   */
   const handlePrefetchStudent = (id: number) => {
-    // queryClient.prefetchQuery(['student', String(id)], {
-    //   queryFn: () => getStudent(id),
-    //   staleTime: 10 * 1000
-    // })
+    queryClient.prefetchQuery(['student', String(id)], {
+      queryFn: () => getStudent(id),
+      staleTime: 10 * 1000
+    })
   }
 
   const fetchStudent = (second: number) => {
