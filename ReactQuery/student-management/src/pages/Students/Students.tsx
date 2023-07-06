@@ -174,7 +174,20 @@ export default function Students() {
       return getStudents(page, LIMIT, controller.signal)
     },
 
+    /**
+     * - Trong trường hợp này, nếu giá trị của tùy chọn "keepPreviousData" là "true", điều đó có nghĩa
+     * là khi thực hiện refetch (tải lại dữ liệu từ máy chủ), dữ liệu cũ sẽ được giữ lại và hiển thị
+     * trên trang web trong khi dữ liệu mới đang được tải về từ máy chủ. Việc giữ lại dữ liệu cũ có thể
+     * giúp tránh tình trạng màn hình trống trong khi đang tải dữ liệu mới và giúp cải thiện trải
+     * nghiệm người dùng.
+     */
+
     keepPreviousData: true,
+    /**
+     * - Nó retry khi mà mạng internet của chúng ta nó có vấn đề.
+     * - Ví dụ như: Chúng ta đang GET API mà bị rớt mạng thì nó sẽ retry lại cho chúng ta
+     * - Mà ở đây ta set giá trị retry = 0 thì khi nó bị rớt mạng thì nó không retry lại nữa
+     */
     retry: 0
   })
 
