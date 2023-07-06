@@ -1,0 +1,1020 @@
+{
+	"info": {
+		"_postman_id": "bd2c98a7-bbda-40a0-9b3a-4a930fa9bc79",
+		"name": "Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3245861"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Create User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@gmail.com\",\r\n    \"name\": \"user\",\r\n    \"password\": \"user123\",\r\n    \"date_of_birth\": \"\",\r\n    \"phone\": \"\",\r\n    \"address\": \"\",\r\n    \"roles\": [\"User\"] \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/users",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/users",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/users/{{id_user}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										"{{id_user}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user1@gmail.com\",\r\n    \"name\": \"user\",\r\n    \"password\": \"user123\",\r\n    \"date_of_birth\": \"\",\r\n    \"phone\": \"\",\r\n    \"address\": \"\",\r\n    \"roles\": [\"User\"] \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/user/update-me/{{id_user}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"user",
+										"update-me",
+										"{{id_user}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/users/delete/{{id_user}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										"delete",
+										"{{id_user}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Read Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/admin/products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/products/{{id_product}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										"{{id_product}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Điện Thoại Vsmart Active 3 6GB/64GB - Hàng Chính Hãng\",\r\n    \"image\":   \"bbea6d3e-e5b1-494f-ab16-02eece816d50.jpg\",\r\n    \"description\": \"<p>Điện Thoại Vsmart Active 3 6GB/64GB - H&agrave;ng Ch&iacute;nh H&atilde;ng<br />Bộ sản phẩm bao gồm: Th&acirc;n m&aacute;y, sạc, c&aacute;p USB, tai nghe, ốp lưng, dụng cụ lấy sim, s&aacute;ch hướng dẫn sử dụng.</p><p>Chất sang chảnh, chuẩn m&agrave;n h&igrave;nh<br />M&agrave;n h&igrave;nh sống động 6.39 AMOLED tr&agrave;n viền<br />Camera Selfie trượt 16MP ấn tượng, đầy m&ecirc; hoặc<br />Bộ 3 Camera AI 48MP si&ecirc;u chụp b&oacute;ng đ&ecirc;m<br />Thiết kế mặt lưng tr&agrave;n &aacute;nh s&aacute;ng<br />Nổi bật trong đ&ecirc;m sắc m&agrave;u. Lấy cảm hứng từ sắc đ&ecirc;m huyền ảo, được chế t&aacute;c tinh xảo tạo n&ecirc;n mặt lưng 3D chuyển m&agrave;u khi tương t&aacute;c với &aacute;nh s&aacute;ng. Với 4 m&agrave;u sắc Xanh Sapphire, Xanh Lục Bảo, T&iacute;m Ngọc v&agrave; Đen Thạch Anh, sẽ khiến bạn trở bạn trở th&agrave;nh t&acirc;m điểm của sự ch&uacute; &yacute;<br />Thật ấn tượng với camera selfie sẽ tự động bật l&ecirc;n v&agrave; thu lại theo thao t&aacute;c chụp ảnh selfie c&ugrave;ng thuật to&aacute;n l&agrave;m đẹp AI Beauty, ảnh selfie cực k&igrave; th&uacute; vị<br />K&iacute;ch thước 66.25 x 75.62 x 8.83 (mm)<br />Trọng lượng 183 g<br />Camera trước 16MP f/2.2 Popup <br />Camera sau 48MP f/1.7 - Camera chụp đ&ecirc;m<br /> 8MP f/2.2 - Camera g&oacute;c rộng<br /> 2MP f/2.4 - Camera x&oacute;a ph&ocirc;ng <br />Độ ph&acirc;n giải FHD+ ( 1080 x 2340 )<br />Cổng USB USB Type-C<br />Điện Thoại Vsmart Active 3 6GB/64GB - H&agrave;ng Ch&iacute;nh H&atilde;ng</p><p>Cảm ơn qu&yacute; kh&aacute;ch đ&atilde; quan t&acirc;m đến sản phẩm b&ecirc;n shop, qu&yacute; kh&aacute;ch vui l&ograve;ng d&agrave;nh &iacute;t thời gian đọc kĩ ch&iacute;nh s&aacute;ch bảo h&agrave;nh đổi trả:<br />- Sản phẩm được bao test 7 ng&agrave;y kể từ ng&agrave;y nhận được sản phẩm v&agrave; sẽ được đổi m&aacute;y mới c&ugrave;ng model hoặc gi&aacute; trị tương đương sau khi được thẩm định lỗi kĩ thuật.<br />- Sản phẩm lỗi kĩ thuật được x&aacute;c nhận bởi trung t&acirc;m bảo h&agrave;nh ủy quyền ch&iacute;nh h&atilde;ng (bằng văn bản); kh&aacute;ch h&agrave;ng c&oacute; thể gửi lại shop để x&aacute;c nhận lỗi hoặc tới trạm bảo h&agrave;nh gần nhất để thẩm định lỗi.<br />- Sản phẩm đổi trả phải c&ograve;n nguy&ecirc;n hiện trạng m&aacute;y kh&ocirc;ng trầy xước, kh&ocirc;ng bể vỡ, v&ocirc; nước, g&atilde;y ch&acirc;n sim, khung thẻ nhớ&hellip; (tất cả c&aacute;c t&aacute;c động ngoại lực từ ph&iacute;a kh&aacute;ch h&agrave;ng đều TỪ CHỐI BẢO H&Agrave;NH)<br />- Sản phẩm đổi trả phải c&ograve;n nguy&ecirc;n hộp tr&ugrave;ng imei, phụ kiện k&egrave;m theo m&aacute;y kh&ocirc;ng trầy xước, ch&aacute;y nổ, đứt d&acirc;y (nếu trầy xước shop kh&ocirc;ng đổi phụ kiện mới)<br />- Sau 7 ng&agrave;y bao test, sản phẩm vẫn nhận ch&iacute;nh s&aacute;ch bảo h&agrave;nh 18 th&aacute;ng kể từ ng&agrave;y k&iacute;ch hoạt bảo h&agrave;nh (kh&aacute;ch chịu ph&iacute; vận chuyển tới shop bảo h&agrave;nh hộ hoặc tự đến trung t&acirc;m bảo h&agrave;nh gần nhất để được hỗ trợ)<br />- Trong một số trường hợp sản phẩm đ&atilde; được k&iacute;ch hoạt bảo h&agrave;nh điện tử để tham gia chương tr&igrave;nh khuyến m&atilde;i c&oacute; gi&aacute; tốt cho kh&aacute;ch h&agrave;ng. Vui l&ograve;ng chat với nh&acirc;n vi&ecirc;n tư vấn để được hỗ trợ th&ecirc;m th&ocirc;ng tin.<br />- Sản phẩm bị TỪ CHỐI BẢO H&Agrave;NH khi ch&aacute;y nổ, bể vỡ, t&aacute;c động ngoại lực v&agrave;o th&acirc;n v&agrave; b&ecirc;n trong m&aacute;y, c&oacute; thay đổi sửa chữa b&ecirc;n ngo&agrave;i.<br />- C&aacute;c sản phẩm bị kh&oacute;a t&agrave;i khoản như Gmail, Samsung account&hellip; Kh&aacute;ch tự chịu ph&iacute; mở kh&oacute;a nếu kh&ocirc;ng nhớ mật khẩu.<br />Điện Thoại Vsmart Active 3 6GB/64GB - H&agrave;ng Ch&iacute;nh H&atilde;ng<br />#điện_thoại #dienthoai #di_động #didong #điện_thoại_di_động #dien_thoai_di_dong #điện_thoại_ch&iacute;nh_h&atilde;ng #h&agrave;ng_ch&iacute;nh_h&atilde;ng #điện_thoại_gi&aacute;_rẻ #dien_thoai_gia_re #gi&aacute; rẻ #khuyen_mai #freeship #mobile #smartphone #điện_thoại_vsmart #vsmart #vsmart_ active_3</p>\",\r\n    \"images\": [\r\n        \"bbea6d3e-e5b1-494f-ab16-02eece816d50.jpg\",\r\n        \"6c4f6bde-6242-40fd-be52-d06033636e04.jpg\",\r\n        \"1385ed69-6843-4edb-a1fb-e5fc795a99e5.jpg\",\r\n        \"7f4f7a5b-b003-462a-a6b9-c0e69175def3.jpg\",\r\n        \"1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg\",\r\n        \"5054f46f-d317-40f6-a804-6b22dc92e946.jpg\",\r\n        \"eed30991-df2d-41b5-afb2-697a06ba3299.jpg\",\r\n        \"2922fee1-448c-4302-bcc2-804e0fe44f84.jpg\",\r\n        \"84f7bf91-685c-4be9-bd8c-1f0a4e2e21c3.jpg\"\r\n    ],\r\n    \"category\": \"{{id_category}}\",\r\n    \"price\": 3190000,\r\n    \"price_before_discount\": 3990000,\r\n    \"quantity\": 138,\r\n    \"sold\": 1200,\r\n    \"rating\": 4.6,\r\n    \"view\": 693\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Image",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/dutha/Desktop/ao.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/admin/products/upload-image",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										"upload-image"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Images",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "images",
+											"type": "file",
+											"src": [
+												"/C:/Users/dutha/Downloads/san pham/01cadde80622f719d7c0af4360c5e0c4.jpg",
+												"/C:/Users/dutha/Downloads/san pham/3d65fcd9c83bea712a9535ecc6f29586.jpg",
+												"/C:/Users/dutha/Downloads/san pham/6c8b3863a725fda5b5aab233fb584a53.jpg",
+												"/C:/Users/dutha/Downloads/san pham/16caeea043eca9d349977d54f3dda3d7.jpg",
+												"/C:/Users/dutha/Downloads/san pham/299b53b7b1efa70b5137df0dde0e50b0.jpg",
+												"/C:/Users/dutha/Downloads/san pham/4018a188055e65e0cdb198572f6fac6b.jpg",
+												"/C:/Users/dutha/Downloads/san pham/0812304ff75286d8d1877cd493a23478.jpg",
+												"/C:/Users/dutha/Downloads/san pham/889116b376947f13f394f9a5f3d1f636.jpg",
+												"/C:/Users/dutha/Downloads/san pham/d1ec2776b1cf182be50c03c20e4b4f4c.jpg"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/admin/products/upload-images",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										"upload-images"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/products/delete/60af6fe6f1a3041b289d8b9d",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										"delete",
+										"60af6fe6f1a3041b289d8b9d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Many Products",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idList\": [\"6072b9c8804e8926c4db5750\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/products/delete-many",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										"delete-many"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Read Category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/categories/",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"categories",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Điện thoại\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/categories",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/categories",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Category",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Giày dép\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/admin/categories/6072f4218fbbd63dc4a07f02",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										"6072f4218fbbd63dc4a07f02"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Category",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/admin/categories/delete/6072f4218fbbd63dc4a07f02",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										"delete",
+										"6072f4218fbbd63dc4a07f02"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Common",
+			"item": [
+				{
+					"name": "Update Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date_of_birth\": \"2021-04-11T14:16:25.751Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/me",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/admin/categories/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/categories",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"d3@gma\",\r\n    \"password\": \"useruser\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Login thành công', function () {\r",
+									"\r",
+									"  pm.response.to.have.status(200)\r",
+									"\r",
+									" \r",
+									"\r",
+									"  const responseJson = pm.response.json()\r",
+									"\r",
+									" \r",
+									"\r",
+									"  pm.environment.set('access_token', responseJson.data.access_token.split(' ')[1])\r",
+									"  pm.environment.set('refresh_token', responseJson.data.refresh_token)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "expire-access-token",
+								"value": "10",
+								"type": "text"
+							},
+							{
+								"key": "expire-refresh-token",
+								"value": "20",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\": {{refresh_token}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/refresh-access-token",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"refresh-access-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/products?page=1&limit=30&order=desc&sort_by=createdAt&exclude={{id_product}}&rating_filter=5&price_min=0&price_max=1000000&name=áo",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "30"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "sort_by",
+									"value": "createdAt"
+								},
+								{
+									"key": "exclude",
+									"value": "{{id_product}}"
+								},
+								{
+									"key": "rating_filter",
+									"value": "5"
+								},
+								{
+									"key": "price_min",
+									"value": "0"
+								},
+								{
+									"key": "price_max",
+									"value": "1000000"
+								},
+								{
+									"key": "name",
+									"value": "áo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/products/{{id_product}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"products",
+								"{{id_product}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Purchase",
+					"item": [
+						{
+							"name": "Buy Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"product_id\": \"60ad004c2fb52902585972a6\",\r\n        \"buy_count\": 2\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchases/buy-products",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchases",
+										"buy-products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read Purchases",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/purchases?status=-1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchases"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Purchases",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n  [\r\n        \"638489eb5fdc5f037e6f6a9c\"\r\n    ]\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchases",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchases"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add To Cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_id\": \"60ad004c2fb52902585972a6\",\r\n    \"buy_count\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchases/add-to-cart",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchases",
+										"add-to-cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Purchase",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product_id\": \"60ad004c2fb52902585972a6\",\r\n    \"buy_count\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/purchases/update-purchase",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"purchases",
+										"update-purchase"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get Me",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/user",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Me",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Dư Thanh Được\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/user",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload avatar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/C:/Users/dutha/Downloads/my-image.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/user/upload-avatar",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"user",
+										"upload-avatar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
