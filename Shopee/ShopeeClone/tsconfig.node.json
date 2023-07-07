@@ -6,7 +6,5 @@
     "target": "ES2015",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "vite.config.ts"
-  ]
+  "include": ["vite.config.ts"]
 }
