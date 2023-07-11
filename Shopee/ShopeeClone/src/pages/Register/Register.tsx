@@ -1,22 +1,22 @@
-import { useMutation } from '@tanstack/react-query'
-import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import Input from 'src/components/Input'
-import { schema, Schema } from 'src/utils/rules'
-import { registerAccount } from 'src/apis/auth.api'
+import { useMutation } from '@tanstack/react-query'
 import { omit } from 'lodash'
+import { schema, Schema } from 'src/utils/rules'
+import Input from 'src/components/Input'
+import { registerAccount } from 'src/apis/auth.api'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 type FormData = Schema
 
 export default function Register() {
   const { setIsAuthenticated } = useContext(AppContext)
   const navigate = useNavigate()
-
   const {
     register,
     handleSubmit,
@@ -48,8 +48,6 @@ export default function Register() {
               })
             })
           }
-
-          // Cách 2:
           // if (formError?.email) {
           //   setError('email', {
           //     message: formError.email,
@@ -82,7 +80,6 @@ export default function Register() {
                 errorMessage={errors.email?.message}
                 placeholder='Email'
               />
-
               <Input
                 name='password'
                 register={register}
@@ -104,9 +101,13 @@ export default function Register() {
               />
 
               <div className='mt-2'>
-                <button className='w-full bg-red-500 px-2 py-4 text-center text-sm uppercase text-white hover:bg-red-600'>
+                <Button
+                  className='flex w-full items-center justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
+                  isLoading={registerAccountMutation.isLoading}
+                  disabled={registerAccountMutation.isLoading}
+                >
                   Đăng ký
-                </button>
+                </Button>
               </div>
               <div className='mt-8 flex items-center justify-center'>
                 <span className='text-gray-400'>Bạn đã có tài khoản?</span>
