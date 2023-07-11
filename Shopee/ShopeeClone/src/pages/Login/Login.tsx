@@ -15,9 +15,8 @@ type FormData = Omit<Schema, 'confirm_password'>
 const loginSchema = schema.omit(['confirm_password'])
 
 export default function Login() {
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
-
   const {
     register,
     setError,
@@ -30,19 +29,16 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => login(body)
   })
-
   const onSubmit = handleSubmit((data) => {
-    console.log('data', data)
-
     loginMutation.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuthenticated(true)
+        setProfile(data.data.data.user)
         navigate('/')
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
           const formError = error.response?.data.data
-
           if (formError) {
             Object.keys(formError).forEach((key) => {
               setError(key as keyof FormData, {
@@ -71,7 +67,6 @@ export default function Login() {
                 errorMessage={errors.email?.message}
                 placeholder='Email'
               />
-
               <Input
                 name='password'
                 register={register}
@@ -81,11 +76,10 @@ export default function Login() {
                 placeholder='Password'
                 autoComplete='on'
               />
-
               <div className='mt-3'>
                 <Button
                   type='submit'
-                  className='flex w-full justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
+                  className='flex  w-full items-center justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
                   isLoading={loginMutation.isLoading}
                   disabled={loginMutation.isLoading}
                 >
