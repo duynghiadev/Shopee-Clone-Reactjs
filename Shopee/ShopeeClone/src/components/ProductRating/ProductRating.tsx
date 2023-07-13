@@ -1,4 +1,4 @@
-export default function ProductRaiting({ rating }: { rating: number }) {
+export default function ProductRating({ rating }: { rating: number }) {
   const handleWidth = (order: number) => {
     if (order <= rating) {
       return '100%'
