@@ -308,6 +308,8 @@ Sữa lỗi Tailwindcss Extension không gợi ý class
 
 Các bạn thêm đoạn code này vào `settings.json` của VS Code
 
+Khi thêm dòng code đó vào thì khi ta code có thuộc tính là class hoặc className thì tailwindCSS sẽ tự động ý code
+
 ```json
 {
   //...
