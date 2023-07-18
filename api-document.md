@@ -9,8 +9,8 @@ Là một object
 
 ```ts
 interface Response {
-  message: string
-  data?: any
+  message: string;
+  data?: any;
 }
 ```
 
