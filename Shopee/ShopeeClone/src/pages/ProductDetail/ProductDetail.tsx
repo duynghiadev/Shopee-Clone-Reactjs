@@ -1,34 +1,34 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
+import purchaseApi from 'src/apis/purchase.api'
+import { toast } from 'react-toastify'
 import ProductRating from 'src/components/ProductRating'
+import QuantityController from 'src/components/QuantityController'
+import { purchasesStatus } from 'src/constants/purchase'
+import { queryClient } from 'src/main'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
 import Product from '../ProductList/components/Product'
-import QuantityController from 'src/components/QuantityController'
 
 export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
-
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
   })
-
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
   const product = productDetailData?.data.data
   const imageRef = useRef<HTMLImageElement>(null)
-
   const currentImages = useMemo(
     () => (product ? product.images.slice(...currentIndexImages) : []),
     [product, currentIndexImages]
   )
-
   const queryConfig: ProductListConfig = { limit: '20', page: '1', category: product?.category._id }
 
   const { data: productsData } = useQuery({
@@ -39,8 +39,7 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product)
   })
-
-  console.log(productsData)
+  const addToCartMutation = useMutation(purchaseApi.addToCart)
 
   useEffect(() => {
     if (product && product.images.length > 0) {
@@ -77,7 +76,6 @@ export default function ProductDetail() {
 
     const top = offsetY * (1 - naturalHeight / rect.height)
     const left = offsetX * (1 - naturalWidth / rect.width)
-
     image.style.width = naturalWidth + 'px'
     image.style.height = naturalHeight + 'px'
     image.style.maxWidth = 'unset'
@@ -93,8 +91,28 @@ export default function ProductDetail() {
     setBuyCount(value)
   }
 
-  if (!product) return null
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { buy_count: buyCount, product_id: product?._id as string },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, {
+            autoClose: 1000
+          })
+          queryClient.invalidateQueries({
+            queryKey: [
+              'purchases',
+              {
+                status: purchasesStatus.inCart
+              }
+            ]
+          })
+        }
+      }
+    )
+  }
 
+  if (!product) return null
   return (
     <div className='bg-gray-200 py-6'>
       <div className='container'>
@@ -192,10 +210,13 @@ export default function ProductDetail() {
                   value={buyCount}
                   max={product.quantity}
                 />
-                <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵnQuan</div>
+                <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
               </div>
               <div className='mt-8 flex items-center'>
-                <button className='flex h-12 items-center justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'>
+                <button
+                  onClick={addToCart}
+                  className='flex h-12 items-center justify-center rounded-sm border border-orange bg-orange/10 px-5 capitalize text-orange shadow-sm hover:bg-orange/5'
+                >
                   <svg
                     enableBackground='new 0 0 15 15'
                     viewBox='0 0 15 15'
@@ -231,7 +252,7 @@ export default function ProductDetail() {
       </div>
       <div className='mt-8'>
         <div className='container'>
-          <div className='mt-8 bg-white p-4 shadow'>
+          <div className=' bg-white p-4 shadow'>
             <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</div>
             <div className='mx-4 mb-4 mt-12 text-sm leading-loose'>
               <div
@@ -243,6 +264,7 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+
       <div className='mt-8'>
         <div className='container'>
           <div className='uppercase text-gray-400'>CÓ THỂ BẠN CŨNG THÍCH</div>
