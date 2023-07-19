@@ -189,7 +189,7 @@ export default function Cart() {
                                   name: purchase.product.name,
                                   id: purchase.product._id
                                 })}`}
-                                className='line-clamp-2'
+                                className='text-left line-clamp-2'
                               >
                                 {purchase.product.name}
                               </Link>
