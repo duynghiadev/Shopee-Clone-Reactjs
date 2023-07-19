@@ -10,6 +10,7 @@ interface AppContextInterface {
   setProfile: React.Dispatch<React.SetStateAction<User | null>>
   extendedPurchases: ExtendedPurchase[]
   setExtendedPurchases: React.Dispatch<React.SetStateAction<ExtendedPurchase[]>>
+  reset: () => void
 }
 
 const initialAppContext: AppContextInterface = {
@@ -18,7 +19,8 @@ const initialAppContext: AppContextInterface = {
   profile: getProfileFromLS(),
   setProfile: () => null,
   extendedPurchases: [],
-  setExtendedPurchases: () => null
+  setExtendedPurchases: () => null,
+  reset: () => null
 }
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
@@ -29,6 +31,12 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [profile, setProfile] = useState<User | null>(initialAppContext.profile)
 
+  const reset = () => {
+    setIsAuthenticated(false)
+    setExtendedPurchases([])
+    setProfile(null)
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -37,7 +45,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         profile,
         setProfile,
         extendedPurchases,
-        setExtendedPurchases
+        setExtendedPurchases,
+        reset
       }}
     >
       {children}
