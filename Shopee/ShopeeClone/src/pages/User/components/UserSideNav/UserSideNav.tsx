@@ -45,7 +45,7 @@ export default function UserSideNav() {
           </div>
           Đổi mật khẩu
         </Link>
-        <Link to={path.hitoryPurchase} className='mt-4 flex items-center capitalize text-gray-600 transition-colors'>
+        <Link to={path.historyPurchase} className='mt-4 flex items-center capitalize text-gray-600 transition-colors'>
           <div className='mr-3 h-[22px] w-[22px]'>
             <img src='https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078' alt='' className='h-full w-full' />
           </div>
