@@ -29,7 +29,6 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.login(body)
   })
-
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
@@ -73,6 +72,7 @@ export default function Login() {
                 register={register}
                 type='password'
                 className='mt-2'
+                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                 errorMessage={errors.password?.message}
                 placeholder='Password'
                 autoComplete='on'

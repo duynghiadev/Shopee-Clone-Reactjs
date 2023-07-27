@@ -23,7 +23,6 @@ const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export default function Register() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
-
   const {
     register,
     handleSubmit,
@@ -32,11 +31,9 @@ export default function Register() {
   } = useForm<FormData>({
     resolver: yupResolver(registerSchema)
   })
-
   const registerAccountMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.registerAccount(body)
   })
-
   const onSubmit = handleSubmit((data) => {
     const body = omit(data, ['confirm_password'])
     registerAccountMutation.mutate(body, {
@@ -93,6 +90,7 @@ export default function Register() {
                 register={register}
                 type='password'
                 className='mt-2'
+                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                 errorMessage={errors.password?.message}
                 placeholder='Password'
                 autoComplete='on'
@@ -103,6 +101,7 @@ export default function Register() {
                 register={register}
                 type='password'
                 className='mt-2'
+                classNameEye='absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]'
                 errorMessage={errors.confirm_password?.message}
                 placeholder='Confirm Password'
                 autoComplete='on'
