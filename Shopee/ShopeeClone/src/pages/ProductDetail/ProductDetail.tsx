@@ -12,8 +12,10 @@ import { Product as ProductType, ProductListConfig } from 'src/types/product.typ
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils'
 import Product from '../ProductList/components/Product'
 import path from 'src/constants/path'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetail() {
+  const { t } = useTranslation(['product'])
   const queryClient = useQueryClient()
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
@@ -98,27 +100,15 @@ export default function ProductDetail() {
       { buy_count: buyCount, product_id: product?._id as string },
       {
         onSuccess: (data) => {
-          toast.success(data.data.message, {
-            autoClose: 1000
-          })
-          queryClient.invalidateQueries({
-            queryKey: [
-              'purchases',
-              {
-                status: purchasesStatus.inCart
-              }
-            ]
-          })
+          toast.success(data.data.message, { autoClose: 1000 })
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
         }
       }
     )
   }
 
   const buyNow = async () => {
-    const res = await addToCartMutation.mutateAsync({
-      buy_count: buyCount,
-      product_id: product?._id as string
-    })
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
     const purchase = res.data.data
     navigate(path.cart, {
       state: {
@@ -225,7 +215,9 @@ export default function ProductDetail() {
                   value={buyCount}
                   max={product.quantity}
                 />
-                <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
+                <div className='ml-6 text-sm text-gray-500'>
+                  {product.quantity} {t('product:available')}
+                </div>
               </div>
               <div className='mt-8 flex items-center'>
                 <button
