@@ -16,12 +16,12 @@ Anh em dev chúng ta chỉ can thiệp được yếu tố cấu trúc website t
 
 ## Như thế nào là cấu trúc web chuẩn
 
-- Dùng đúng nhiệm vụ các thẻ khai báo HTML như `<head>`, `<body>`, các thẻ heading, thẻ p
-- Một trang của 1 web thì chỉ nên có 1 thẻ `<h1>`, các thẻ heading khác thì bao nhiêu cũng được
-- Sử dụng các thẻ meta, title cho từng trang
+- Dùng đúng nhiệm vụ các thẻ khai báo HTML như `<head>`, `<body>`, các thẻ `heading`, thẻ `p`
+- Một trang của 1 web thì chỉ nên có 1 thẻ `<h1>`, các thẻ `heading` khác thì bao nhiêu cũng được
+- Sử dụng các thẻ `meta`, `title` cho từng trang
 - URL dễ đọc
-- Mô tả ảnh với alt
-- Responsive trên mobile
+- Mô tả ảnh với `alt`
+- Responsive trên `mobile`
 
 - Tìm hiểu thêm Open Graph và shema JSOND để tăng tính thân thiện với search engine
 
