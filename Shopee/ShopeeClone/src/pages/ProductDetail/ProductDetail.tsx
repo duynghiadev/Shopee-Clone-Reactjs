@@ -22,18 +22,22 @@ export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState(1)
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
+
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
   })
+
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
   const product = productDetailData?.data.data
   const imageRef = useRef<HTMLImageElement>(null)
+
   const currentImages = useMemo(
     () => (product ? product.images.slice(...currentIndexImages) : []),
     [product, currentIndexImages]
   )
+
   const queryConfig: ProductListConfig = { limit: '20', page: '1', category: product?.category._id }
 
   const { data: productsData } = useQuery({
@@ -44,6 +48,7 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product)
   })
+
   const addToCartMutation = useMutation(purchaseApi.addToCart)
   const navigate = useNavigate()
 
@@ -102,15 +107,28 @@ export default function ProductDetail() {
       { buy_count: buyCount, product_id: product?._id as string },
       {
         onSuccess: (data) => {
-          toast.success(data.data.message, { autoClose: 1000 })
-          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
+          toast.success(data.data.message, {
+            autoClose: 1000
+          })
+          queryClient.invalidateQueries({
+            queryKey: [
+              'purchases',
+              {
+                status: purchasesStatus.inCart
+              }
+            ]
+          })
         }
       }
     )
   }
 
   const buyNow = async () => {
-    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
+    const res = await addToCartMutation.mutateAsync({
+      buy_count: buyCount,
+      product_id: product?._id as string
+    })
+
     const purchase = res.data.data
     navigate(path.cart, {
       state: {
