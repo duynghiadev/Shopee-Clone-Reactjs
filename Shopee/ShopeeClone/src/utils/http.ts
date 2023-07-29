@@ -22,7 +22,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 // Refresh Token mới cho API me: 5 - 6 (sau khi Me hết hạn thì nó lỗi. Sau đó nó gọi lại refresh token cho Me. Bắt đầu từ giây 5 -> giây 6)
 // Gọi lại Me: 6 (cuối cùng thì nó gọi lại API Me từ giây thứ 6)
 
-class Http {
+export class Http {
   instance: AxiosInstance
   private accessToken: string
   private refreshToken: string
@@ -93,7 +93,6 @@ class Http {
           const { url } = config
           // Trường hợp Token hết hạn và request đó không phải là của request refresh token
           // thì chúng ta mới tiến hành gọi refresh token
-          console.log(config)
           if (isAxiosExpiredTokenError(error) && url !== URL_REFRESH_TOKEN) {
             // Hạn chế gọi 2 lần handleRefreshToken
             this.refreshTokenRequest = this.refreshTokenRequest
