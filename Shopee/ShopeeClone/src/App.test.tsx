@@ -1,10 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
-import matchers from '@testing-library/jest-dom/matchers'
 import { renderWithRouter } from './utils/testUtils'
 import path from './constants/path'
-
-expect.extend(matchers)
 
 describe('App', () => {
   test('App render và chuyển trang', async () => {
@@ -31,20 +28,17 @@ describe('App', () => {
 
   test('Về trang not found', async () => {
     const badRoute = '/some/bad/route'
-    renderWithRouter({
-      route: badRoute
-    })
+    renderWithRouter({ route: badRoute })
     await waitFor(() => {
       expect(screen.getByText(/Page Not Found/i)).toBeInTheDocument()
     })
   })
 
   test('Render trang register', async () => {
-    renderWithRouter({
-      route: path.register
-    })
+    renderWithRouter({ route: path.register })
     await waitFor(() => {
       expect(screen.getByText(/Bạn đã có tài khoản?/i)).toBeInTheDocument()
     })
+    // await logScreen()
   })
 })

@@ -8,6 +8,9 @@ export const access_token_1s =
 export const refresh_token_1000days =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWJhZDZlMWFmYzJlMWExZjk2YjI4MyIsImVtYWlsIjoiYnVja0BnbWFpbC5jb20iLCJyb2xlcyI6WyJVc2VyIl0sImNyZWF0ZWRfYXQiOiIyMDIzLTA3LTI5VDA3OjQ4OjU0LjE2M1oiLCJpYXQiOjE2OTA2MTY5MzQsImV4cCI6NzQ2NjY1MDYxNjkzNH0.girHG88p9u9UFy4qS6v6ZHuBFNrWPr7LM_FRlbooSHA'
 
+export const access_token =
+  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmY5MzVlNWZkYzVmMDM3ZTZmNjhkMyIsImVtYWlsIjoiZDNAZ21haWwuY29tIiwicm9sZXMiOlsiVXNlciJdLCJjcmVhdGVkX2F0IjoiMjAyMi0xMi0xOVQxMzo1ODo0OC40ODlaIiwiaWF0IjoxNjcxNDU4MzI4LCJleHAiOjE2ODE0NTgzMjd9.00oi-93dF4Wz2Ngb6_G2dXO4VQXf2cRCft3W8DKgPdA'
+
 const loginRes = {
   message: 'Đăng nhập thành công',
   data: {
