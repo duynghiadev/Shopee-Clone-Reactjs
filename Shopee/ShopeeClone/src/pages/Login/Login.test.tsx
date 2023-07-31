@@ -46,12 +46,12 @@ describe('Login', () => {
   it('Không nên hiển thị lỗi khi nhập lại value đúng', async () => {
     fireEvent.change(emailInput, {
       target: {
-        value: 'test@mail.com'
+        value: 'buck@gmail.com'
       }
     })
     fireEvent.change(passwordInput, {
       target: {
-        value: '123456'
+        value: 'useruser'
       }
     })
     // Những trường hợp chứng minh rằng tìm không ra text hay là element
