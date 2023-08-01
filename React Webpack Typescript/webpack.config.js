@@ -21,16 +21,10 @@ module.exports = (env, argv) => {
   const config = {
     // Quy định cách webpack giải quyết các file
     resolve: {
+      
       // Giải quyết các file theo thứ tự ưu tiên từ trái sang phải nếu import
       // các file cùng một tên nhưng các đuôi mở rộng
-      extensions: ['.tsx', '.ts', '.jsx', '.js'],
-      alias: {
-        // Cấu hình alias cho webpack
-        // để khi import cho ngắn gọn
-        // Ví dụ: import Login from '@pages/Login'
-        // Thay vì: import Login from '../pages/Login' chẳng hạn
-        '@pages': path.resolve(__dirname, './src/pages')
-      }
+      extensions: ['.tsx', '.ts', '.jsx', '.js']
     },
     // File đầu vào cho webpack, file này thường là file import mọi file khác
     entry: ['./src/index.tsx'],
