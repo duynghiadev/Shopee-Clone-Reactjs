@@ -306,6 +306,18 @@ const response: SuccessResponse<{ deleted_count: number }> = {
 
 ---
 
+## 🚀🚀 Đây là cách giải thích của anh Được Dev trong group chat:
+
+- Đây là câu hỏi:
+
+![deletePurchase](deletePurchase.png)
+
+- Đây là đoạn code mà mình hỏi và anh Được đã giải thích ở hình dưới:
+
+![deleted_count](deleted_count.png)
+
+---
+
 ```jsx
 export default purchaseApi
 ```
