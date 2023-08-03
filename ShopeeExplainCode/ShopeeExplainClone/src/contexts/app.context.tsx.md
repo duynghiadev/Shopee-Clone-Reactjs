@@ -225,6 +225,7 @@ export const AppProvider = ({
     setExtendedPurchases([])
     setProfile(null)
   }
+}
 ```
 
 1. `export const AppProvider = (...) => { ... }`:
@@ -297,67 +298,100 @@ export const AppProvider = ({
 
 ---
 
-- Bữa sau bắt đầu từ đoạn dưới này 👇👇👇 (từ số 3 -> số 6)
-
 3. `const [isAuthenticated, setIsAuthenticated] = useState<boolean>(defaultValue.isAuthenticated)`:
 
-- Dùng useState để tạo một biến trạng thái isAuthenticated và một hàm setIsAuthenticated để cập nhật giá trị của biến trạng thái này.
+- Dùng `useState` để tạo một biến trạng thái `isAuthenticated` và một hàm `setIsAuthenticated` để cập nhật giá trị của biến trạng thái này.
 
-- Giá trị ban đầu của isAuthenticated sẽ được lấy từ defaultValue.isAuthenticated, tức là giá trị isAuthenticated trong initialAppContext.
+- Giá trị ban đầu của `isAuthenticated` sẽ được lấy từ `defaultValue.isAuthenticated`, tức là giá trị `isAuthenticated` trong `initialAppContext`.
 
 4. `const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchase[]>(defaultValue.extendedPurchases)`:
 
-- Dùng useState để tạo một biến trạng thái extendedPurchases và một hàm setExtendedPurchases để cập nhật giá trị của biến trạng thái này.
+- Dùng `useState` để tạo một biến trạng thái `extendedPurchases` và một hàm `setExtendedPurchases` để cập nhật giá trị của biến trạng thái này.
 
-- Giá trị ban đầu của extendedPurchases sẽ được lấy từ defaultValue.extendedPurchases, tức là giá trị extendedPurchases trong initialAppContext.
+- Giá trị ban đầu của `extendedPurchases` sẽ được lấy từ `defaultValue.extendedPurchases`, tức là giá trị `extendedPurchases` trong `initialAppContext`.
 
 5. `const [profile, setProfile] = useState<User | null>(defaultValue.profile)`:
 
-- Dùng useState để tạo một biến trạng thái profile và một hàm setProfile để cập nhật giá trị của biến trạng thái này.
+- Dùng `useState` để tạo một biến trạng thái `profile` và một hàm `setProfile` để cập nhật giá trị của biến trạng thái này.
 
-- Giá trị ban đầu của profile sẽ được lấy từ defaultValue.profile, tức là giá trị profile trong initialAppContext.
+- Giá trị ban đầu của `profile` sẽ được lấy từ `defaultValue.profile`, tức là giá trị `profile` trong `initialAppContext`.
 
 6. `const reset = () => { ... }`:
 
-- Định nghĩa hàm reset để thiết lập lại các giá trị trạng thái của Provider về giá trị ban đầu.
+- Định nghĩa hàm `reset` để thiết lập lại các giá trị trạng thái của Provider về giá trị ban đầu.
 
-- Trong hàm reset, giá trị của isAuthenticated sẽ được đặt về false, extendedPurchases sẽ là một mảng rỗng [], và profile sẽ được đặt về null.
+- Trong hàm `reset`, giá trị của `isAuthenticated` sẽ được đặt về `false`, `extendedPurchases` sẽ là một mảng rỗng `[]`, và `profile` sẽ được đặt về `null`.
 
-- Khi hàm reset được gọi, các giá trị trạng thái của Provider sẽ được reset về giá trị ban đầu của defaultValue trong initialAppContext.
+- Khi hàm `reset` được gọi, các giá trị trạng thái của Provider sẽ được reset về giá trị ban đầu của `defaultValue` trong `initialAppContext`.
 
-- Sau khi tạo các biến trạng thái và hàm reset, AppProvider sẽ cung cấp các giá trị và hàm này xuống cho các component con thông qua Context (AppContext.Provider). Các component con có thể sử dụng Hook useContext để truy cập và sử dụng các giá trị và hàm này trong ứng dụng.
+- Sau khi tạo các biến trạng thái và hàm `reset`, `AppProvider` sẽ cung cấp các giá trị và hàm này xuống cho các component con thông qua Context (`AppContext.Provider`). Các component con có thể sử dụng Hook `useContext` để truy cập và sử dụng các giá trị và hàm này trong ứng dụng.
 
 ---
 
 ```jsx
-  return (
-    <AppContext.Provider
-      value={{
-        isAuthenticated,
-        setIsAuthenticated,
-        profile,
-        setProfile,
-        extendedPurchases,
-        setExtendedPurchases,
-        reset
-      }}
-    >
-      {children}
-    </AppContext.Provider>
-  )
-}
+return (
+  <AppContext.Provider
+    value={{
+      isAuthenticated,
+      setIsAuthenticated,
+      profile,
+      setProfile,
+      extendedPurchases,
+      setExtendedPurchases,
+      reset
+    }}
+  >
+    {children}
+  </AppContext.Provider>
+)
 ```
+
+- Đoạn code trên là phần trả về của `AppProvider`, nơi mà giá trị và hàm trạng thái được cung cấp thông qua Context (`AppContext`) xuống cho các component con.
+
+- Giải thích từng phần chi tiết của đoạn code:
+
+1. `<AppContext.Provider ...>`:
+
+- Đoạn code trên sử dụng Context Provider (`AppContext.Provider`) để cung cấp các giá trị trạng thái và phương thức cho các component con trong cây DOM.
+
+- Giá trị và hàm trạng thái được cung cấp thông qua thuộc tính `value` của Provider.
+
+2. `value={{ ... }}`:
+
+- Đoạn code này định nghĩa đối tượng (object) chứa các giá trị trạng thái (state) và phương thức (method) được cung cấp xuống cho các component con thông qua Context.
+
+- Các thuộc tính của đối tượng tương ứng với tên của giá trị và hàm trạng thái đã được định nghĩa trước đó trong `AppProvider`.
+
+3. `isAuthenticated, setIsAuthenticated, profile, setProfile, extendedPurchases, setExtendedPurchases, reset`:
+
+- Các biến và hàm trạng thái đã được tạo trong `AppProvider` được cung cấp thông qua đối tượng `value`.
+
+- Như vậy, các component con sẽ có thể truy cập và sử dụng giá trị của `isAuthenticated`, `profile`, `extendedPurchases` và các hàm `setIsAuthenticated`, `setProfile`, `setExtendedPurchases`, `reset` thông qua Context.
+
+4. `{children}`:
+
+- Giữa các thẻ `AppContext.Provider`, chúng ta có `{children}`. Điều này cho phép các component con được bao bọc bên trong Provider.
+
+- Các component con bên trong `AppProvider` sẽ có thể truy cập vào các giá trị và hàm trạng thái từ Context thông qua Hook `useContext`.
+
+- Tóm lại, đoạn code trên cung cấp các giá trị và hàm trạng thái từ `AppProvider` xuống cho các component con thông qua Context (`AppContext`). Điều này cho phép các component con trong cây DOM có thể truy cập và sử dụng các giá trị và hàm trạng thái này mà không cần truyền dữ liệu qua props. Việc sử dụng Context giúp giảm bớt sự phức tạp của việc quản lý dữ liệu và tiết kiệm thời gian và công sức trong việc truyền dữ liệu giữa các component.
 
 ---
 
 ❌❌Ôn lại khái niệm Context, trong Context gồm có những gì❌❌
 
-## Hãy nêu khái niệm React context API ?
+## Hãy nêu khái niệm React Context API ?
 
-## Tạo context trong react ?
+## Trong Context gồm có những gì ?
 
-## Cách update data trong context ?
+## Cho ví dụ cơ bản về Context API trong React ?
 
-## So sánh Redux và context ?
+## Cho ví dụ nâng cao về Context API trong React ?
+
+## Tạo Context trong react ?
+
+## Cách update data trong Context ?
+
+## So sánh Redux và Context ?
 
 ![Redux and Context](Redux-Context.png)
