@@ -382,16 +382,231 @@ return (
 
 ## Hãy nêu khái niệm React Context API ?
 
+- React Context API là một tính năng của React, giúp quản lý và chia sẻ dữ liệu trong cây component một cách hiệu quả và tiện lợi. Nó giúp giải quyết vấn đề truyền dữ liệu giữa các component con cấp thấp và cấp cao khi không muốn truyền dữ liệu qua props nhiều lớp.
+
+- Khái niệm React Context API bao gồm các yếu tố chính sau:
+
+1. `Provider`: Là thành phần cung cấp dữ liệu (state) và hàm cập nhật dữ liệu xuống các component con trong cây component. Provider đóng vai trò là nguồn dữ liệu chung và đảm bảo rằng các component con có thể truy cập và sử dụng dữ liệu này mà không cần truyền qua props.
+
+2. `Consumer`: Là thành phần con trong cây component, sử dụng dữ liệu (state) từ Provider. Consumer sẽ đăng ký để lắng nghe và nhận thông tin từ Provider. Khi dữ liệu trong Provider thay đổi, các Consumer sẽ tự động cập nhật và hiển thị lại dữ liệu mới.
+
+3. `Context`: Là đối tượng chứa dữ liệu được cung cấp bởi Provider và nhận được bởi Consumer. Context cung cấp một cách để truyền dữ liệu từ Provider đến Consumer mà không cần truyền qua props qua nhiều lớp trung gian.
+
+- Cách sử dụng React Context API:
+
+1. `Định nghĩa Context`: Tạo một Context bằng hàm `createContext` và định nghĩa các giá trị mặc định ban đầu cho nó.
+
+2. `Tạo Provider`: Sử dụng Provider để cung cấp dữ liệu cho cây component. Đặt các giá trị trạng thái và hàm cập nhật dữ liệu vào thuộc tính `value` của Provider.
+
+3. `Tạo Consumer`: Sử dụng Consumer để nhận và sử dụng dữ liệu từ Provider. Consumer sẽ tự động cập nhật khi dữ liệu trong Provider thay đổi.
+
+4. `Truyền dữ liệu`: Dữ liệu từ Provider sẽ được truyền xuống các Consumer thông qua Context, cho phép các component con có thể truy cập và sử dụng dữ liệu này mà không cần truyền qua props nhiều lớp.
+
+---
+
 ## Trong Context gồm có những gì ?
+
+- Trong Context, có những phần chính sau:
+
+1. `Provider`: Provider là thành phần cung cấp dữ liệu và hàm cập nhật dữ liệu cho cây component. Nó được sử dụng để định nghĩa các giá trị trạng thái và các hàm cập nhật dữ liệu. Provider chịu trách nhiệm cung cấp dữ liệu cho các component con bên trong cây component.
+
+2. `Consumer`: Consumer là thành phần con trong cây component, sử dụng dữ liệu từ Provider. Nó sẽ đăng ký để lắng nghe và nhận thông tin từ Provider. Khi dữ liệu trong Provider thay đổi, các Consumer sẽ tự động cập nhật và hiển thị lại dữ liệu mới.
+
+3. `Context Object`: Context là đối tượng chứa dữ liệu được cung cấp bởi Provider và nhận được bởi Consumer. Context cung cấp một cách để truyền dữ liệu từ Provider đến Consumer mà không cần truyền qua props qua nhiều lớp trung gian. Context được tạo bằng hàm `createContext` trong React.
+
+4. `Giá trị trạng thái và hàm cập nhật`: Là các giá trị trạng thái và hàm cập nhật dữ liệu được định nghĩa trong Provider. Những giá trị này là dữ liệu mà Provider cung cấp cho Consumer để sử dụng. Khi giá trị trạng thái thay đổi trong Provider, các Consumer sẽ được thông báo và cập nhật lại dữ liệu mới.
+
+- Tóm lại, trong Context, có Provider để cung cấp dữ liệu, Consumer để sử dụng dữ liệu và Context Object để truyền dữ liệu giữa Provider và Consumer. Việc sử dụng Context giúp giảm bớt sự phức tạp của việc quản lý dữ liệu và tiết kiệm thời gian và công sức trong việc truyền dữ liệu giữa các component trong ứng dụng React.
+
+---
 
 ## Cho ví dụ cơ bản về Context API trong React ?
 
+- Dưới đây là một ví dụ cơ bản về cách sử dụng Context API trong React để chia sẻ và sử dụng dữ liệu giữa các component:
+
+1. Đầu tiên, tạo một Context và một Provider:
+
+```jsx
+import React, { createContext, useState } from 'react'
+
+// Tạo Context
+const MyContext = createContext()
+
+// Tạo Provider
+const MyProvider = ({ children }) => {
+  const [count, setCount] = useState(0)
+
+  return <MyContext.Provider value={{ count, setCount }}>{children}</MyContext.Provider>
+}
+```
+
+2. Tiếp theo, tạo các component sử dụng dữ liệu từ Provider thông qua Consumer:
+
+```jsx
+// Component con sử dụng dữ liệu từ Context
+const CounterDisplay = () => {
+  const { count } = useContext(MyContext)
+
+  return <div>Count: {count}</div>
+}
+
+// Component con sử dụng dữ liệu và hàm cập nhật từ Context
+const CounterButton = () => {
+  const { count, setCount } = useContext(MyContext)
+
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1)
+  }
+
+  return <button onClick={handleIncrement}>Increment</button>
+}
+```
+
+3. Cuối cùng, sử dụng Provider để bao bọc các component và cung cấp dữ liệu cho chúng:
+
+```jsx
+const App = () => {
+  return (
+    // Sử dụng Provider để cung cấp dữ liệu cho các component con
+    <MyProvider>
+      <CounterDisplay />
+      <CounterButton />
+    </MyProvider>
+  )
+}
+```
+
+- Trong ví dụ này, `MyContext` là một Context, `MyProvider` là một Provider cung cấp dữ liệu cho các component con và chia sẻ `count` và `setCount` là giá trị trạng thái và hàm cập nhật của `count`. Các component con `CounterDisplay` và `CounterButton` sử dụng dữ liệu từ Provider thông qua `useContext` để hiển thị giá trị `count` và thực hiện hành động tăng giá trị `count` khi nhấn vào nút "Increment".
+
+<br/>
+
+<b>✅✅ Sau đây là giải thích những đoạn code ở trên ✅✅</b>
+
+<samp>❌❌ Đoạn 1 ❌❌</samp>
+
+```jsx
+import React, { createContext, useState } from 'react'
+
+// Tạo Context
+const MyContext = createContext()
+
+// Tạo Provider
+const MyProvider = ({ children }) => {
+  const [count, setCount] = useState(0)
+
+  return <MyContext.Provider value={{ count, setCount }}>{children}</MyContext.Provider>
+}
+```
+
+- Trong đoạn mã trên, chúng ta đang tạo một Context và một Provider sử dụng Context API của React.
+
+1. `import React, { createContext, useState } from 'react'`: Import các module cần thiết từ React, bao gồm `createContext` và `useState`.
+
+2. Tạo Context:
+
+- `const MyContext = createContext()`: Đoạn mã trên tạo một Context mới với tên là `MyContext` bằng cách sử dụng hàm `createContext()`. Khi không truyền giá trị nào vào hàm `createContext()`, Context sẽ có giá trị mặc định là `undefined`.
+
+3. Tạo Provider:
+
+- `const MyProvider = ({ children }) => { ... }`: Đoạn mã trên tạo một Provider với tên là `MyProvider`, nhận vào một prop là `children`.
+
+- Trong React, `children` là một prop đặc biệt chứa các component con của component cha được bao bọc bởi Provider.
+
+- `const [count, setCount] = useState(0)`: Trong Provider, chúng ta sử dụng `useState` để tạo một biến trạng thái `count` và một hàm `setCount` để cập nhật giá trị của `count`. Giá trị ban đầu của `count` là 0.
+
+- `<MyContext.Provider value={{ count, setCount }}> ... </MyContext.Provider>`: Trong Provider, chúng ta sử dụng `MyContext.Provider` để cung cấp dữ liệu cho các component con bên trong cây component.
+
+  - Thuộc tính `value` của Provider chứa đối tượng và chứa các giá trị trạng thái và hàm cập nhật mà các component con có thể truy cập thông qua Context.
+
+  - Trong trường hợp này, chúng ta đang cung cấp giá trị `count` và hàm `setCount` cho các component con thông qua Context.
+
+4. `{children}`: Đoạn mã `children` bên trong Provider cho phép các component con được bao bọc bởi Provider. Như vậy, các component con trong cây component sẽ có thể truy cập vào các giá trị `count` và `setCount` từ Context.
+
+- Tóm lại, đoạn mã trên tạo một Context có tên là `MyContext` và một Provider có tên là `MyProvider`, cung cấp giá trị trạng thái `count` và hàm cập nhật `setCount` cho các component con trong cây component thông qua Context.
+
+<samp>❌❌ Đoạn 2 ❌❌</samp>
+
+```jsx
+const CounterDisplay = () => {
+  const { count } = useContext(MyContext)
+
+  return <div>Count: {count}</div>
+}
+
+// Component con sử dụng dữ liệu và hàm cập nhật từ Context
+const CounterButton = () => {
+  const { count, setCount } = useContext(MyContext)
+
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1)
+  }
+
+  return <button onClick={handleIncrement}>Increment</button>
+}
+```
+
+- Đoạn mã trên là hai component con trong React sử dụng dữ liệu từ Context (`MyContext`) thông qua Hook `useContext`.
+
+1. `const { count } = useContext(MyContext)`: Trong component `CounterDisplay`, chúng ta sử dụng `useContext` để lấy dữ liệu từ Context (`MyContext`). Biến `count` sẽ lấy giá trị trạng thái `count` từ Context và được sử dụng để hiển thị số lượng hiện tại.
+
+2. `return <div>Count: {count}</div>`: Component `CounterDisplay` trả về một đoạn mã JSX là một div hiển thị số lượng hiện tại từ dữ liệu lấy từ Context.
+
+3. `const { count, setCount } = useContext(MyContext)`: Trong component `CounterButton`, chúng ta cũng sử dụng `useContext` để lấy dữ liệu từ Context (`MyContext`). Biến `count` lấy giá trị trạng thái `count` từ Context và biến `setCount` lấy hàm cập nhật `setCount` từ Context. Biến `setCount` được sử dụng để tăng giá trị `count` khi nút "Increment" được nhấn.
+
+4. `const handleIncrement = () => { setCount((prevCount) => prevCount + 1) }`: Hàm `handleIncrement` sử dụng hàm cập nhật `setCount` để cập nhật giá trị `count`. Bằng cách sử dụng hàm cập nhật dạng hàm (`(prevCount) => prevCount + 1`), chúng ta đảm bảo rằng giá trị mới được tính toán dựa trên giá trị trước đó của `count`.
+
+5. `return <button onClick={handleIncrement}>Increment</button>`: Component `CounterButton` trả về một đoạn mã JSX là một nút "Increment". Khi nút này được nhấn, hàm `handleIncrement` sẽ được gọi và giá trị `count` sẽ được tăng lên 1.
+
+- Tóm lại, đoạn mã trên cho thấy cách hai component con `CounterDisplay` và `CounterButton` sử dụng dữ liệu từ Context (`MyContext`) thông qua Hook `useContext` để hiển thị và cập nhật giá trị `count`. Nhờ đó, dữ liệu trong Provider được chia sẻ và sử dụng giữa các component con mà không cần truyền qua props nhiều lớp.
+
+<samp>❌❌ Đoạn 3 ❌❌</samp>
+
+```jsx
+const App = () => {
+  return (
+    // Sử dụng Provider để cung cấp dữ liệu cho các component con
+    <MyProvider>
+      <CounterDisplay />
+      <CounterButton />
+    </MyProvider>
+  )
+}
+```
+
+1. Đoạn mã trên là một component tên là `App`, là component chính của ứng dụng.
+
+2. `MyProvider` là một Provider, như đã định nghĩa trước đó, nó chứa dữ liệu và hàm cập nhật dữ liệu để chia sẻ cho các component con trong cây component.
+
+3. `<MyProvider>`: Chúng ta bao bọc hai component con `CounterDisplay` và `CounterButton` bên trong `<MyProvider>`. Nhờ vậy, hai component con này đều có thể sử dụng dữ liệu từ Provider.
+
+4. `CounterDisplay` và `CounterButton` là hai component con sử dụng dữ liệu từ Provider thông qua Context API, như đã giải thích ở trước đó.
+
+5. Từ đoạn mã trên, ta có thể hiểu rằng `App` đang sử dụng `MyProvider` để cung cấp dữ liệu cho các component con bên trong nó. Cụ thể là `CounterDisplay` và `CounterButton` có thể sử dụng và chia sẻ dữ liệu từ Provider, và việc truyền dữ liệu qua các cấp component không cần thiết.
+
+- Với cách này, dữ liệu trong Provider sẽ được chia sẻ và sử dụng bởi các component con một cách hiệu quả, giúp giảm bớt sự phức tạp của việc quản lý dữ liệu và tiết kiệm thời gian và công sức trong việc truyền dữ liệu giữa các component trong ứng dụng React.
+
+---
+
+## Cho ví dụ cơ bản về Context API trong React trong typescript?
+
+---
+
 ## Cho ví dụ nâng cao về Context API trong React ?
+
+---
 
 ## Tạo Context trong react ?
 
+---
+
 ## Cách update data trong Context ?
 
+---
+
 ## So sánh Redux và Context ?
+
+---
+
+👇👇👇 Dưới đây là hình ảnh sơ lược về Redux và Context 👇👇👇
 
 ![Redux and Context](Redux-Context.png)
