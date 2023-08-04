@@ -589,9 +589,156 @@ const App = () => {
 
 ## Cho ví dụ cơ bản về Context API trong React trong typescript?
 
+- Dưới đây là một ví dụ cơ bản về cách sử dụng Context API trong React với TypeScript để chia sẻ và sử dụng dữ liệu giữa các component:
+
+1. Đầu tiên, tạo một Context và một Provider với TypeScript:
+
+```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+// Định nghĩa kiểu dữ liệu của Context
+interface AppContextData {
+  count: number;
+  increment: () => void;
+}
+
+// Tạo Context với kiểu dữ liệu AppContextData
+const AppContext = createContext<AppContextData>({} as AppContextData);
+
+// Tạo Provider
+const AppProvider = ({ children }) => {
+  const [count, setCount] = useState<number>(0);
+
+  const increment = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+
+  return (
+    <AppContext.Provider value={{ count, increment }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+```
+
+1. Đoạn mã trên bao gồm ba phần chính:
+
+- Định nghĩa kiểu dữ liệu của Context:
+
+```jsx
+interface AppContextData {
+  count: number;
+  increment: () => void;
+}
+```
+
+- Đây là một interface TypeScript để xác định kiểu dữ liệu của Context. Trong trường hợp này, Context có hai trường dữ liệu: `count` là một số nguyên (number) và `increment` là một hàm không có tham số và không có giá trị trả về.
+
+- Tạo Context:
+
+```jsx
+const AppContext = createContext<AppContextData>({} as AppContextData);
+```
+
+- Đoạn mã trên tạo một Context mới có tên là `AppContext`. Chúng ta sử dụng hàm `createContext` từ React và chỉ định kiểu dữ liệu của Context là `AppContextData`.
+
+- Tạo Provider:
+
+```jsx
+const AppProvider = ({ children }) => {
+  const [count, setCount] = useState < number > 0
+
+  const increment = () => {
+    setCount((prevCount) => prevCount + 1)
+  }
+
+  return <AppContext.Provider value={{ count, increment }}>{children}</AppContext.Provider>
+}
+```
+
+- Trong đoạn mã trên, chúng ta tạo một Provider (người cung cấp dữ liệu) có tên là `AppProvider`. Provider này sử dụng React Hook `useState` để tạo một trạng thái (state) có tên là `count` với giá trị ban đầu là 0. Ngoài ra, chúng ta tạo một hàm có tên là `increment` để tăng giá trị của `count` lên một đơn vị mỗi khi được gọi.
+
+- Sau đó, Provider truyền dữ liệu và hàm `increment` này vào trong Context thông qua thuộc tính `value` của Provider (`<AppContext.Provider value={{ count, increment }}>`) để các component con có thể sử dụng.
+
+- Provider bao bọc một số component con (được truyền qua prop children) để cung cấp dữ liệu cho chúng.
+
+2. Tiếp theo, tạo các component sử dụng dữ liệu từ Provider thông qua Consumer với TypeScript:
+
+```jsx
+// Component sử dụng dữ liệu từ Context
+const CounterDisplay = () => {
+  const { count } = useContext(AppContext)
+
+  return <div>Count: {count}</div>
+}
+
+// Component sử dụng dữ liệu và hàm cập nhật từ Context
+const CounterButton = () => {
+  const { increment } = useContext(AppContext)
+
+  return <button onClick={increment}>Increment</button>
+}
+```
+
+1. Đoạn mã trên định nghĩa hai component con: `CounterDisplay` và `CounterButton`.
+
+2. Component `CounterDisplay` sử dụng dữ liệu từ Context (`AppContext`) để hiển thị số lượng hiện tại (`count`).
+
+3. Component `CounterButton` sử dụng dữ liệu và hàm cập nhật từ Context để thực hiện hành động tăng số lượng (`increment`) khi nhấn nút "Increment".
+
+4. Cách hoạt động của hai component con:
+
+- Component `CounterDisplay`:
+
+  - Sử dụng `useContext(AppContext)` để lấy dữ liệu từ Context. Trong trường hợp này, chúng ta chỉ quan tâm đến dữ liệu `count`, vì vậy chúng ta sử dụng cú pháp `{ count } = useContext(AppContext)` để lấy giá trị `count` từ Context.
+
+  - Sau đó, component trả về một div hiển thị số lượng hiện tại (`count`) được lấy từ Context.
+
+- Component `CounterButton`:
+
+  - Cũng sử dụng `useContext(AppContext)` để lấy dữ liệu và hàm cập nhật từ Context. Chúng ta chỉ quan tâm đến hàm `increment` trong Context, nên chúng ta sử dụng cú pháp `{ increment } = useContext(AppContext)` để lấy hàm `increment`.
+
+  - Sau đó, component trả về một nút "Increment" (`<button onClick={increment}>Increment</button>`) và định nghĩa hành động khi nút này được nhấn: khi nhấn nút, hàm `increment` sẽ được gọi để tăng giá trị `count` trong Context lên một đơn vị.
+
+- Để hiểu rõ hơn, ta cần bao bọc các component con này bên trong Provider (`AppProvider`) để cung cấp dữ liệu từ Context cho chúng. Bằng cách này, các component con có thể sử dụng và chia sẻ dữ liệu từ Provider một cách dễ dàng và hiệu quả.
+
+3. Cuối cùng, sử dụng Provider để bao bọc các component và cung cấp dữ liệu cho chúng:
+
+```jsx
+const App = () => {
+  return (
+    // Sử dụng Provider để cung cấp dữ liệu cho các component con
+    <AppProvider>
+      <CounterDisplay />
+      <CounterButton />
+    </AppProvider>
+  )
+}
+```
+
+- Đoạn mã trên là một component chính có tên là `App`. Component `App` được sử dụng để hiển thị các component con `CounterDisplay` và `CounterButton`.
+
+1. `<AppProvider>`: Đây là một Provider (`AppProvider`) mà chúng ta đã định nghĩa trước đó. Provider này chứa dữ liệu và hàm cập nhật dữ liệu (`count` và `increment`) và được sử dụng để chia sẻ dữ liệu giữa các component con bên trong nó.
+
+2. Bên trong `<AppProvider>`, chúng ta có hai component con:
+
+- `CounterDisplay`: Đây là component sử dụng dữ liệu từ Context để hiển thị số lượng hiện tại (`count`). Nó không thay đổi dữ liệu mà chỉ sử dụng dữ liệu từ Provider để hiển thị thông tin.
+
+- `CounterButton`: Đây là component sử dụng dữ liệu và hàm cập nhật từ Context để thực hiện hành động tăng số lượng (`increment`) khi nhấn nút "Increment".
+
+- Nhưng để Context API hoạt động, chúng ta cần có một Provider (`AppProvider`) bọc các component con. Trong trường hợp này, chúng ta bao bọc `CounterDisplay` và `CounterButton` bên trong `<AppProvider>`. Nhờ Provider này, dữ liệu `count` và hàm `increment` từ Provider sẽ được cung cấp cho cả `CounterDisplay` và `CounterButton` một cách dễ dàng và hiệu quả.
+
+- Điều này cho phép các component con chia sẻ và sử dụng dữ liệu chung từ Provider mà không cần phải truyền qua props qua nhiều lớp. Nó giúp giảm sự phức tạp và tăng tính tái sử dụng của mã trong ứng dụng React.
+
+- ✅✅ Tóm lại: Trong ví dụ này, `AppContextData` là kiểu dữ liệu của Context và Provider. `AppContext` là Context được tạo bằng hàm `createContext` với kiểu dữ liệu `AppContextData`. `AppProvider` là Provider chứa dữ liệu và hàm cập nhật dữ liệu, và cung cấp chúng cho các component con thông qua Context. Các component con `CounterDisplay` và `CounterButton` sử dụng dữ liệu từ Context thông qua Hook `useContext` và hiển thị số lượng hiện tại và thực hiện hành động tăng giá trị `count` khi nhấn vào nút "Increment".
+
 ---
 
 ## Cho ví dụ nâng cao về Context API trong React ?
+
+---
+
+## Cho ví dụ nâng cao về Context API trong React với TypeScript ?
 
 ---
 
