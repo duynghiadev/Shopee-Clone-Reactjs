@@ -734,7 +734,7 @@ const App = () => {
 
 ---
 
-## Cho ví dụ nâng cao về Context API trong React ?
+## Cho ví dụ nâng cao về Context API trong React với TypeScript ?
 
 - Dưới đây là một ví dụ nâng cao về cách sử dụng Context API trong React để quản lý trạng thái của một giỏ hàng trong ứng dụng mua sắm đơn giản.
 
@@ -1114,19 +1114,392 @@ const App = () => {
 
 ---
 
-## Cho ví dụ nâng cao về Context API trong React với TypeScript ?
-
----
-
 ## Tạo Context trong react ?
+
+- Để tạo một Context trong React, chúng ta sẽ sử dụng các bước sau:
+
+1. Định nghĩa kiểu dữ liệu cho Context (nếu cần thiết): Đầu tiên, chúng ta cần định nghĩa kiểu dữ liệu cho dữ liệu và hành động mà chúng ta muốn chia sẻ qua Context. Điều này có thể là bất kỳ kiểu dữ liệu nào, bao gồm cả các kiểu dữ liệu tùy chỉnh (optional).
+
+2. Tạo Context: Chúng ta sử dụng hàm `createContext` từ thư viện React để tạo Context. Hàm này trả về một đối tượng Context.
+
+3. Tạo Provider: Tiếp theo, chúng ta sẽ tạo một Provider bằng cách sử dụng Context. Provider sẽ cung cấp dữ liệu và hành động từ Context cho các component con.
+
+4. Cung cấp dữ liệu từ Provider: Cuối cùng, chúng ta bao bọc các component con bên trong Provider và cung cấp dữ liệu và hành động từ Context cho chúng.
+
+- Dưới đây là một ví dụ minh họa về cách tạo một Context trong React:
+
+```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+// Định nghĩa kiểu dữ liệu của Context
+interface AppContextData {
+  username: string;
+  setUsername: (name: string) => void;
+}
+
+// Tạo Context với kiểu dữ liệu AppContextData
+const AppContext = createContext<AppContextData>({} as AppContextData);
+
+// Tạo Provider
+const AppProvider = ({ children }) => {
+  const [username, setUsername] = useState<string>('');
+
+  return (
+    <AppContext.Provider value={{ username, setUsername }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+// Component sử dụng dữ liệu và hành động từ Context
+const UserProfile = () => {
+  const { username, setUsername } = useContext(AppContext);
+
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <p>Username: {username}</p>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+    </div>
+  );
+};
+
+// Component sử dụng dữ liệu từ Context
+const Greeting = () => {
+  const { username } = useContext(AppContext);
+
+  return <h1>Hello, {username}!</h1>;
+};
+
+// Component chính của ứng dụng
+const App = () => {
+  return (
+    <AppProvider>
+      <Greeting />
+      <UserProfile />
+    </AppProvider>
+  );
+};
+```
+
+**❌❌ Giải thích chi tiết đoạn code ❌❌**
+
+❌❌ Đoạn 1 ❌❌
+
+```jsx
+import React, { createContext, useContext, useState } from 'react'
+```
+
+- Dòng mã trên sử dụng cú pháp `import` để import các module từ thư viện React và cung cấp khả năng sử dụng các tính năng trong React trong ứng dụng.
+
+- `React`: Đây là module cốt lõi của thư viện React. Nó cung cấp các hàm và thành phần (component) cơ bản để xây dựng giao diện người dùng và quản lý trạng thái của ứng dụng.
+
+- `createContext`: Đây là một hàm trong React được sử dụng để tạo Context. Context giúp chia sẻ dữ liệu giữa các thành phần (component) con trong ứng dụng mà không cần truyền qua các thành phần (component) cha.
+
+- `useContext`: Đây là một hook trong React, được sử dụng để truy cập dữ liệu từ Context Provider. Khi sử dụng hook này, các thành phần con có thể lấy dữ liệu và các hàm hành động từ Context Provider một cách dễ dàng.
+
+- `useState`: Đây cũng là một hook trong React, được sử dụng để tạo biến state và hàm setter tương ứng để quản lý trạng thái của các thành phần. Khi giá trị của biến state thay đổi, React sẽ tự động cập nhật giao diện với giá trị mới.
+
+- Những module và hook này rất quan trọng trong việc xây dựng ứng dụng React. Chúng cho phép bạn tạo và quản lý trạng thái, chia sẻ dữ liệu giữa các thành phần, và làm cho quá trình phát triển ứng dụng trở nên đơn giản và hiệu quả.
+
+❌❌ Đoạn 2 ❌❌
+
+```jsx
+// Định nghĩa kiểu dữ liệu của Context
+interface AppContextData {
+  username: string;
+  setUsername: (name: string) => void;
+}
+```
+
+- Giao diện (interface) `AppContextData` định nghĩa kiểu dữ liệu cho Context trong ứng dụng. Trong trường hợp này, `AppContextData` mô tả các thuộc tính và phương thức cần thiết để quản lý dữ liệu về tên người dùng (`username`) và cách để thay đổi giá trị của tên người dùng (`setUsername`).
+
+1. `username: string;`:
+
+- Đây là một thuộc tính (property) của Context có kiểu dữ liệu là `string`.
+- Thuộc tính `username` sẽ lưu trữ tên người dùng trong ứng dụng. Đây là một dữ liệu không đổi, tức là chỉ đọc và không thay đổi trực tiếp.
+
+2. `setUsername: (name: string) => void;`:
+
+- Đây là một phương thức (method) của Context có kiểu dữ liệu là một hàm (function) nhận tham số kiểu `string` và không có giá trị trả về (`void`).
+- Phương thức `setUsername` sẽ được sử dụng để thay đổi giá trị của `username`, nghĩa là khi bạn gọi `setUsername(name)`, giá trị của `username` trong Context sẽ được cập nhật thành `name`.
+
+- Với `AppContextData` này, ta định nghĩa kiểu dữ liệu cho Context trong ứng dụng, cung cấp các thuộc tính và phương thức để quản lý tên người dùng và thay đổi nó khi cần thiết. Context Provider sẽ sử dụng `AppContextData` này để cung cấp các giá trị và phương thức này cho các thành phần con trong ứng dụng.
+
+❌❌ Đoạn 3 ❌❌
+
+```jsx
+// Tạo Context với kiểu dữ liệu AppContextData
+const AppContext = createContext<AppContextData>({} as AppContextData);
+```
+
+- Dòng mã trên tạo một Context với tên `AppContext` và kiểu dữ liệu là `AppContextData`. Context này sẽ được sử dụng để chia sẻ dữ liệu giữa các thành phần con trong ứng dụng và cung cấp các phương thức để quản lý dữ liệu.
+
+- Giải thích từng phần trong đoạn mã:
+
+1. `const AppContext = createContext<AppContextData>({} as AppContextData);`:
+
+- `createContext` là hàm trong React được sử dụng để tạo Context mới. Nó nhận vào một giá trị mặc định (thường là một giá trị rỗng) để tránh lỗi khi Context không có Provider bọc bên ngoài.
+- Trong trường hợp này, chúng ta cung cấp kiểu dữ liệu `AppContextData` vào hàm `createContext`. Điều này cho biết Context sẽ lưu trữ dữ liệu và phương thức được định nghĩa trong `AppContextData`.
+- Nếu không có dòng này, TypeScript có thể phát hiện lỗi kiểu dữ liệu khi sử dụng Context Provider hoặc Hook `useContext`, vì không thể tìm thấy kiểu dữ liệu của `AppContextData` cho Context.
+
+2. `{} as AppContextData`:
+
+- Đây là một đối tượng rỗng (`{}`) được ép kiểu về kiểu dữ liệu `AppContextData` bằng cách sử dụng `as AppContextData`. Điều này đảm bảo rằng TypeScript không phát hiện lỗi kiểu dữ liệu khi tạo Context, mặc dù đối tượng này không chứa bất kỳ thuộc tính hay phương thức nào của `AppContextData`.
+- Đây chỉ là một giá trị mặc định không có ý nghĩa trong Context thực tế. Khi sử dụng Context Provider, các giá trị thực tế được cung cấp thông qua thuộc tính `value` của Context Provider.
+
+❌❌ Đoạn 4 ❌❌
+
+```jsx
+// Tạo Provider
+const AppProvider = ({ children }) => {
+  const [username, setUsername] = useState < string > ''
+
+  return <AppContext.Provider value={{ username, setUsername }}>{children}</AppContext.Provider>
+}
+```
+
+- Đoạn mã trên định nghĩa một Context Provider có tên `AppProvider`. Context Provider này có nhiệm vụ cung cấp dữ liệu và các phương thức quản lý dữ liệu tới các thành phần con bên trong nó thông qua Context.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+1. `const AppProvider = ({ children }) => { ... }`:
+
+- Đây là cách định nghĩa một functional component có tên `AppProvider`.
+- Component này nhận một prop là `children`, nó sẽ chứa toàn bộ các thành phần con bên trong Context Provider. Prop `children` thường được sử dụng để định nghĩa các thành phần con và chúng được truyền vào Context Provider bằng cách sử dụng cặp thẻ mở và đóng `({...})`.
+
+2. `const [username, setUsername] = useState<string>('')`:
+
+- Dòng này sử dụng hook `useState` để tạo một biến state `username` và hàm `setUsername` tương ứng để quản lý trạng thái của biến `username`.
+- `username`: Biến state `username` sẽ lưu trữ tên người dùng (khởi tạo với giá trị rỗng `''`).
+- `setUsername`: Hàm `setUsername` sẽ được sử dụng để thay đổi giá trị của biến `username` khi cần thiết.
+
+3. `<AppContext.Provider value={{ username, setUsername }}>{children}</AppContext.Provider>`:
+
+- Đây là Context Provider (`AppContext.Provider`). Nó sẽ cung cấp dữ liệu và các phương thức từ AppContext tới các thành phần con bên trong nó.
+- Trong thuộc tính `value`, chúng ta cung cấp đối tượng có hai thuộc tính `username` và `setUsername`. Điều này cho phép các thành phần con truy cập và sử dụng dữ liệu `username` và phương thức `setUsername` thông qua hook `useContext(AppContext)`.
+- `children`: Các thành phần con bên trong Context Provider sẽ được đặt vào giữa cặp thẻ mở và đóng của Context Provider bằng cách sử dụng biến `children`.
+
+- Như vậy, sau khi wrap một component cha bằng `<AppProvider>`, bất kỳ component con nào bên trong đều có thể sử dụng `useContext(AppContext)` để truy cập dữ liệu `username` và các phương thức `setUsername` từ Context Provider. Các giá trị và phương thức này có thể được sử dụng để hiển thị tên người dùng và thay đổi tên người dùng trong ứng dụng.
+
+❌❌ Đoạn 5 ❌❌
+
+```jsx
+// Component sử dụng dữ liệu và hành động từ Context
+const UserProfile = () => {
+  const { username, setUsername } = useContext(AppContext)
+
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <p>Username: {username}</p>
+      <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+    </div>
+  )
+}
+```
+
+- Component `UserProfile` là một functional component trong ứng dụng, và nó sử dụng Context thông qua hook `useContext` để truy cập dữ liệu `username` và phương thức `setUsername` từ Context Provider (`AppContext`).
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+1. `const { username, setUsername } = useContext(AppContext)`:
+
+- Dòng này sử dụng hook `useContext` để lấy dữ liệu từ Context Provider (`AppContext`).
+- `AppContext` là Context đã được định nghĩa trước đó và cung cấp dữ liệu và phương thức quản lý dữ liệu về `username`.
+- Bằng cách sử dụng hook `useContext(AppContext)`, biến `username` và hàm `setUsername` được truyền vào từ Context Provider và lưu trữ trong các biến `username` và `setUsername`.
+
+2. `Hiển thị thông tin User Profile`:
+
+- Component này hiển thị một tiêu đề `h2` là "User Profile".
+- Thẻ `<p>` hiển thị thông tin "Username: {username}". Giá trị `username` sẽ được lấy từ biến `username` mà ta đã nhận được từ Context Provider.
+- Một trường nhập liệu (`<input>`) cũng được hiển thị, nó sẽ có giá trị ban đầu là `username`, và khi người dùng nhập thông tin vào trường này, sự kiện `onChange` sẽ gọi hàm `setUsername(e.target.value)` để cập nhật giá trị `username` trong Context Provider.
+
+- Như vậy, khi bạn sử dụng component `UserProfile` trong ứng dụng, nó sẽ hiển thị tên người dùng hiện tại từ dữ liệu trong Context Provider và cho phép người dùng thay đổi tên bằng cách nhập thông tin vào trường nhập liệu. Khi người dùng thay đổi tên, dữ liệu `username` trong Context Provider sẽ được cập nhật, và các thành phần khác sử dụng dữ liệu này thông qua Context Provider cũng sẽ tự động cập nhật để hiển thị tên mới.
+
+❌❌ Đoạn 6 ❌❌
+
+```jsx
+// Component sử dụng dữ liệu từ Context
+const Greeting = () => {
+  const { username } = useContext(AppContext)
+
+  return <h1>Hello, {username}!</h1>
+}
+```
+
+- Component `Greeting` là một functional component trong ứng dụng, và nó sử dụng Context thông qua hook `useContext` để truy cập dữ liệu `username` từ Context Provider (`AppContext`).
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+1. `const { username } = useContext(AppContext)`:
+
+- Dòng này sử dụng hook `useContext` để lấy dữ liệu từ Context Provider (`AppContext`).
+- `AppContext` là Context đã được định nghĩa trước đó và cung cấp dữ liệu `username`.
+- Bằng cách sử dụng hook `useContext(AppContext)`, biến `username` được truyền vào từ Context Provider và lưu trữ trong biến `username`.
+
+2. `Hiển thị lời chào`:
+
+- Component này hiển thị một tiêu đề `h1` là "Hello, {username}!". Giá trị `username` sẽ được lấy từ biến `username` mà ta đã nhận được từ Context Provider.
+- Điều này sẽ hiển thị một lời chào "Hello" cùng với tên người dùng (`username`) từ dữ liệu trong Context Provider.
+
+- Như vậy, khi bạn sử dụng component `Greeting` trong ứng dụng, nó sẽ hiển thị một lời chào "Hello, {username}!" với tên người dùng hiện tại từ dữ liệu trong Context Provider. Khi giá trị `username` trong Context Provider thay đổi, lời chào trong component `Greeting` cũng sẽ tự động cập nhật để hiển thị tên mới.
+
+❌❌ Đoạn 7 ❌❌
+
+```jsx
+// Component chính của ứng dụng
+const App = () => {
+  return (
+    <AppProvider>
+      <Greeting />
+      <UserProfile />
+    </AppProvider>
+  )
+}
+```
+
+- Component `App` là component chính của ứng dụng. Nó là một functional component và định nghĩa cấu trúc giao diện của ứng dụng bằng cách sử dụng các thành phần con đã được định nghĩa trước đó.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+1. `<AppProvider>`:
+
+- Đây là Context Provider (`AppProvider`) đã được định nghĩa trước đó để cung cấp dữ liệu và các phương thức quản lý dữ liệu cho các thành phần con bên trong nó.
+- Bên trong `<AppProvider>`, chúng ta đặt các thành phần con mà chúng ta muốn chia sẻ dữ liệu từ Context Provider.
+
+2. `<Greeting />`:
+
+- Đây là component `Greeting`, một component hiển thị lời chào "Hello, {username}!" với tên người dùng hiện tại. Component này sử dụng Context thông qua `useContext(AppContext)` để lấy dữ liệu `username` từ Context Provider và hiển thị lời chào.
+
+3. `<UserProfile />`:
+
+- Đây là component `UserProfile`, một component hiển thị thông tin người dùng và cho phép người dùng thay đổi tên bằng cách sử dụng trường nhập liệu. Component này sử dụng Context thông qua `useContext(AppContext)` để lấy dữ liệu `username` và hàm `setUsername` từ Context Provider.
+
+- Như vậy, khi bạn sử dụng component `App` trong ứng dụng, nó sẽ hiển thị lời chào "Hello, {username}!" cùng với thông tin người dùng và trường nhập liệu để thay đổi tên. Các giá trị và hành động trong các component con (`Greeting` và `UserProfile`) được cung cấp thông qua Context Provider (`AppProvider`). Khi dữ liệu `username` thay đổi (vì người dùng đã nhập tên mới), các thành phần con cũng sẽ tự động cập nhật để hiển thị tên mới trong lời chào và thông tin người dùng.
+
+👇👇👇 Dưới đây là phần tổng quan về đoạn code 👇👇👇
+
+- ✅✅ Tóm lại: Trong ví dụ trên, chúng ta đã tạo một Context (`AppContext`) với kiểu dữ liệu `AppContextData` bao gồm `username` và `setUsername`. Sau đó, chúng ta đã tạo một Provider (`AppProvider`) để cung cấp dữ liệu và hành động từ Context cho các component con. Trong component chính (`App`), chúng ta đã sử dụng Provider để bao bọc các component con và cung cấp dữ liệu từ Context cho chúng.
+
+- ✅✅ Các component con (`Greeting` và `UserProfile`) sử dụng dữ liệu từ Context thông qua hook `useContext` để hiển thị thông tin và cho phép người dùng cập nhật `username`. Nhờ Provider, chúng ta có thể chia sẻ dữ liệu và hành động (`username` và `setUsername`) giữa các component con một cách dễ dàng và hiệu quả.
+
+- ✅✅ Chức năng của đoạn code: Chức năng chính của đoạn code là hiển thị một ứng dụng đơn giản với hai thành phần: `UserProfile` và `Greeting`. `UserProfile` cho phép người dùng nhập tên người dùng và hiển thị tên đó, trong khi `Greeting` hiển thị một lời chào chào mừng với tên người dùng hiện tại.
 
 ---
 
 ## Cách update data trong Context ?
 
+- Để cập nhật dữ liệu trong Context, chúng ta cần làm các bước sau:
+
+1. Định nghĩa hàm cập nhật dữ liệu: Đầu tiên, chúng ta cần định nghĩa các hàm cập nhật dữ liệu trong Provider. Ví dụ: nếu Context chứa một biến `data`, thì chúng ta cần định nghĩa một hàm để cập nhật giá trị của `data`.
+
+2. Tạo Provider: Tiếp theo, chúng ta sẽ tạo một Provider bằng cách sử dụng Context. Provider sẽ cung cấp các hàm cập nhật dữ liệu cho các component con.
+
+3. Sử dụng hàm cập nhật dữ liệu từ Provider: Các component con sẽ sử dụng hàm cập nhật dữ liệu từ Provider thông qua hook `useContext` để thực hiện các thao tác cập nhật dữ liệu.
+
+- Dưới đây là một ví dụ minh họa về cách cập nhật dữ liệu trong Context:
+
+```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+// Định nghĩa kiểu dữ liệu của Context
+interface AppContextData {
+  data: number;
+  updateData: (newData: number) => void;
+}
+
+// Tạo Context với kiểu dữ liệu AppContextData
+const AppContext = createContext<AppContextData>({} as AppContextData);
+
+// Tạo Provider
+const AppProvider = ({ children }) => {
+  const [data, setData] = useState<number>(0);
+
+  // Hàm cập nhật dữ liệu
+  const updateData = (newData: number) => {
+    setData(newData);
+  };
+
+  return (
+    <AppContext.Provider value={{ data, updateData }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+// Component sử dụng dữ liệu và hàm cập nhật từ Context
+const DataDisplay = () => {
+  const { data } = useContext(AppContext);
+
+  return <div>Data: {data}</div>;
+};
+
+// Component sử dụng hàm cập nhật dữ liệu từ Context
+const DataUpdater = () => {
+  const { updateData } = useContext(AppContext);
+  const [newData, setNewData] = useState<number>(0);
+
+  const handleUpdate = () => {
+    updateData(newData);
+  };
+
+  return (
+    <div>
+      <input
+        type="number"
+        value={newData}
+        onChange={(e) => setNewData(Number(e.target.value))}
+      />
+      <button onClick={handleUpdate}>Update Data</button>
+    </div>
+  );
+};
+
+// Component chính của ứng dụng
+const App = () => {
+  return (
+    <AppProvider>
+      <DataDisplay />
+      <DataUpdater />
+    </AppProvider>
+  );
+};
+```
+
+- Trong ví dụ trên, chúng ta đã định nghĩa một hàm `updateData` trong Provider để cập nhật giá trị của `data`. Các component con (`DataDisplay` và `DataUpdater`) sử dụng dữ liệu và hàm cập nhật từ Context thông qua hook `useContext` để hiển thị dữ liệu và cho phép người dùng cập nhật `data` một cách dễ dàng và hiệu quả. Khi người dùng nhấn vào nút "Update Data" trong `DataUpdater`, `data` sẽ được cập nhật và `DataDisplay` tự động hiển thị giá trị mới.
+
 ---
 
 ## So sánh Redux và Context ?
+
+- Redux và Context đều là công cụ quản lý trạng thái (state management) trong ứng dụng React, nhưng có những điểm khác nhau quan trọng. Dưới đây là một số so sánh giữa Redux và Context:
+
+1. Quy mô ứng dụng:
+
+- `Redux`: Thích hợp cho các ứng dụng có quy mô lớn hoặc phức tạp, đặc biệt là khi có nhiều thành phần chia sẻ trạng thái và các trạng thái có thể thay đổi nhiều và phức tạp.
+- `Context`: Phù hợp cho các ứng dụng có quy mô nhỏ hoặc trung bình và yêu cầu ít hơn về quản lý trạng thái phức tạp. Nó là một giải pháp linh hoạt và đơn giản cho việc quản lý trạng thái trong các thành phần con.
+
+2. Cú pháp và tích hợp:
+
+- `Redux`: Cú pháp phức tạp hơn và yêu cầu nhiều khái niệm như `store`, `reducer`, `action`, `middleware`, và `connect` để tích hợp và sử dụng.
+- `Context`: Cú pháp đơn giản hơn và dễ sử dụng hơn, bao gồm `createContext`, `Provider` và `useContext`. Tích hợp trực tiếp vào ứng dụng React mà không cần bất kỳ thư viện bổ sung nào.
+
+3. Hiệu suất:
+
+- `Redux`: Redux có cơ chế tối ưu hóa và hỗ trợ sử dụng `middleware` như `Redux Thunk` hoặc `Redux Saga` để xử lý các tác vụ không đồng bộ. Do đó, Redux có thể hiệu quả hơn khi quản lý trạng thái phức tạp và xử lý các tác vụ bất đồng bộ.
+- `Context`: Context không được tối ưu hóa bằng Redux và thường sử dụng cho các trường hợp đơn giản. Nếu ứng dụng có quy mô lớn và phức tạp, việc sử dụng Context có thể dẫn đến hiệu suất kém hơn so với Redux.
+
+4. Cộng đồng và tài liệu:
+
+- `Redux`: Redux có cộng đồng lớn và phong phú, điều này có nghĩa là có nhiều tài liệu, các gói mở (open source) rộng và hỗ trợ từ cộng đồng.
+- `Context`: Context cũng có cộng đồng tương đối lớn, nhưng không bằng Redux. Do đó, tài liệu và hỗ trợ từ cộng đồng có thể hạn chế hơn.
+
+- ✅✅ Tóm lại: Redux thích hợp cho các ứng dụng có quy mô lớn hoặc phức tạp, đòi hỏi quản lý trạng thái mạnh mẽ và hiệu quả. Trong khi đó, Context là một giải pháp đơn giản và linh hoạt hơn, phù hợp cho các ứng dụng có quy mô nhỏ hoặc trung bình và yêu cầu ít hơn về quản lý trạng thái. Việc chọn giữa Redux và Context phụ thuộc vào quy mô và yêu cầu của ứng dụng cụ thể.
 
 ---
 
