@@ -736,6 +736,382 @@ const App = () => {
 
 ## Cho ví dụ nâng cao về Context API trong React ?
 
+- Dưới đây là một ví dụ nâng cao về cách sử dụng Context API trong React để quản lý trạng thái của một giỏ hàng trong ứng dụng mua sắm đơn giản.
+
+1. Đầu tiên, hãy tạo một Context và một Provider để quản lý trạng thái giỏ hàng:
+
+```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+// Định nghĩa kiểu dữ liệu của sản phẩm trong giỏ hàng
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+// Định nghĩa kiểu dữ liệu của Context
+interface CartContextData {
+  cartItems: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (id: number) => void;
+  clearCart: () => void;
+}
+
+// Tạo Context với kiểu dữ liệu CartContextData
+const CartContext = createContext<CartContextData>({} as CartContextData);
+
+// Tạo Provider
+const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Thêm một sản phẩm vào giỏ hàng
+  const addToCart = (item: CartItem) => {
+    setCartItems((prevItems) => [...prevItems, item]);
+  };
+
+  // Xóa một sản phẩm khỏi giỏ hàng dựa trên ID
+  const removeFromCart = (id: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  // Xóa toàn bộ giỏ hàng
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  return (
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+```
+
+❌❌ Giải thích đoạn code chi tiết ❌❌
+
+- Trong đoạn mã trên, chúng ta sử dụng React Context API để tạo một Context và một Provider để quản lý trạng thái của giỏ hàng trong ứng dụng mua sắm đơn giản.
+
+- Đầu tiên, chúng ta định nghĩa kiểu dữ liệu cho một sản phẩm trong giỏ hàng (`CartItem`) và cho Context (`CartContextData`):
+
+- Trong đó có 2 đoạn mã đang định nghĩa hai giao diện (interfaces) cho việc quản lý giỏ hàng (cart) trong một ứng dụng.
+
+✅✅ Đoạn 1 ✅✅
+
+- 👉 Thứ nhất là `Interface CartItem`:
+
+```jsx
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+```
+
+- (Giao diện) `Interface CartItem` mô tả các thuộc tính của một mục hàng trong giỏ hàng. Các thuộc tính bao gồm:
+
+  - `id`: Mã số duy nhất định danh cho mục hàng (sử dụng số nguyên).
+  - `name`: Tên của mục hàng.
+  - `price`: Giá của mục hàng (sử dụng số thực).
+  - `quantity`: Số lượng mục hàng trong giỏ hàng (sử dụng số nguyên).
+
+- 👉 Thứ hai là `Interface CartContextData`:
+
+```jsx
+interface CartContextData {
+  cartItems: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (id: number) => void;
+  clearCart: () => void;
+}
+```
+
+- (Giao diện) `Interface CartContextData` mô tả dữ liệu và các phương thức cần thiết để quản lý giỏ hàng trong Context. Các thuộc tính và phương thức bao gồm:
+
+  - `cartItems`: Một mảng chứa các mục hàng trong giỏ hàng, mỗi mục hàng sẽ tuân theo (giao diện) `Interface CartItem`.
+  - `addToCart`: Một hàm có tham số `item` là một đối tượng mục hàng (kiểu `CartItem`). Hàm này được sử dụng để thêm mục hàng mới vào giỏ hàng.
+  - `removeFromCart`: Một hàm có tham số `id` là mã số định danh của mục hàng cần xóa (kiểu số nguyên). Hàm này được sử dụng để xóa mục hàng từ giỏ hàng dựa vào mã số.
+  - `clearCart`: Một hàm không có tham số, được sử dụng để xóa toàn bộ nội dung trong giỏ hàng (làm rỗng giỏ hàng).
+
+- Những giao diện (interface) này giúp định nghĩa các kiểu dữ liệu và phương thức cần thiết để làm việc với giỏ hàng trong ứng dụng. Khi đã định nghĩa giao diện, ta có thể sử dụng chúng trong việc tạo Context và cung cấp dữ liệu cho các thành phần con trong ứng dụng.
+
+✅✅ Đoạn 2 ✅✅
+
+```jsx
+// Tạo Context với kiểu dữ liệu CartContextData
+const CartContext = createContext<CartContextData>({} as CartContextData);
+```
+
+- Dòng mã trên là cách tạo một Context trong React và xác định kiểu dữ liệu của Context đó là `CartContextData`.
+
+- `Tạo Context`:
+
+  - Hàm `createContext()` được sử dụng để tạo một Context mới.
+  - Trong trường hợp này, chúng ta tạo một Context có tên là `CartContext`.
+
+- `Kiểu dữ liệu của Context`:
+
+  - Để xác định kiểu dữ liệu của Context, chúng ta sử dụng cú pháp `createContext<CartContextData>()`.
+  - Trong trường hợp này, `CartContextData` là một giao diện (interface) đã được định nghĩa ở đoạn mã trước đó, mô tả dữ liệu và phương thức quản lý giỏ hàng.
+
+- `Giá trị mặc định (optional)`:
+
+  - Nếu bạn không muốn cung cấp giá trị mặc định ban đầu cho Context, bạn có thể bỏ qua phần ngoặc đơn ở sau hàm `createContext()`.
+  - Tuy nhiên, trong đoạn mã trên, chúng ta đã cung cấp giá trị mặc định bằng cách sử dụng `{} as CartContextData`. Điều này chỉ định rằng giá trị mặc định ban đầu cho Context là một đối tượng rỗng có kiểu dữ liệu là `CartContextData`.
+
+- Sau khi tạo Context với kiểu dữ liệu `CartContextData`, bạn có thể sử dụng Context Provider và Context Consumer để cung cấp và truy cập dữ liệu trong `CartContext`. Điều này giúp chia sẻ dữ liệu về giỏ hàng (`cartItems`) và các phương thức quản lý giỏ hàng (`addToCart`, `removeFromCart`, `clearCart`) với các thành phần con trong ứng dụng một cách dễ dàng và hiệu quả.
+
+✅✅ Đoạn 3 ✅✅
+
+```jsx
+// Tạo Provider
+const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Thêm một sản phẩm vào giỏ hàng
+  const addToCart = (item: CartItem) => {
+    setCartItems((prevItems) => [...prevItems, item]);
+  };
+
+  // Xóa một sản phẩm khỏi giỏ hàng dựa trên ID
+  const removeFromCart = (id: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  // Xóa toàn bộ giỏ hàng
+  const clearCart = () => {
+    setCartItems([]);
+  };
+}
+```
+
+- Đoạn mã này định nghĩa một Context Provider có tên là `CartProvider` để quản lý giỏ hàng trong ứng dụng. Context Provider này sẽ cung cấp dữ liệu và các phương thức để thêm, xóa và xóa toàn bộ mục hàng trong giỏ hàng. Để sử dụng Context này, bạn cần wrap các thành phần con trong ứng dụng bằng `<CartProvider>` ở cấp cao nhất.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+- `const [cartItems, setCartItems] = useState<CartItem[]>([]);`:
+
+- Đây là một state trong React dùng để lưu trữ các mục hàng trong giỏ hàng.
+
+  - `cartItems`: Biến state lưu trữ danh sách các mục hàng trong giỏ hàng. Kiểu dữ liệu của `cartItems` là một mảng các đối tượng `CartItem`.
+  - `setCartItems`: Hàm để cập nhật giá trị của `cartItems`. Khi gọi hàm `setCartItems`, React sẽ tự động cập nhật lại giao diện với giá trị mới của `cartItems`.
+
+- `const addToCart = (item: CartItem) => { ... }`:
+
+  - Hàm `addToCart` dùng để thêm một mục hàng mới vào giỏ hàng.
+  - Khi gọi hàm `addToCart(item)`, nó sẽ thêm `item` vào `cartItems` bằng cách tạo một mảng mới chứa tất cả các mục hàng cũ và thêm mục hàng mới vào cuối mảng.
+
+- `const removeFromCart = (id: number) => { ... }`:
+
+  - Hàm `removeFromCart` dùng để xóa một mục hàng từ giỏ hàng dựa vào `id` của mục hàng.
+  - Khi gọi hàm `removeFromCart(id)`, nó sẽ xóa mục hàng có `id` tương ứng ra khỏi `cartItems` bằng cách sử dụng `filter` để loại bỏ mục hàng có `id` cần xóa khỏi mảng.
+
+- `const clearCart = () => { ... }`:
+
+  - Hàm `clearCart` dùng để xóa toàn bộ mục hàng khỏi giỏ hàng.
+  - Khi gọi hàm `clearCart()`, nó sẽ đơn giản là cập nhật `cartItems` thành một mảng rỗng để làm rỗng giỏ hàng.
+
+- Tóm lại: Sau khi đã xác định các hàm quản lý giỏ hàng và state `cartItems`, bạn có thể sử dụng Context Provider `CartProvider` để cung cấp dữ liệu và các phương thức này cho các thành phần con trong ứng dụng.
+
+✅✅ Đoạn 4 ✅✅
+
+```jsx
+return (
+  <CartContext.Provider
+    value={{
+      cartItems,
+      addToCart,
+      removeFromCart,
+      clearCart
+    }}
+  >
+    {children}
+  </CartContext.Provider>
+)
+```
+
+- Đoạn mã này thực hiện việc tạo một Context Provider bằng cách sử dụng Context `CartContext` đã được định nghĩa trước đó. Nó cung cấp các giá trị và phương thức quản lý giỏ hàng (`cartItems`, `addToCart`, `removeFromCart`, `clearCart`) cho các thành phần con nằm bên trong nó thông qua việc sử dụng `CartContext.Provider`.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+- `<CartContext.Provider>`:
+
+  - Đây là Context Provider. Nó là nơi bạn cung cấp dữ liệu và các phương thức trong Context để các thành phần con có thể truy cập và sử dụng.
+  - Bên trong Context Provider, ta sử dụng thuộc tính `value` để định nghĩa dữ liệu và các phương thức mà ta muốn chia sẻ với các thành phần con.
+
+- `value={{ cartItems, addToCart, removeFromCart, clearCart }}`:
+
+  - Đây là thuộc tính `value` của Context Provider. Nó là nơi bạn cung cấp dữ liệu và các phương thức muốn chia sẻ cho các thành phần con.
+  - Trong trường hợp này, chúng ta đang cung cấp các giá trị và phương thức quản lý giỏ hàng đã được định nghĩa trước đó cho các thành phần con.
+  - `cartItems`: Giá trị lưu trữ các mục hàng trong giỏ hàng.
+  - `addToCart`: Phương thức để thêm một mục hàng vào giỏ hàng.
+  - `removeFromCart`: Phương thức để xóa một mục hàng khỏi giỏ hàng dựa vào `id`.
+  - `clearCart`: Phương thức để xóa toàn bộ mục hàng khỏi giỏ hàng.
+
+- `{children}`:
+
+  - Đây là các thành phần con bên trong Context Provider. Bạn có thể thay thế `{children}` bằng bất kỳ thành phần (component) con nào mà bạn muốn quản lý dữ liệu giỏ hàng của chúng thông qua Context.
+
+- Như vậy, sau khi wrap một component cha bằng `<CartProvider>`, bất kỳ component con nào bên trong đều có thể sử dụng `useContext(CartContext)` để truy cập dữ liệu giỏ hàng và các phương thức quản lý giỏ hàng đã được cung cấp từ Context Provider.
+
+2. Tiếp theo, hãy tạo các component sử dụng dữ liệu và hành động từ Provider thông qua Context:
+
+```jsx
+// Component hiển thị danh sách sản phẩm trong giỏ hàng
+const CartItemList = () => {
+  const { cartItems, removeFromCart } = useContext(CartContext)
+
+  return (
+    <ul>
+      {cartItems.map((item) => (
+        <li key={item.id}>
+          {item.name} - ${item.price} - Quantity: {item.quantity}
+          <button onClick={() => removeFromCart(item.id)}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// Component thêm sản phẩm vào giỏ hàng
+const AddToCartButton<{ item: CartItem }> = ({ item }) => {
+  const { addToCart } = useContext(CartContext)
+
+  return <button onClick={() => addToCart(item)}>Add to Cart</button>
+}
+```
+
+❌❌ Đoạn 1 ❌❌
+
+```jsx
+// Component hiển thị danh sách sản phẩm trong giỏ hàng
+const CartItemList = () => {
+  const { cartItems, removeFromCart } = useContext(CartContext)
+
+  return (
+    <ul>
+      {cartItems.map((item) => (
+        <li key={item.id}>
+          {item.name} - ${item.price} - Quantity: {item.quantity}
+          <button onClick={() => removeFromCart(item.id)}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+- Đoạn mã trên định nghĩa một functional component có tên `CartItemList`, có chức năng hiển thị danh sách các mục hàng trong giỏ hàng. Component này sử dụng Context thông qua `useContext(CartContext)` để truy cập dữ liệu giỏ hàng và phương thức `removeFromCart` từ Context Provider.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+- `const { cartItems, removeFromCart } = useContext(CartContext)`:
+
+  - Dòng này sử dụng hook `useContext` để lấy dữ liệu từ Context Provider. Nó kết hợp với `CartContext` để truy cập dữ liệu giỏ hàng và các phương thức quản lý giỏ hàng.
+  - `cartItems`: Biến `cartItems` sẽ lưu trữ các mục hàng trong giỏ hàng (lấy từ `CartContext`).
+  - `removeFromCart`: Hàm `removeFromCart` sẽ lưu trữ phương thức xóa một mục hàng khỏi giỏ hàng dựa vào `id` (lấy từ `CartContext`).
+
+- `Hiển thị danh sách mục hàng trong giỏ hàng`:
+
+  - Component này sử dụng hàm `map` để duyệt qua mỗi mục hàng trong `cartItems` và hiển thị thông tin của mỗi mục hàng trong một thẻ `<li>` (list item) của danh sách.
+  - Mỗi mục hàng bao gồm thông tin: `item.name` (tên mục hàng), `item.price` (giá mục hàng), và `item.quantity` (số lượng mục hàng).
+  - Đối với mỗi mục hàng, ta cũng hiển thị một nút "Remove" để xóa mục hàng khỏi giỏ hàng, sử dụng hàm `removeFromCart(item.id)` khi người dùng nhấn vào nút này.
+
+- `key={item.id}`:
+
+- Trong vòng lặp, ta cần cung cấp prop `key` duy nhất cho mỗi phần tử trong danh sách. Điều này giúp React hiểu định danh của mỗi phần tử và giúp tối ưu hoá quá trình cập nhật các phần tử của danh sách khi có thay đổi.
+
+- Như vậy, khi bạn sử dụng component `CartItemList` trong ứng dụng, nó sẽ hiển thị danh sách các mục hàng trong giỏ hàng, và người dùng có thể xóa mục hàng bằng cách nhấn vào nút "Remove" tương ứng với mỗi mục hàng. Các thay đổi trong giỏ hàng sẽ được cập nhật tự động nhờ việc sử dụng Context để quản lý trạng thái giỏ hàng.
+
+❌❌ Đoạn 2 ❌❌
+
+```jsx
+// Component thêm sản phẩm vào giỏ hàng
+const AddToCartButton<{ item: CartItem }> = ({ item }) => {
+  const { addToCart } = useContext(CartContext)
+
+  return <button onClick={() => addToCart(item)}>Add to Cart</button>
+}
+```
+
+- Đoạn mã trên định nghĩa một functional component có tên `AddToCartButton`, có chức năng tạo nút "Add to Cart" cho mỗi mục hàng (`CartItem`). Component này sử dụng Context thông qua `useContext(CartContext)` để truy cập phương thức `addToCart` từ Context Provider.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+- `const AddToCartButton<{ item: CartItem }> = ({ item }) => { ... }`:
+
+  - Đây là cách định nghĩa một functional component và đồng thời định nghĩa các prop mà component này có thể nhận được.
+  - `AddToCartButton` là tên của component.
+  - `{ item: CartItem }` là cách định nghĩa kiểu dữ liệu của prop `item`. Trong trường hợp này, component `AddToCartButton` có thể nhận một prop có tên là `item` và kiểu dữ liệu là `CartItem`.
+
+- `const { addToCart } = useContext(CartContext)`:
+
+  - Dòng này sử dụng hook `useContext` để lấy dữ liệu từ Context Provider. Nó kết hợp với `CartContext` để truy cập phương thức `addToCart` từ Context Provider.
+  - `addToCart`: Biến `addToCart` sẽ lưu trữ phương thức thêm một mục hàng vào giỏ hàng (lấy từ `CartContext`).
+
+- `<button onClick={() => addToCart(item)}>Add to Cart</button>`:
+
+  - Đây là thẻ `button` trong JSX. Khi người dùng nhấn vào nút này, nó sẽ gọi phương thức `addToCart(item)` để thêm mục hàng (`item`) vào giỏ hàng.
+  - `onClick={() => addToCart(item)}` là sự kiện click, khi người dùng nhấn vào nút, nó sẽ gọi hàm `addToCart(item)` để thêm `item` vào giỏ hàng.
+
+- Như vậy, khi bạn sử dụng component `AddToCartButton` trong ứng dụng và truyền prop `item` cho nó, nó sẽ hiển thị một nút "Add to Cart". Khi người dùng nhấn vào nút này, mục hàng được truyền qua prop `item` sẽ được thêm vào giỏ hàng thông qua việc sử dụng Context và phương thức `addToCart` từ Context Provider. Điều này giúp quản lý giỏ hàng và cập nhật giỏ hàng một cách dễ dàng và linh hoạt trong ứng dụng.
+
+3. Cuối cùng, sử dụng Provider để bao bọc các component và cung cấp dữ liệu cho chúng:
+
+```jsx
+const App = () => {
+  return (
+    // Sử dụng Provider để cung cấp dữ liệu cho các component con
+    <CartProvider>
+      <h1>Shopping Cart</h1>
+      <CartItemList />
+
+      <h2>Available Products</h2>
+      <AddToCartButton item={{ id: 1, name: 'Product 1', price: 10, quantity: 1 }} />
+      <AddToCartButton item={{ id: 2, name: 'Product 2', price: 20, quantity: 1 }} />
+    </CartProvider>
+  )
+}
+```
+
+- Đoạn mã trên định nghĩa một functional component có tên `App`, là component chính của ứng dụng. Component này sử dụng `CartProvider` để cung cấp dữ liệu giỏ hàng và các phương thức quản lý giỏ hàng cho các thành phần con bên trong nó.
+
+- Hãy giải thích từng phần trong đoạn mã:
+
+- `<CartProvider> ... </CartProvider>`:
+
+  - Đây là Context Provider (`CartProvider`) đã được định nghĩa trước đó để cung cấp dữ liệu giỏ hàng và các phương thức quản lý giỏ hàng cho các thành phần con.
+  - Bên trong `CartProvider`, chúng ta đặt tất cả các thành phần con mà chúng ta muốn chia sẻ dữ liệu giỏ hàng với.
+
+- `<h1>Shopping Cart</h1>`:
+
+  - Đây là một thẻ tiêu đề `h1` hiển thị dòng chữ "Shopping Cart" trên trang ứng dụng.
+
+- `<CartItemList />`:
+
+  - Đây là component `CartItemList`, là một component hiển thị danh sách các mục hàng trong giỏ hàng. Component này sử dụng Context thông qua `useContext(CartContext)` để truy cập dữ liệu giỏ hàng và các phương thức `removeFromCart` từ Context Provider.
+
+- `<h2>Available Products</h2>`:
+
+  - Đây là một thẻ tiêu đề `h2` hiển thị dòng chữ "Available Products" trên trang ứng dụng.
+
+- `<AddToCartButton item={{ id: 1, name: 'Product 1', price: 10, quantity: 1 }} />`:
+
+  - Đây là component `AddToCartButton`, là một component hiển thị nút "Add to Cart" cho mục hàng được truyền vào thông qua prop `item`.
+  - Trong trường hợp này, chúng ta đang truyền vào prop `item` là một đối tượng mục hàng có các thuộc tính `id`, `name`, `price`, và `quantity`.
+
+- `AddToCartButton item={{ id: 2, name: 'Product 2', price: 20, quantity: 1 }} />`:
+
+  - Tương tự như trên, đây là component `AddToCartButton` khác, là một component hiển thị nút "Add to Cart" cho mục hàng có thông tin khác nhau.
+
+- Như vậy, khi bạn sử dụng component `App` trong ứng dụng, nó sẽ hiển thị các thành phần và thông tin giỏ hàng, và bạn có thể thêm các mục hàng vào giỏ hàng thông qua các nút "Add to Cart". Các phương thức và dữ liệu giỏ hàng được quản lý bởi Context Provider (`CartProvider`) giúp cho việc quản lý giỏ hàng trong ứng dụng trở nên dễ dàng và tiện lợi.
+
+- ✅✅ Tóm lại: Trong ví dụ này, chúng ta tạo một giỏ hàng đơn giản với các sản phẩm và có thể thêm và xóa các sản phẩm khỏi giỏ hàng bằng cách sử dụng Context API để quản lý trạng thái của giỏ hàng. Component `CartItemList` hiển thị danh sách sản phẩm trong giỏ hàng và có nút "Remove" để xóa sản phẩm khỏi giỏ hàng. Component `AddToCartButton` cho phép thêm một sản phẩm vào giỏ hàng khi nhấn nút "Add to Cart".
+
+- ✅✅ Nhờ việc sử dụng Provider và Context, các component con có thể sử dụng dữ liệu và hành động từ Provider một cách dễ dàng và hiệu quả mà không cần phải truyền qua props qua nhiều lớp. Điều này giúp giảm sự phức tạp và tăng tính tái sử dụng của mã trong ứng dụng React.
+
 ---
 
 ## Cho ví dụ nâng cao về Context API trong React với TypeScript ?
