@@ -278,10 +278,63 @@ export default function useQueryConfig() {
 
 - `queryParams: QueryConfig = useQueryParams();`: Đầu tiên, hook này gọi một hook khác tên là `useQueryParams` để lấy các tham số truy vấn từ URL và gán chúng vào biến `queryParams`. Biến này có kiểu `QueryConfig`, tương ứng với cấu trúc của các tham số truy vấn.
 
-- `const queryConfig: QueryConfig = omitBy(...)`: Tiếp theo, hook sử dụng hàm `omitBy` để loại bỏ các thuộc tính trong `queryParams` có giá trị là `undefined`. Đoạn mã từ `page` đến `category` xác định giá trị cho mỗi thuộc tính của `queryConfig`. Nếu thuộc tính tương ứng không tồn tại trong queryParams, nó sẽ có giá trị mặc định, hoặc nếu giá trị là undefined thì giá trị mặc định cũng được sử dụng. Điều này đảm bảo rằng queryConfig sẽ không chứa các thuộc tính không hợp lệ.
+- `const queryConfig: QueryConfig = omitBy(...)`: Tiếp theo, hook sử dụng hàm `omitBy` để loại bỏ các thuộc tính trong `queryParams` có giá trị là `undefined`. Đoạn mã từ `page` đến `category` xác định giá trị cho mỗi thuộc tính của `queryConfig`. Nếu thuộc tính tương ứng không tồn tại trong `queryParams`, nó sẽ có giá trị mặc định, hoặc nếu giá trị là `undefined` thì giá trị mặc định cũng được sử dụng. Điều này đảm bảo rằng `queryConfig` sẽ không chứa các thuộc tính không hợp lệ.
 
-- Hàm `isUndefined` được sử dụng để kiểm tra xem một giá trị có phải là undefined hay không. Nó được truyền vào như một hàm kiểm tra cho hàm omitBy, để xác định xem các thuộc tính nào cần được loại bỏ khỏi đối tượng.
+- Hàm `isUndefined` được sử dụng để kiểm tra xem một giá trị có phải là `undefined` hay không. Nó được truyền vào như một hàm kiểm tra cho hàm `omitBy`, để xác định xem các thuộc tính nào cần được loại bỏ khỏi đối tượng.
 
 - Cuối cùng, hook trả về đối tượng `queryConfig` đã được xử lý và tinh chỉnh.
 
 ---
+
+## Khi sử dụng hàm `omitBy` thì bắt buộc phải có hàm `isUndefined` (predicate) hay sao ?
+
+- Khi bạn sử dụng hàm `omitBy` từ thư viện lodash, không bắt buộc phải có hàm kiểm tra (`predicate`) như `isUndefined`, nhưng thường thì bạn sẽ cần một hàm kiểm tra để xác định những thuộc tính nào cần được loại bỏ.
+
+- Hàm `omitBy` cần một hàm kiểm tra (`predicate`) để quyết định xem mỗi thuộc tính có nên được bỏ qua (loại bỏ) hay không. Hàm kiểm tra này sẽ được áp dụng cho mỗi thuộc tính trong đối tượng, và nếu hàm kiểm tra trả về `true` cho một thuộc tính cụ thể, thuộc tính đó sẽ bị loại bỏ khỏi đối tượng kết quả.
+
+- Trong trường hợp của đoạn mã mà bạn cung cấp, hàm kiểm tra `isUndefined` được sử dụng để kiểm tra xem một giá trị có phải là `undefined` hay không. Những thuộc tính trong đối tượng `queryParams` có giá trị là `undefined` sẽ bị loại bỏ khỏi đối tượng kết quả. Điều này giúp loại bỏ các thuộc tính truy vấn không hợp lệ hoặc không có giá trị trong URL.
+
+- Tuy nhiên, nếu bạn không muốn sử dụng `isUndefined`, bạn có thể tự tạo một hàm kiểm tra khác dựa trên yêu cầu cụ thể của dự án hoặc sử dụng các hàm kiểm tra có sẵn khác từ thư viện lodash, như `isEmpty`, `isNull`, `isNil`, v.v. Chọn hàm kiểm tra phù hợp sẽ phụ thuộc vào ngữ cảnh và yêu cầu cụ thể của ứng dụng của bạn.
+
+---
+
+## Ví dụ Loại bỏ Thuộc tính Không hợp lệ từ Đối tượng có sử dụng `omitBy` và `isUndefined`
+
+- Dưới đây là một ví dụ TypeScript về cách sử dụng `omitBy` để loại bỏ các thuộc tính không có giá trị từ một đối tượng sử dụng hàm kiểm tra `isUndefined`:
+
+```jsx
+import omitBy from 'lodash/omitBy'
+import isUndefined from 'lodash/isUndefined'
+
+interface Person {
+  name?: string;
+  age?: number;
+  city?: string;
+}
+
+const person: Person = {
+  name: 'John',
+  age: 30,
+  city: 'New York'
+}
+
+// Simulate a missing property (Mô phỏng thuộc tính bị thiếu)
+delete person.city
+
+// Create a new object with undefined properties omitted
+const filteredPerson = omitBy(person, isUndefined)
+
+console.log(filteredPerson)
+```
+
+- Trong ví dụ này:
+
+1. Chúng ta định nghĩa một kiểu dữ liệu `Person` đại diện cho một đối tượng có các thuộc tính `name`, `age`, và `city`.
+
+2. Chúng ta tạo một đối tượng `person` và sau đó xóa thuộc tính `city` để tạo ra một thuộc tính không có giá trị.
+
+3. Sử dụng hàm `omitBy`, chúng ta tạo một đối tượng `filteredPerson` mới bằng cách loại bỏ các thuộc tính không có giá trị từ đối tượng `person`. Hàm kiểm tra `isUndefined` được sử dụng để xác định xem một thuộc tính có giá trị là `undefined` hay không.
+
+4. Cuối cùng, chúng ta in ra đối tượng `filteredPerson` sau khi đã loại bỏ các thuộc tính không có giá trị.
+
+- Kết quả sẽ là một đối tượng chỉ chứa các thuộc tính có giá trị (`name` và `age`), thuộc tính `city` đã bị loại bỏ.
