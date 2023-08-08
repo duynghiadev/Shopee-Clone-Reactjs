@@ -570,3 +570,447 @@ return { onSubmitSearch, register }
 - Tóm lại, đoạn mã này thực hiện xử lý tìm kiếm và chuyển hướng dựa trên các tham số truy vấn được tạo ra từ dữ liệu nhập vào trong biểu mẫu tìm kiếm.
 
 ---
+
+**Hãy cho ví dụ dùng có chức năng search các sản phẩm. Yêu cầu bạn fetch cho tôi 1 API giả. Sau đó tạo hàm `useSearchProducts` để chứa tất cả các chức năng con, có sử dụng `useNavigate`, `createSearchParams`, `useForm`, `omit`, `yupResolver`**
+
+- Dưới đây là một ví dụ về cách tạo một hàm tùy chỉnh `useSearchProducts` để thực hiện tìm kiếm sản phẩm dựa trên các tham số truy vấn. Ví dụ này sử dụng các khái niệm mà bạn đã đề cập: `useNavigate`, `createSearchParams`, `useForm`, `omit`, và `yupResolver`. Tôi sẽ sử dụng thư viện `axios` để làm giả API.
+
+- Trước tiên, bạn cần cài đặt các thư viện cần thiết:
+
+```bash
+npm install axios react-router-dom react-hook-form @hookform/resolvers yup
+```
+
+- Sau đó, dưới đây là ví dụ về cách tạo hàm `useSearchProducts`:
+
+```jsx
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { useForm, useFormState } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import axios from 'axios'
+
+// Fake API URL
+const API_URL = 'https://fakeapi.com/products'
+
+// Page components
+const Home: React.FC = () => {
+  const navigate = useNavigate()
+  const { register, handleSubmit } = useForm()
+
+  const onSubmit = (data) => {
+    const queryParams = createSearchParams(data)
+    navigate(`/search?${queryParams.toString()}`)
+  }
+
+  return (
+    <div>
+      <h1>Search Products</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Search Term:</label>
+        <input {...register('searchTerm')} />
+        <button type='submit'>Search</button>
+      </form>
+    </div>
+  )
+}
+
+const SearchResults: React.FC = () => {
+  const navigate = useNavigate()
+  const params = new URLSearchParams(window.location.search)
+  const searchTerm = params.get('searchTerm') || ''
+
+  const { data, error, loading } = useSearchProducts(searchTerm)
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
+
+  return (
+    <div>
+      <h2>Search Results</h2>
+      <button onClick={() => navigate('/')}>Go back to search</button>
+      <ul>
+        {data.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+// Custom hook for searching products
+const useSearchProducts = (searchTerm: string) => {
+  const { errors } = useFormState()
+  const schema = yup.object().shape({
+    searchTerm: yup.string().required('Search term is required')
+  })
+
+  const { data, error, loading } = useApiFetch(API_URL + `?q=${searchTerm}`)
+
+  const { handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: { searchTerm }
+  })
+
+  const onSubmit = (data) => {
+    const queryParams = createSearchParams(data)
+    navigate(`/search?${queryParams.toString()}`)
+  }
+
+  return { data, error, loading, handleSubmit }
+}
+
+// Custom hook for fetching data from API
+const useApiFetch = (url: string) => {
+  const [data, setData] = React.useState([])
+  const [error, setError] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    axios
+      .get(url)
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((error) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [url])
+
+  return { data, error, loading }
+}
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/search' element={<SearchResults />} />
+      </Routes>
+    </Router>
+  )
+}
+
+export default App
+```
+
+- Trong ví dụ này:
+
+1. `useSearchProducts` là một hàm tùy chỉnh để thực hiện tìm kiếm sản phẩm. Hàm này sử dụng `useApiFetch` để gửi yêu cầu tìm kiếm sản phẩm từ API.
+
+2. Trang `Home` có một biểu mẫu để nhập từ khóa tìm kiếm. Khi người dùng nhập từ khóa và nhấn nút "Search", hàm `onSubmit` trong `useSearchProducts` được gọi để thực hiện tìm kiếm và điều hướng đến trang `SearchResults` với tham số truy vấn.
+
+3. Trang `SearchResults` hiển thị kết quả tìm kiếm dựa trên tham số truy vấn `searchTerm`. Dữ liệu được lấy từ API sử dụng hàm `useApiFetch`.
+
+4. Trong `useSearchProducts`, chúng ta sử dụng `useForm` để quản lý biểu mẫu tìm kiếm và xác thực dữ liệu bằng `yupResolver`.
+
+5. `useApiFetch` là một hàm tùy chỉnh để gửi yêu cầu GET đến API và trả về dữ liệu, lỗi và trạng thái tải.
+
+6. Component `App` quản lý routing và cấu hình định tuyến cho trang `Home` và `SearchResults`.
+
+- Tóm lại, ví dụ trên mô phỏng cách sử dụng `useSearchProducts` để thực hiện tìm kiếm sản phẩm với các tính năng bao gồm xác thực dữ liệu, điều hướng, và gửi yêu cầu API.
+
+---
+
+## Sau đây là phần giải thích chi tiết đoạn code
+
+❌❌ Đoạn 1 ❌❌
+
+```jsx
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import { useForm, useFormState } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import axios from 'axios'
+```
+
+- `import React from 'react';`: Dòng này import thư viện React, cho phép bạn sử dụng các thành phần React như React.FC (Functional Component).
+
+- `import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';`: Dòng này import các thành phần từ thư viện `react-router-dom`. Cụ thể:
+
+  - `Router`: Component chứa các thành phần định tuyến.
+  - `Routes`: Component dùng để định nghĩa các đường dẫn và thành phần tương ứng.
+  - `Route`: Component định nghĩa một đường dẫn và liên kết nó với một thành phần.
+  - `useNavigate`: Hook dùng để thực hiện điều hướng trong ứng dụng.
+
+- `import { useForm, useFormState } from 'react-hook-form';`: Dòng này import các hook từ thư viện `react-hook-form` để quản lý biểu mẫu và trạng thái của biểu mẫu.
+
+- `import { yupResolver } from '@hookform/resolvers/yup';`: Dòng này import resolver `yupResolver` từ thư viện `@hookform/resolvers`. Resolver này được sử dụng để kết hợp xác thực dữ liệu từ thư viện `yup` với `react-hook-form`.
+
+- `import * as yup from 'yup';`: Dòng này import toàn bộ các thành phần từ thư viện `yup`, thư viện sử dụng để định nghĩa schema xác thực dữ liệu.
+
+- `import axios from 'axios';`: Dòng này import thư viện `axios`, một thư viện dùng để thực hiện các yêu cầu HTTP, như gửi yêu cầu GET và POST đến API.
+
+- Tóm lại, đoạn mã này import các thư viện và module cần thiết để xây dựng ứng dụng sử dụng React, React Router, React Hook Form, `yup` để xác thực dữ liệu, và `axios` để gửi yêu cầu HTTP.
+
+---
+
+❌❌ Đoạn 2 ❌❌
+
+```jsx
+const Home: React.FC = () => {
+  // Sử dụng hook useNavigate() để lấy hàm navigate để điều hướng trang
+  const navigate = useNavigate()
+
+  // Sử dụng hook useForm() để quản lý biểu mẫu và dữ liệu nhập
+  const { register, handleSubmit } = useForm()
+
+  // Hàm được gọi khi người dùng nhấn nút "Search"
+  const onSubmit = (data) => {
+    // Tạo tham số truy vấn (query parameter) từ dữ liệu nhập trong biểu mẫu
+    const queryParams = createSearchParams(data)
+
+    // Thực hiện điều hướng đến trang tìm kiếm kèm theo tham số truy vấn
+    navigate(`/search?${queryParams.toString()}`)
+  }
+
+  return (
+    <div>
+      <h1>Search Products</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Search Term:</label>
+        {/*
+          Sử dụng hook register() để kết nối trường input 'searchTerm' với useForm
+          để React Hook Form quản lý và theo dõi trạng thái của trường này
+        */}
+        <input {...register('searchTerm')} />
+
+        {/* Nút "Submit" để người dùng gửi biểu mẫu */}
+        <button type='submit'>Search</button>
+      </form>
+    </div>
+  )
+}
+```
+
+- Giải thích từng phần code:
+
+- `const navigate = useNavigate();`: Đây là việc sử dụng hook `useNavigate()` từ thư viện `react-router-dom`. Nó cho phép bạn lấy hàm `navigate` để thực hiện việc điều hướng trang.
+
+- `const { register, handleSubmit } = useForm();`: Đây là sử dụng hook `useForm()` từ thư viện `react-hook-form`. Bạn lấy các hàm `register` và `handleSubmit` để liên kết các trường `input` và xử lý sự kiện gửi biểu mẫu.
+
+- `const onSubmit = (data) => { ... }`: Đây là hàm được gọi khi người dùng nhấn nút "Search". Trong hàm này, chúng ta tạo các tham số truy vấn từ dữ liệu nhập trong biểu mẫu và sử dụng hàm `navigate` để thực hiện điều hướng đến trang tìm kiếm kèm theo tham số truy vấn.
+
+- `<form onSubmit={handleSubmit(onSubmit)}>...</form>`: Đây là phần khai báo biểu mẫu. Khi người dùng nhấn nút "Submit", sự kiện `onSubmit` sẽ được gọi.
+
+- `<input {...register('searchTerm')} />`: Đây là input để người dùng nhập từ khóa tìm kiếm. Sử dụng `register` để kết nối trường này với React Hook Form, cho phép Hook theo dõi và quản lý trạng thái của trường input này.
+
+- `<button type='submit'>Search</button>`: Đây là nút "Submit" để người dùng gửi biểu mẫu.
+
+- Tóm lại, đoạn mã trên giải thích cách sử dụng các hook và hàm từ các thư viện khác nhau để tạo một trang tìm kiếm sản phẩm đơn giản, sử dụng React Hook Form để quản lý biểu mẫu và xử lý dữ liệu nhập từ người dùng.
+
+---
+
+❌❌ Đoạn 3 ❌❌
+
+```jsx
+const SearchResults: React.FC = () => {
+  // Sử dụng hook useNavigate() để lấy hàm navigate để thực hiện điều hướng trang
+  const navigate = useNavigate()
+
+  // Lấy tham số truy vấn từ URL để biết từ khóa tìm kiếm
+  const params = new URLSearchParams(window.location.search)
+  const searchTerm = params.get('searchTerm') || '' // Lấy giá trị 'searchTerm' từ URL, nếu không có thì gán giá trị mặc định là chuỗi trống
+
+  // Sử dụng custom hook useSearchProducts để tìm kiếm sản phẩm dựa trên từ khóa tìm kiếm
+  const { data, error, loading } = useSearchProducts(searchTerm)
+
+  // Kiểm tra trạng thái tải dữ liệu. Nếu đang tải, hiển thị thông báo "Loading..."
+  if (loading) return <p>Loading...</p>
+
+  // Kiểm tra nếu có lỗi, hiển thị thông báo lỗi
+  if (error) return <p>Error: {error.message}</p>
+
+  // Nếu không có lỗi và đã tải xong dữ liệu, hiển thị kết quả tìm kiếm
+  return (
+    <div>
+      <h2>Search Results</h2>
+
+      {/*
+        Nút "Go back to search" để người dùng quay lại trang tìm kiếm ban đầu
+        Sử dụng hàm navigate để thực hiện điều hướng
+      */}
+      <button onClick={() => navigate('/')}>Go back to search</button>
+
+      <ul>
+        {/*
+          Lặp qua từng sản phẩm trong dữ liệu và hiển thị tên của từng sản phẩm
+          Lấy key của sản phẩm là 'id' để làm khóa duy nhất
+        */}
+        {data.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+- `const navigate = useNavigate();`: Sử dụng hook `useNavigate()` để lấy hàm `navigate` để thực hiện điều hướng trang.
+
+- `const params = new URLSearchParams(window.location.search);`: Tạo một đối tượng `URLSearchParams` để lấy tham số truy vấn từ URL. `window.location.search` chứa chuỗi truy vấn từ URL.
+
+- `const searchTerm = params.get('searchTerm') || '';`: Sử dụng hàm `get` từ đối tượng `URLSearchParams` để lấy giá trị của tham số truy vấn 'searchTerm' từ URL. Nếu không có giá trị, gán giá trị mặc định là chuỗi trống.
+
+- `const { data, error, loading } = useSearchProducts(searchTerm);`: Sử dụng custom hook `useSearchProducts` để tìm kiếm sản phẩm dựa trên từ khóa tìm kiếm. Kết quả trả về bao gồm dữ liệu, lỗi, và trạng thái tải.
+
+- `if (loading) return <p>Loading...</p>;`: Kiểm tra trạng thái tải dữ liệu. Nếu đang tải, hiển thị thông báo "Loading..." để người dùng biết dữ liệu đang được tải.
+
+- `if (error) return <p>Error: {error.message}</p>;`: Kiểm tra nếu có lỗi từ dữ liệu tìm kiếm. Nếu có lỗi, hiển thị thông báo lỗi kèm theo thông điệp lỗi.
+
+- `<button onClick={() => navigate('/')}>Go back to search</button>`: Nút "Go back to search" để người dùng quay lại trang tìm kiếm ban đầu. Sử dụng hàm `navigate` để thực hiện điều hướng.
+
+- `{data.map((product) => (<li key={product.id}>{product.name}</li>))}`: Sử dụng hàm `map` để lặp qua từng sản phẩm trong dữ liệu. Đối với mỗi sản phẩm, hiển thị tên của sản phẩm. `key` được sử dụng để đảm bảo mỗi phần tử trong danh sách có khóa duy nhất.
+
+- Tóm lại, đoạn mã trên giải thích cách sử dụng dữ liệu tìm kiếm và tình huống xử lý tải và lỗi để hiển thị kết quả tìm kiếm sản phẩm.
+
+---
+
+❌❌ Đoạn 4 ❌❌
+
+```jsx
+const useSearchProducts = (searchTerm: string) => {
+  // Sử dụng hook useFormState() để lấy thông tin trạng thái của biểu mẫu
+  const { errors } = useFormState()
+
+  // Định nghĩa schema để xác thực dữ liệu nhập
+  const schema = yup.object().shape({
+    searchTerm: yup.string().required('Search term is required')
+  })
+
+  // Sử dụng custom hook useApiFetch để lấy dữ liệu từ API dựa trên từ khóa tìm kiếm
+  const { data, error, loading } = useApiFetch(API_URL + `?q=${searchTerm}`)
+
+  // Sử dụng hook useForm() để quản lý biểu mẫu và xác thực dữ liệu
+  const { handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+
+    // Đặt giá trị mặc định cho trường 'searchTerm' từ dữ liệu hiện tại
+    defaultValues: { searchTerm }
+  })
+
+  // Hàm được gọi khi người dùng nhấn nút "Search"
+  const onSubmit = (data) => {
+    // Tạo tham số truy vấn từ dữ liệu nhập trong biểu mẫu
+    const queryParams = createSearchParams(data)
+
+    // Thực hiện điều hướng đến trang tìm kiếm kèm theo tham số truy vấn
+    navigate(`/search?${queryParams.toString()}`)
+  }
+
+  // Trả về dữ liệu, lỗi, trạng thái tải và hàm handleSubmit để sử dụng trong component
+  return { data, error, loading, handleSubmit }
+}
+```
+
+- `const { errors } = useFormState();`: Sử dụng hook `useFormState()` để lấy thông tin về trạng thái của biểu mẫu, bao gồm cả lỗi.
+
+- `const schema = yup.object().shape({ ... });`: Định nghĩa schema để xác thực dữ liệu nhập trong biểu mẫu. Trong trường này, yêu cầu trường 'searchTerm' phải được điền.
+
+- `const { data, error, loading } = useApiFetch(API_URL + ?q=${searchTerm});`: Sử dụng custom hook `useApiFetch` để lấy dữ liệu từ API dựa trên từ khóa tìm kiếm `searchTerm`.
+
+- `const { handleSubmit } = useForm({ ... });`: Sử dụng hook `useForm()` để quản lý biểu mẫu và xác thực dữ liệu. Đặt giá trị mặc định cho trường 'searchTerm' từ dữ liệu hiện tại.
+
+- `const onSubmit = (data) => { ... }`: Hàm được gọi khi người dùng nhấn nút "Search". Trong hàm này, tạo tham số truy vấn từ dữ liệu nhập trong biểu mẫu và sử dụng hàm `navigate` để thực hiện điều hướng đến trang tìm kiếm kèm theo tham số truy vấn.
+
+- `return { data, error, loading, handleSubmit };`: Trả về một đối tượng chứa dữ liệu, lỗi, trạng thái tải và hàm `handleSubmit` để sử dụng trong component.
+
+- Tóm lại, đoạn mã trên giải thích cách sử dụng các hooks và custom hooks khác nhau để quản lý biểu mẫu, xác thực dữ liệu, tìm kiếm sản phẩm từ API, và thực hiện điều hướng trong ứng dụng.
+
+---
+
+❌❌ Đoạn 5 ❌❌
+
+```jsx
+const useApiFetch = (url: string) => {
+  // Sử dụng React.useState() để tạo các state
+  const [data, setData] = React.useState([]) // State chứa dữ liệu
+  const [error, setError] = React.useState(null) // State chứa lỗi
+  const [loading, setLoading] = React.useState(true) // State để xác định trạng thái tải
+
+  // Sử dụng React.useEffect() để thực hiện side effect khi url thay đổi
+  React.useEffect(() => {
+    // Gửi yêu cầu GET đến API bằng thư viện axios
+    axios
+      .get(url)
+      .then((response) => {
+        // Nếu thành công, cập nhật state data với dữ liệu trả về từ API
+        setData(response.data)
+      })
+      .catch((error) => {
+        // Nếu xảy ra lỗi, cập nhật state error với thông tin lỗi
+        setError(error)
+      })
+      .finally(() => {
+        // Dù thành công hay thất bại, cập nhật state loading thành false để đánh dấu kết thúc tải dữ liệu
+        setLoading(false)
+      })
+  }, [url]) // Sử dụng dependency array để chỉ thực hiện side effect khi url thay đổi
+
+  // Trả về đối tượng chứa dữ liệu, lỗi và trạng thái tải
+  return { data, error, loading }
+}
+```
+
+- `const [data, setData] = React.useState([]);`: Sử dụng `React.useState()` để tạo state `data` với giá trị mặc định là một mảng rỗng. State này sẽ chứa dữ liệu trả về từ API.
+
+- `const [error, setError] = React.useState(null);`: Tạo state `error` để lưu thông tin lỗi (nếu có). Ban đầu, giá trị lỗi được đặt là `null`.
+
+- `const [loading, setLoading] = React.useState(true);`: Tạo state `loading` để xác định trạng thái tải. Ban đầu, state này được đặt là `true` để biểu thị rằng dữ liệu đang được tải.
+
+- `React.useEffect(() => { ... }, [url]);`: Sử dụng hook `useEffect()` để thực hiện các tác vụ phụ (side effects) khi `url` thay đổi. Trong trường hợp này, khi `url` thay đổi (điều này xảy ra khi bạn cung cấp một URL khác khi gọi hook), yêu cầu GET sẽ được gửi đến API bằng thư viện axios.
+
+- `.then((response) => { ... })`: Xử lý dữ liệu trả về từ yêu cầu GET thành công. Dữ liệu trong `response.data` được cập nhật vào state `data`.
+
+- `.catch((error) => { ... })`: Xử lý khi xảy ra lỗi trong quá trình gửi yêu cầu. Thông tin lỗi được cập nhật vào state `error`.
+
+- `.finally(() => { ... })`: Luôn được thực hiện sau cả khi yêu cầu thành công hay thất bại, dùng để cập nhật state `loading` thành `false` để kết thúc trạng thái tải.
+
+- `return { data, error, loading };`: Trả về một đối tượng chứa dữ liệu, lỗi và trạng thái tải. Điều này cho phép bạn sử dụng dữ liệu, xử lý lỗi và biết trạng thái tải trong component sử dụng hook này.
+
+- Tóm lại, đoạn mã trên định nghĩa một custom hook có tên `useApiFetch` để thực hiện việc gửi yêu cầu GET đến API, quản lý dữ liệu trả về, xử lý lỗi và theo dõi trạng thái tải của dữ liệu.
+
+---
+
+❌❌ Đoạn 6 ❌❌
+
+```jsx
+const App: React.FC = () => {
+  return (
+    // Sử dụng Router để bọc toàn bộ ứng dụng và quản lý các route
+    <Router>
+      {/* Sử dụng Routes để khai báo các route */}
+      <Routes>
+        {/*
+          Route cho trang chính ("/"): Khi đường dẫn khớp với "/" (root path), hiển thị component Home
+          'element' prop được sử dụng để xác định component sẽ được hiển thị cho route này
+        */}
+        <Route path='/' element={<Home />} />
+
+        {/*
+          Route cho trang kết quả tìm kiếm ("/search"): Khi đường dẫn khớp với "/search", hiển thị component SearchResults
+          'element' prop được sử dụng để xác định component sẽ được hiển thị cho route này
+        */}
+        <Route path='/search' element={<SearchResults />} />
+      </Routes>
+    </Router>
+  )
+}
+```
+
+- `<Router>`: Sử dụng `Router` để bọc toàn bộ ứng dụng và tạo một vùng quản lý các `route` trong ứng dụng.
+
+- `<Routes>`: Sử dụng `Routes` để khai báo các `route` của ứng dụng. Trong đoạn mã này, chúng ta đang khai báo hai `route`.
+
+- `<Route path='/' element={<Home />} />`: Đây là `route` cho trang chính, được kích hoạt khi đường dẫn khớp với "/" (root path). Prop `path` xác định đường dẫn cần khớp, và prop `element` xác định component sẽ được hiển thị khi `route` này được kích hoạt. Trong trường hợp này, khi trang chính được mở, component `Home` sẽ được hiển thị.
+
+- `<Route path='/search' element={<SearchResults />} />`: Đây là `route` cho trang kết quả tìm kiếm, được kích hoạt khi đường dẫn khớp với "/search". Prop `path` xác định đường dẫn cần khớp, và prop `element` xác định component sẽ được hiển thị khi `route` này được kích hoạt. Trong trường hợp này, khi người dùng truy cập trang kết quả tìm kiếm, component `SearchResults` sẽ được hiển thị.
+
+- Tóm lại, đoạn mã cuối cùng giải thích cách sử dụng `Router` và `Routes` từ thư viện `react-router-dom` để xác định và quản lý các `route` trong ứng dụng.
+
+---
