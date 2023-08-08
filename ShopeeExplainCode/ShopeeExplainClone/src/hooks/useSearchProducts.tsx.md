@@ -258,6 +258,93 @@ export default App
 
 - Với ví dụ này, bạn có thể thấy cách sử dụng `yupResolver` để xác thực dữ liệu trong biểu mẫu sử dụng React Hook Form.
 
+**Dưới đây là phần giải thích chi tiết đoạn code**
+
+- Đoạn mã này là một ví dụ cụ thể về cách sử dụng React Hook Form cùng với `yupResolver` để tạo và xác thực biểu mẫu. Hãy giải thích từng phần của đoạn mã:
+
+1. Import các thư viện và module cần thiết:
+
+```jsx
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+```
+
+- `react`: Thư viện React để tạo giao diện người dùng.
+- `useForm`: Hook từ React Hook Form để quản lý biểu mẫu.
+- `yupResolver`: Resolver từ `@hookform/resolvers/yup` để sử dụng xác thực dữ liệu dựa trên schema `yup`.
+- `yup`: Thư viện `yup` dùng để định nghĩa schema xác thực dữ liệu.
+
+2. Định nghĩa schema `yup` cho biểu mẫu:
+
+```jsx
+const schema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  age: yup.number().typeError('Age must be a number').required('Age is required').positive('Age must be positive')
+})
+```
+
+- Đây là một schema `yup` gồm ba trường: `name`, `email`, và `age`.
+- Mỗi trường có các quy tắc xác thực tương ứng.
+
+3. Định nghĩa component `App`:
+
+```jsx
+function App() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+}
+```
+
+- Sử dụng hook `useForm` để khởi tạo biểu mẫu và quản lý nó.
+- resolver trong `useForm` được thiết lập là `yupResolver(schema)` để sử dụng schema `yup` đã định nghĩa.
+
+- `onSubmit` được gọi khi người dùng nhấn nút "Submit":
+- Khi người dùng nhấn nút "Submit", `data` chứa thông tin của biểu mẫu sẽ được in ra trong console.
+
+4. JSX để hiển thị giao diện biểu mẫu và thông báo lỗi:
+
+```jsx
+return (
+  <div>
+    <h1>React Hook Form with yupResolver</h1>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <label>Name</label>
+        <input {...register('name')} />
+        {errors.name && <p>{errors.name.message}</p>}
+      </div>
+      <div>
+        <label>Email</label>
+        <input {...register('email')} />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div>
+      <div>
+        <label>Age</label>
+        <input {...register('age')} />
+        {errors.age && <p>{errors.age.message}</p>}
+      </div>
+      <button type='submit'>Submit</button>
+    </form>
+  </div>
+)
+```
+
+- Hiển thị giao diện cho component `App` bao gồm tiêu đề, biểu mẫu và nút "Submit".
+- Mỗi trường trong biểu mẫu được liên kết với React Hook Form bằng cách sử dụng `{...register('fieldName')}`.
+- `errors` object được sử dụng để hiển thị thông báo lỗi tương ứng với từng trường.
+
 ---
 
 ```jsx
