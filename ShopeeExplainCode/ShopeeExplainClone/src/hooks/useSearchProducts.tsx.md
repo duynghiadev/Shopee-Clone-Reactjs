@@ -351,6 +351,187 @@ return (
 const navigate = useNavigate()
 ```
 
+- Trong đoạn mã này, chúng ta đang sử dụng hook `useNavigate()` từ thư viện `react-router-dom`. Hook này có mục đích là để thực hiện các chuyển hướng (điều hướng) trong ứng dụng React sử dụng React Router.
+
+- Hãy xem chi tiết:
+
+1. `const navigate`: Đây là biến mà chúng ta sử dụng để gọi hàm thực hiện chuyển hướng.
+
+2. `useNavigate()`: Đây là hook mà chúng ta sử dụng để lấy một hàm `navigate` từ React Router. Hàm `navigate` này có khả năng thực hiện các chuyển hướng (điều hướng) trong ứng dụng của bạn.
+
+- Ví dụ sử dụng `navigate`:
+
+```jsx
+navigate('/products') // Chuyển hướng đến đường dẫn '/products'
+navigate('/contact') // Chuyển hướng đến đường dẫn '/contact'
+```
+
+- Như vậy, khi bạn cần thực hiện chuyển hướng trong ứng dụng của mình, bạn có thể sử dụng biến `navigate` để gọi hàm `navigate()` và cung cấp đường dẫn bạn muốn điều hướng đến. Điều này giúp bạn thực hiện chuyển hướng giữa các trang một cách dễ dàng và hiệu quả.
+
+---
+
+## 🚀 Ví dụ sử dụng hook useNavigate()
+
+- Dưới đây là một ví dụ sử dụng hook `useNavigate()` để thực hiện chuyển hướng trong ứng dụng React sử dụng React Router:
+
+- Trước tiên, bạn cần cài đặt `react-router-dom` nếu chưa có:
+
+```bash
+npm install react-router-dom
+npm install --save-dev @types/react-router-dom
+```
+
+- Sau đó, bạn có thể tạo một ví dụ như sau:
+
+```jsx
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const Home = () => {
+  const navigate = useNavigate()
+
+  const handleNavigation = () => {
+    // Sử dụng biến navigate để thực hiện chuyển hướng đến "/about" khi nút được bấm
+    navigate('/about')
+  }
+
+  return (
+    <div>
+      <h1>Trang chủ</h1>
+      <button onClick={handleNavigation}>Đến trang "About"</button>
+    </div>
+  )
+}
+
+export default Home
+```
+
+- Trong ví dụ trên:
+
+- Chúng ta sử dụng hook `useNavigate()` để lấy hàm `navigate` từ React Router.
+- Hàm `handleNavigation` được gọi khi nút được bấm. Trong hàm này, chúng ta sử dụng biến `navigate` để thực hiện chuyển hướng đến trang "/about".
+- JSX sử dụng một nút để kích hoạt hàm `handleNavigation` khi được bấm.
+
+- Khi bạn chạy ứng dụng và bấm nút, bạn sẽ thấy ứng dụng chuyển hướng từ trang chủ đến trang "/about".
+
+## 🚀 Ví dụ sử dụng useNavigate() trong các dự án thực tế có sử dụng TypeScript
+
+- Dưới đây là một ví dụ phức tạp hơn, thể hiện cách sử dụng hook `useNavigate()` trong một dự án React thực tế. Trong ví dụ này, chúng ta sẽ tạo một ứng dụng quản lý danh sách sản phẩm với chức năng thêm và xem chi tiết sản phẩm. Code sẽ sử dụng TypeScript để cải thiện tính đúng đắn và hiệu quả của mã:
+
+- Tạo một thư mục `src` trong dự án của bạn và bên trong tạo các tệp tương ứng:
+
+- `src/App.tsx`: Giao diện chính của ứng dụng.
+- `src/components/ProductList.tsx`: Danh sách sản phẩm.
+- `src/components/ProductDetail.tsx`: Chi tiết sản phẩm.
+- `src/components/Header.tsx`: Thanh đầu trang.
+
+1. `src/App.tsx`:
+
+```jsx
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import ProductList from './components/ProductList'
+import ProductDetail from './components/ProductDetail'
+
+const App = () => {
+  return (
+    <div>
+      <Header />
+      <Routes>
+        <Route path='/' element={<ProductList />} />
+        <Route path='/product/:id' element={<ProductDetail />} />
+      </Routes>
+    </div>
+  )
+}
+
+export default App
+```
+
+2. `src/components/Header.tsx`:
+
+```jsx
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const Header = () => {
+  return (
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <Link to='/'>Danh sách sản phẩm</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  )
+}
+
+export default Header
+```
+
+3. `src/components/ProductList.tsx`:
+
+```jsx
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const ProductList = () => {
+  const navigate = useNavigate()
+
+  const handleProductClick = (productId: number) => {
+    navigate(`/product/${productId}`)
+  }
+
+  return (
+    <div>
+      <h2>Danh sách sản phẩm</h2>
+      <ul>
+        <li onClick={() => handleProductClick(1)}>Sản phẩm 1</li>
+        <li onClick={() => handleProductClick(2)}>Sản phẩm 2</li>
+        {/* Thêm các sản phẩm khác */}
+      </ul>
+    </div>
+  )
+}
+
+export default ProductList
+```
+
+4. `src/components/ProductDetail.tsx`:
+
+```jsx
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+interface ProductDetailParams {
+  id: string;
+}
+
+const ProductDetail = () => {
+  const { id } = useParams<ProductDetailParams>();
+
+  return (
+    <div>
+      <h2>Chi tiết sản phẩm {id}</h2>
+      {/* Hiển thị thông tin chi tiết sản phẩm */}
+    </div>
+  );
+};
+
+export default ProductDetail;
+```
+
+- Trong ví dụ này:
+
+- Chúng ta sử dụng React Router để quản lý các tuyến đường và sử dụng hook `useNavigate()` để thực hiện chuyển hướng.
+- Trong `ProductList`, khi người dùng bấm vào một sản phẩm, chúng ta sử dụng `navigate()` để chuyển hướng đến trang chi tiết sản phẩm tương ứng.
+- Trong `ProductDetail`, chúng ta sử dụng `useParams()` để lấy tham số `id` từ URL để hiển thị thông tin chi tiết của sản phẩm.
+
+- Ví dụ này cho thấy cách sử dụng hook `useNavigate()` trong một ứng dụng thực tế với TypeScript để thực hiện chuyển hướng giữa các trang trong ứng dụng React.
+
 ---
 
 ```jsx
@@ -375,5 +556,17 @@ const onSubmitSearch = handleSubmit((data) => {
 
 return { onSubmitSearch, register }
 ```
+
+- Trong đoạn mã trên, chúng ta đang xử lý sự kiện khi người dùng gửi biểu mẫu tìm kiếm:
+
+1. `const onSubmitSearch = handleSubmit((data) => { ... })`: Đây là việc định nghĩa hàm `onSubmitSearch`, mà sẽ được gọi khi người dùng gửi biểu mẫu tìm kiếm. Hàm này sử dụng `handleSubmit` từ thư viện `react-hook-form`, và tham số `data` chứa các giá trị đã nhập vào biểu mẫu.
+
+2. `const config = queryConfig.order ? ... : ...`: Ở đây, chúng ta đang tạo một đối tượng `config` để xác định các tham số truy vấn cho tìm kiếm. Nếu `queryConfig.order` tồn tại (khác null hoặc undefined), chúng ta sẽ sử dụng hàm `omit` từ thư viện `lodash` để loại bỏ các thuộc tính không cần thiết (`order` và `sort_by`) khỏi `queryConfig`, và đặt giá trị `name` từ `data` (giá trị đã nhập vào trường tìm kiếm). Nếu không, chúng ta đơn giản là sử dụng `queryConfig` hiện tại và đặt giá trị `name` từ `data`.
+
+3. `navigate({ ... })`: Ở đây, chúng ta sử dụng hàm `navigate` để thực hiện chuyển hướng đến trang chủ (`path.home`) với các tham số truy vấn được cập nhật dựa trên `config`. Chúng ta sử dụng hàm `createSearchParams` để tạo chuỗi tham số truy vấn từ `config`, và sau đó chuyển nó thành chuỗi bằng cách sử dụng `.toString()`.
+
+4. `return { onSubmitSearch, register }`: Cuối cùng, chúng ta trả về một đối tượng chứa hai giá trị. `onSubmitSearch` là hàm xử lý sự kiện khi gửi biểu mẫu tìm kiếm, và `register` là một phương thức từ hook `useForm` để liên kết các trường trong biểu mẫu với `react-hook-form`.
+
+- Tóm lại, đoạn mã này thực hiện xử lý tìm kiếm và chuyển hướng dựa trên các tham số truy vấn được tạo ra từ dữ liệu nhập vào trong biểu mẫu tìm kiếm.
 
 ---
