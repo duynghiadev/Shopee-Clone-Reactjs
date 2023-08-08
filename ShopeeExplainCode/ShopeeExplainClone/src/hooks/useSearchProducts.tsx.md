@@ -1014,3 +1014,83 @@ const App: React.FC = () => {
 - Tóm lại, đoạn mã cuối cùng giải thích cách sử dụng `Router` và `Routes` từ thư viện `react-router-dom` để xác định và quản lý các `route` trong ứng dụng.
 
 ---
+
+## `shape()` là phương thức hay là hàm ? Trong ngữ cảnh của JavaScript, TypeScript, và được sử dụng trong ReactJS ?
+
+- Trong ngữ cảnh của JavaScript, TypeScript và sử dụng trong ReactJS:
+
+1. `JavaScript và TypeScript`:
+
+- Trong JavaScript và TypeScript, `shape()` không phải là phương thức hoặc hàm có sẵn trong ngôn ngữ. Nó không thuộc về JavaScript core hay TypeScript core. Thay vào đó, nó thường được sử dụng trong các thư viện hoặc frameworks để chỉ định một "hình dáng" (shape) của đối tượng, thường được sử dụng để kiểm tra kiểu dữ liệu hoặc xác thực dữ liệu.
+
+2. `ReactJS và PropTypes`:
+
+- Trong ReactJS, `shape()` được sử dụng trong thư viện `prop-types` để xác định một hình dáng (shape) cụ thể của các thuộc tính (props) mà một thành phần cần nhận. `shape()` cho phép bạn chỉ định một đối tượng với các thuộc tính và kiểu tương ứng mà bạn mong đợi.
+
+- Ví dụ:
+
+```jsx
+import PropTypes from 'prop-types'
+
+const MyComponent = ({ person }) => {
+  // ...
+}
+
+MyComponent.propTypes = {
+  person: PropTypes.shape({
+    name: PropTypes.string,
+    age: PropTypes.number
+  })
+}
+```
+
+- Trong ví dụ trên, `shape()` là một phương thức từ thư viện `prop-types` và được sử dụng để kiểm tra kiểu của đối tượng `person` trong thuộc tính của `MyComponent`.
+
+3. `TypeScript và Interfaces`:
+
+- Trong TypeScript, thay vì sử dụng `shape()` như trong `prop-types`, bạn thường sử dụng các giao diện (interfaces) để định nghĩa hình dáng của đối tượng.
+
+- Ví dụ:
+
+```jsx
+interface Person {
+  name: string;
+  age: number;
+}
+
+const person: Person = {
+  name: 'John',
+  age: 30
+}
+```
+
+- Trong TypeScript, `shape()` không phải là một phần của ngôn ngữ, mà thay vào đó, giao diện (interface) được sử dụng để định nghĩa hình dáng (shape) của các đối tượng và kiểu dữ liệu.
+
+- Tóm lại, trong ngữ cảnh của JavaScript, TypeScript và ReactJS, `shape()` có ý nghĩa khác nhau tùy theo ngữ cảnh và thư viện mà nó được sử dụng.
+
+## `shape()` được gọi là `propTypes` trong ReactJS hả ?
+
+- Đúng vậy. `shape()` là một phương thức trong thư viện `prop-types` của React và thường được sử dụng để xác định hình dáng (shape) của các thuộc tính (props) mà một component mong đợi.
+
+- Trong React, khi bạn định nghĩa các prop types cho một component, bạn có thể sử dụng PropTypes.`shape()` để chỉ định rõ hình dáng của một đối tượng.
+
+- Ví dụ:
+
+```jsx
+import PropTypes from 'prop-types'
+
+const MyComponent = ({ person }) => {
+  // ...
+}
+
+MyComponent.propTypes = {
+  person: PropTypes.shape({
+    name: PropTypes.string,
+    age: PropTypes.number
+  })
+}
+```
+
+- Trong ví dụ này, `MyComponent` mong đợi một prop `person` có hình dáng gồm hai thuộc tính là `name` (kiểu string) và `age` (kiểu number).
+
+---
