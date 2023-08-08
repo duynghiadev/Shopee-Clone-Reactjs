@@ -245,6 +245,31 @@ useEffect(() => {
 }, [currentPage, sortBy])
 ```
 
+- Đoạn mã này liên quan đến việc sử dụng React hooks để quản lý trạng thái và xử lý dữ liệu dựa trên các query parameters trong URL. Hãy giải thích từng phần của đoạn mã:
+
+```jsx
+const [currentPage, setCurrentPage] = (useState < string) | (undefined > queryParams.page)
+```
+
+1. `useState<string> | (undefined > queryParams.page)`: Đoạn này đang khai báo một biến state `currentPage` bằng cách sử dụng hook `useState`. `useState` trả về một mảng với hai phần tử: giá trị hiện tại của state và hàm để cập nhật state. Trong trường hợp này, giá trị ban đầu của `currentPage` sẽ được lấy từ `queryParams.page`. Nếu không có `queryParams.page`, giá trị ban đầu của `currentPage` sẽ là `undefined`.
+
+```jsx
+const [sortBy, setSortBy] = (useState < string) | (undefined > queryParams.sortBy)
+```
+
+2. Tương tự như trên, đoạn này đang khai báo biến state `sortBy` và hàm cập nhật `setSortBy`. Giá trị ban đầu của `sortBy` sẽ được lấy từ `queryParams.sortBy`. Nếu không có `queryParams.sortBy`, giá trị ban đầu của `sortBy` sẽ là `undefined`.
+
+```jsx
+useEffect(() => {
+  // Fetch data from API based on queryParams
+  fetchData(currentPage, sortBy)
+}, [currentPage, sortBy])
+```
+
+- `useEffect(() => {...}, [currentPage, sortBy])`: Đây là một hook `useEffect` được sử dụng để thực hiện các hành động sau khi component đã render hoặc khi trạng thái thay đổi. Trong trường hợp này, nếu `currentPage` hoặc `sortBy` thay đổi, hook này sẽ được gọi. Trong hàm callback của `useEffect`, bạn thấy một hàm `fetchData(currentPage, sortBy)` được gọi để tải dữ liệu từ API dựa trên các query parameters.
+
+- Tóm lại, đoạn mã này sử dụng React hooks để quản lý trạng thái của `currentPage` và `sortBy` dựa trên các query parameters từ URL. Khi `currentPage` hoặc `sortBy` thay đổi, một hàm `fetchData` sẽ được gọi để lấy dữ liệu từ API dựa trên các query parameters mới.
+
 ---
 
 ✅✅ Đoạn 5 ✅✅
@@ -257,9 +282,25 @@ const fetchData = (page: string | undefined, sort: string | undefined) => {
 }
 ```
 
+- Đoạn mã này định nghĩa một hàm `fetchData` để mô phỏng việc tải dữ liệu từ một API dựa trên các tham số `page` và `sort`. Dưới đây là giải thích từng phần của đoạn mã:
+
+1. `const fetchData`: Đây là việc khai báo một hàm tên là `fetchData`.
+
+2. `(page: string | undefined, sort: string | undefined)`: Đây là phần khai báo tham số của hàm. Hàm này nhận hai tham số: `page` và `sort`, cả hai đều có kiểu là `string` hoặc `undefined`. Kiểu dữ liệu `string | undefined` cho phép tham số có thể là một chuỗi hoặc `undefined`.
+
+3. `=>`: Đây là cú pháp trong JavaScript để định nghĩa một hàm (arrow function).
+
+4. `// Simulate fetching data from an API based on the page and sort parameters`: Đây là một chú thích (comment) giải thích rằng hàm này đang mô phỏng việc tải dữ liệu từ một API dựa trên các tham số `page` và `sort`.
+
+5. `console.log('Fetching data for page:', page);`: Đây là lệnh in ra thông tin về việc đang tải dữ liệu cho trang (`page`) nào. Đối số của `console.log()` là một chuỗi và giá trị của `page`.
+
+6. `console.log('Sorting by:', sort);`: Tương tự như trên, đây là lệnh in ra thông tin về việc đang sắp xếp dữ liệu theo trường (`sort`) nào.
+
+- Tóm lại, hàm `fetchData` trong đoạn mã mô phỏng việc lấy dữ liệu từ một API dựa trên các tham số `page` và `sort`, sau đó sử dụng `console.log()` để in ra thông tin liên quan đến việc tải và sắp xếp dữ liệu.
+
 ---
 
-✅✅ Đoạn 7 ✅✅
+✅✅ Đoạn 6 ✅✅
 
 ```jsx
 const handlePageChange = (newPage: string) => {
@@ -271,9 +312,43 @@ const handleSortChange = (newSort: string) => {
 }
 ```
 
+- Đoạn mã trên liên quan đến việc định nghĩa hai hàm `handlePageChange` và `handleSortChange` để thay đổi trạng thái của `currentPage` và `sortBy` dựa trên các thay đổi trong dữ liệu mới. Dưới đây là giải thích từng phần của đoạn mã:
+
+```jsx
+const handlePageChange = (newPage: string) => {
+  setCurrentPage(newPage)
+}
+```
+
+1. `const handlePageChange`: Đây là việc khai báo một hàm tên là `handlePageChange`.
+
+2. `(newPage: string)`: Đây là phần khai báo tham số của hàm. Hàm này nhận một tham số có tên là `newPage` và kiểu dữ liệu là `string`. Tham số này biểu diễn trang mới mà người dùng muốn chuyển đến.
+
+3. `=>`: Đây là cú pháp trong JavaScript để định nghĩa một hàm (arrow function).
+
+4. `setCurrentPage(newPage);`: Đây là một hàm được gọi để cập nhật giá trị (state) của `currentPage` bằng giá trị mới `newPage` mà người dùng đã chọn.
+
+```jsx
+const handleSortChange = (newSort: string) => {
+  setSortBy(newSort)
+}
+```
+
+- Tương tự như trên:
+
+1. `const handleSortChange`: Đây là việc khai báo một hàm tên là `handleSortChange`.
+
+2. `(newSort: string)`: Đây là phần khai báo tham số của hàm. Hàm này nhận một tham số có tên là `newSort` và kiểu dữ liệu là `string`. Tham số này biểu diễn trường sắp xếp mới mà người dùng muốn chọn.
+
+3. `=>`: Đây là cú pháp định nghĩa trong JavaScript để định nghĩa một hàm (arrow function).
+
+4. `setSortBy(newSort);`: Gọi hàm `setSortBy` để cập nhật giá trị (state) của `sortBy` bằng giá trị mới `newSort`.
+
+- Tóm lại, hai hàm `handlePageChange` và `handleSortChange` trong đoạn mã dùng để cập nhật trạng thái của `currentPage` và `sortBy` dựa trên thay đổi mà người dùng thực hiện. Khi người dùng thay đổi trang hoặc trường sắp xếp, các hàm này được gọi để cập nhật trạng thái tương ứng, dẫn đến việc kích hoạt hook `useEffect` (được giải thích trong các câu trước) để tải dữ liệu mới từ API.
+
 ---
 
-✅✅ Đoạn 8 ✅✅
+✅✅ Đoạn 7 ✅✅
 
 ```jsx
 return (
@@ -287,5 +362,27 @@ return (
   </div>
 )
 ```
+
+- Đoạn mã này liên quan đến việc tạo giao diện người dùng cho component và tương tác với trạng thái (state) `currentPage` và `sortBy`. Dưới đây là giải thích từng phần của đoạn mã:
+
+1. `return (`: Đây là khai báo của phần trả về JSX của component. JSX là cú pháp tương tự HTML và có thêm những đoạn code JavaScript được sử dụng trong React để tạo giao diện người dùng. JSX cho phép lập trình viên viết các phần tử HTML bằng JavaScript và đặt chúng trong DOM mà không cần bất kỳ phương thức nào `createElement()` hoặc `appendChild()`.
+
+2. `<div>`: Đây là một phần tử JSX để bao quanh tất cả các phần tử con trong component.
+
+3. `<h1>My Component</h1>`: Đây là một phần tử tiêu đề của HTML để hiển thị tiêu đề "My Component".
+
+4. `<p>Current Page: {currentPage}</p>`: Đây là một phần tử đoạn văn bản để hiển thị trang hiện tại mà người dùng đang ở, được lấy từ biến `currentPage`.
+
+5. `<p>Sort By: {sortBy}</p>`: Đây là một phần tử đoạn văn bản để hiển thị trường sắp xếp hiện tại mà người dùng đang chọn, được lấy từ biến `sortBy`.
+
+6. `<button onClick={() => handlePageChange('2')}>Go to Page 2</button>`: Đây là một nút bấm để chuyển đến trang 2 khi người dùng nhấn vào nút. Sự kiện onClick sẽ gọi hàm `handlePageChange('2')` để cập nhật trạng thái `currentPage` sang trang 2.
+
+7. `<button onClick={() => handleSortChange('name')}>Sort by Name</button>`: Đây là nút bấm để sắp xếp theo tên khi người dùng nhấn vào nút. Sự kiện onClick sẽ gọi hàm `handleSortChange('name')` để cập nhật trạng thái `sortBy` sang trường 'name'.
+
+8. `<button onClick={() => handleSortChange('price')}>Sort by Price</button>`: Tương tự như trên, đây là nút bấm để sắp xếp theo giá khi người dùng nhấn vào nút. Sự kiện onClick sẽ gọi hàm `handleSortChange('price')` để cập nhật trạng thái sortBy sang trường 'price'.
+
+9. `</div>`: Đóng phần tử <div>.
+
+- Tóm lại, đoạn mã JSX này tạo ra một giao diện người dùng cho component với các phần tử hiển thị thông tin về trang hiện tại và trường sắp xếp hiện tại, cùng với các nút bấm để thay đổi trạng thái dựa trên hành động của người dùng.
 
 ---
