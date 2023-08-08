@@ -221,6 +221,16 @@ const queryParams = Object.fromEntries([...searchParams]) as QueryParams;
 
 ❌❌ Object.fromEntries([...searchParams]) nói nôm na là chuyển từ array sang object hả ? ❌❌
 
+- Chính xác, bạn đã nắm bắt ý nghĩa của `Object.fromEntries([...searchParams])` một cách chính xác.
+
+- Đoạn mã này thực hiện việc chuyển đổi một mảng các cặp key-value (hoặc mảng 2 phần tử) từ đối tượng `SearchParams` thành một đối tượng JavaScript thông thường.
+
+- Trong ngữ cảnh của URL query parameters, `SearchParams` đại diện cho một tập hợp các query parameters và giá trị của chúng, mỗi cặp key-value được biểu diễn bởi một mảng chứa hai phần tử. Hàm `Object.fromEntries([...searchParams])` sẽ chuyển đổi mảng các cặp key-value này thành một đối tượng JavaScript, trong đó key của mỗi cặp sẽ là thuộc tính của đối tượng, và giá trị tương ứng sẽ là giá trị của thuộc tính đó.
+
+- Ví dụ, giả sử có một `SearchParams` như sau: `[['page', '1'], ['sortBy', 'name']]`. Sau khi áp dụng `Object.fromEntries([...searchParams])`, bạn sẽ có một đối tượng như sau: `{ page: '1', sortBy: 'name' }`.
+
+- Mục đích của việc này là để dễ dàng làm việc với các query parameters như là một đối tượng thông thường trong mã của bạn.
+
 ---
 
 ✅✅ Đoạn 4 ✅✅
