@@ -354,3 +354,40 @@ export type RefreshTokenReponse = SuccessResponse<{ access_token: string }>
 - Những loại Token này có thể được sử dụng tùy theo mục đích và phương thức xác thực cụ thể của hệ thống. Trong mỗi trường hợp, loại Token được sử dụng sẽ có cách thức hoạt động và mục đích sử dụng riêng biệt.
 
 ---
+
+**Authentication là gì ?**
+
+- Authentication (Xác thực) là quá trình xác định và xác minh danh tính của một thực thể (người dùng, hệ thống, ứng dụng, vv.) để đảm bảo rằng thực thể đó thật sự là người hoặc thực thể mà nó tuyên bố là. Quá trình xác thực giúp đảm bảo rằng chỉ những người dùng hoặc thực thể có quyền thực hiện các hoạt động hoặc truy cập vào các tài nguyên cụ thể mới được phép.
+
+- Trong ngữ cảnh của ứng dụng web hoặc hệ thống, quá trình xác thực thường liên quan đến việc người dùng cung cấp thông tin đăng nhập (chẳng hạn tên đăng nhập và mật khẩu) để chứng minh danh tính của họ. Sau đó, hệ thống sẽ xác minh thông tin này và xác định xem người dùng có quyền truy cập vào hệ thống hay không.
+
+- Một số phương pháp phổ biến trong quá trình xác thực bao gồm:
+
+- `Username/Password Authentication`: Người dùng cung cấp tên đăng nhập và mật khẩu để xác thực. Hệ thống so sánh thông tin này với dữ liệu lưu trữ để xác định xem người dùng có hợp lệ hay không.
+
+- `Token-Based Authentication`: Thay vì sử dụng tên đăng nhập và mật khẩu mỗi lần, người dùng đăng nhập một lần và nhận được một token (mã thông báo) xác thực. Token này được sử dụng trong các yêu cầu sau này để xác định danh tính và quyền của người dùng.
+
+- `Biometric Authentication`: Sử dụng thông tin sinh trắc học của người dùng như vân tay, khuôn mặt, hoặc mống mắt để xác thực.
+
+- `Multi-Factor Authentication (MFA)`: Yêu cầu người dùng cung cấp nhiều yếu tố xác thực khác nhau, chẳng hạn mật khẩu và mã OTP (one-time password).
+
+- `Social Media Authentication`: Sử dụng thông tin xác thực từ tài khoản mạng xã hội của người dùng.
+
+- Quá trình xác thực đóng vai trò quan trọng trong việc bảo mật thông tin cá nhân và đảm bảo rằng chỉ những người dùng có quyền truy cập được phép vào hệ thống.
+
+---
+
+**Authorization là gì ?**
+
+- Authorization (Ủy quyền) là quá trình xác định và kiểm tra quyền của một thực thể (người dùng, ứng dụng, hệ thống) để thực hiện các hành động hoặc truy cập vào các tài nguyên cụ thể trên hệ thống.
+
+- Trong bối cảnh bảo mật thông tin và hệ thống, quá trình ủy quyền đảm bảo rằng chỉ những thực thể có quyền hợp lệ mới được phép thực hiện các hoạt động hoặc truy cập vào tài nguyên cụ thể.
+
+- Mục tiêu chính của quá trình ủy quyền là đảm bảo tính bảo mật của hệ thống và ngăn ngừa việc truy cập trái phép hoặc lạm dụng quyền hạn. Các phân quyền và quy tắc ủy quyền định nghĩa rõ ràng và giới hạn quyền của từng thực thể dựa trên vai trò, quyền hạn, và ngữ cảnh.
+
+- Ví dụ:
+
+- Trong một ứng dụng quản lý, chỉ có quản trị viên mới có quyền tạo, sửa đổi hoặc xóa người dùng khác.
+- Trong một hệ thống tài khoản ngân hàng trực tuyến, người dùng chỉ có thể xem thông tin tài khoản của chính họ, không thể xem thông tin của người khác.
+- Một ứng dụng có thể ủy quyền cho một ứng dụng khác để thực hiện các yêu cầu API cụ thể, nhưng không cho phép truy cập hoặc thực hiện các yêu cầu khác.
+- Quá trình ủy quyền thường đi kèm với quá trình xác thực (authentication) để đảm bảo rằng người dùng thực sự là người họ tuyên bố và có quyền thực hiện các hành động cụ thể. Khi đã xác thực, quá trình ủy quyền đảm bảo rằng người dùng hoặc thực thể chỉ có thể thực hiện các hoạt động và truy cập vào các tài nguyên phù hợp với quyền của họ.
