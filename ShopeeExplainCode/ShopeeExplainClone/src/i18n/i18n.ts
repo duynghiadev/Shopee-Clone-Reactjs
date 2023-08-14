@@ -27,10 +27,11 @@ export const defaultNS = 'product'
 i18n.use(initReactI18next).init({
   resources,
   lng: 'vi',
-  ns: ['home', 'product'],
-  fallbackLng: 'vi',
-  defaultNS,
+  ns: ['home', 'product'], // String or array of namespaces to load
+  fallbackLng: 'vi', // Language to use if translations in user language are not available.
+  defaultNS, // Default namespace used if not passed to translation function
   interpolation: {
+    // Escape passed in values to avoid xss injection
     escapeValue: false // react already safes from xss
   }
 })
