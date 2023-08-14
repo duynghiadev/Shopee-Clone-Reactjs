@@ -113,3 +113,35 @@ const obj: RequiredFields = {
 - Trong ví dụ trên, `RequiredFields` sử dụng cú pháp `-?` để áp dụng trạng thái "bắt buộc" lên tất cả các thuộc tính trong `OriginalType`, làm cho chúng trở thành các thuộc tính bắt buộc trong `RequiredFields`.
 
 - Tóm lại, cú pháp `-?` trong TypeScript được sử dụng trong mapped type để thay đổi tính tùy chọn (optional) của thuộc tính sang tính bắt buộc (required).
+
+## Dưới đây là phần giải thích chi tiết đoạn code trên
+
+- Tất nhiên, tôi sẽ giải thích đoạn mã trên cho bạn:
+
+  - `type OriginalType = { ... };`
+
+  - `type OriginalType`: Đây là cách để định nghĩa một kiểu dữ liệu tùy chỉnh mới có tên là `OriginalType`.
+
+  - `{ name?: string; age?: number; }`: Đây là phần thân của kiểu `OriginalType`, định nghĩa hai thuộc tính tên `name` và `age`. Hai thuộc tính này có thể có hoặc không có giá trị, do đó được đánh dấu là tùy chọn bằng dấu `?` (optional).
+
+  - `type RequiredFields = { ... };`
+
+  - `type RequiredFields`: Đây là cách để định nghĩa một kiểu dữ liệu tùy chỉnh mới có tên là `RequiredFields`.
+
+  - `{ [P in keyof OriginalType]-?: OriginalType[P]; }`: Đây là cách tạo một mapped type mới từ `OriginalType`. Cụ thể:
+
+  - `[P in keyof OriginalType]`: Đây là cú pháp để lặp qua tất cả các thuộc tính của `OriginalType`. Mỗi thuộc tính được đại diện bởi biến `P`.
+
+  - `-?`: Cú pháp này sử dụng mapped type modifier để biến các thuộc tính từ tùy chọn sang bắt buộc. Điều này có nghĩa là các thuộc tính trong `RequiredFields` sẽ trở thành bắt buộc.
+
+  - `OriginalType[P]`: Đây là kiểu dữ liệu của thuộc tính tương ứng trong `OriginalType`.
+
+  - `const obj: RequiredFields = { ... };`
+
+  - `const obj`: Đây là cách để khai báo một hằng số có tên `obj`.
+
+  - `: RequiredFields`: Đây là cách để chỉ định rằng kiểu của hằng số `obj` phải tuân thủ theo kiểu `RequiredFields`, tức là một phiên bản của `OriginalType` mà các thuộc tính đã trở thành bắt buộc.
+
+  - `{ name: 'John', age: 30 }`: Đây là giá trị của hằng số `obj`. Bạn có thể thấy rằng cả `name` và `age` đều bắt buộc, dù trong `OriginalType` chúng có thể không bắt buộc.
+
+- Tóm lại, đoạn mã trên làm thay đổi kiểu `OriginalType` bằng cách sử dụng mapped type để tạo ra một kiểu mới là `RequiredFields`, trong đó các thuộc tính đã trở thành bắt buộc. Khi bạn khai báo một hằng số với kiểu `RequiredFields`, bạn phải cung cấp giá trị cho tất cả các thuộc tính, không thể bỏ sót chúng.
