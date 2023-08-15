@@ -206,6 +206,33 @@ export const schema = yup.object({
 })
 ```
 
+- Đoạn code này định nghĩa một schema kiểm tra (validation schema) sử dụng thư viện `Yup` để kiểm tra dữ liệu của các trường trong form.
+
+1. `yup.object({ ... })`: Tạo một schema kiểm tra dữ liệu cho một đối tượng.
+
+2. `email: yup.string().required('Email là bắt buộc')...`: Định nghĩa kiểm tra cho trường `email`:
+
+- `.string()`: Xác định rằng trường `email` là kiểu dữ liệu chuỗi.
+- `.required('Email là bắt buộc')`: Yêu cầu trường `email` không được trống.
+- `.email('Email không đúng định dạng')`: Kiểm tra định dạng `email` hợp lệ.
+- `.min(5, 'Độ dài từ 5 - 160 ký tự')`: Kiểm tra độ dài tối thiểu của trường `email` là 5 ký tự.
+- `.max(160, 'Độ dài từ 5 - 160 ký tự')`: Kiểm tra độ dài tối đa của trường `email` là 160 ký tự.
+
+3. `password: yup.string().required('Password là bắt buộc')...`: Định nghĩa kiểm tra cho trường `password`, tương tự như kiểm tra cho trường `email`.
+
+4. `confirm_password: handleConfirmPasswordYup('password')`: Gọi hàm `handleConfirmPasswordYup` để tạo schema kiểm tra cho trường `confirm_password`, kiểm tra bắt buộc, độ dài, và so sánh giá trị với trường `password`.
+
+5. `price_min: yup.string().test({ ... })`: Định nghĩa kiểm tra tùy chỉnh cho trường `price_min` bằng cách sử dụng `.test()`. Kiểm tra này sử dụng hàm `testPriceMinMax` để kiểm tra xem giá trị của `price_max` có lớn hơn hoặc bằng `price_min` hay không.
+
+6. `price_max: yup.string().test({ ... })`: Định nghĩa kiểm tra tùy chỉnh cho trường `price_max`, tương tự như trường `price_min`.
+
+7. `name: yup.string().trim().required('Tên sản phẩm là bắt buộc')`: Định nghĩa kiểm tra cho trường `name`:
+
+- `.trim()`: Loại bỏ khoảng trắng ở đầu và cuối chuỗi.
+- `.required('Tên sản phẩm là bắt buộc')`: Kiểm tra yêu cầu trường `name` không được trống.
+
+- Tóm lại, đoạn code này định nghĩa một schema kiểm tra dữ liệu cho các trường trong form, bao gồm kiểm tra định dạng email, độ dài, so sánh giá trị của `confirm_password` và `password`, và kiểm tra tùy chỉnh cho các trường `price_min` và `price_max`.
+
 ---
 
 ```jsx
@@ -221,16 +248,66 @@ export const userSchema = yup.object({
 })
 ```
 
+- Đoạn code này định nghĩa một schema kiểm tra (validation schema) dành cho dữ liệu của người dùng (user) trong một tình huống cụ thể. Nó sử dụng thư viện `Yup` để kiểm tra dữ liệu của các trường trong user schema.
+
+- `yup.object({ ... })`: Tạo một schema kiểm tra dữ liệu cho một đối tượng.
+
+- `name: yup.string().max(160, 'Độ dài tối đa là 160 ký tự')`: Định nghĩa kiểm tra cho trường `name`:
+
+  - `.string()`: Xác định rằng trường `name` là kiểu dữ liệu chuỗi.
+  - `.max(160, 'Độ dài tối đa là 160 ký tự')`: Kiểm tra độ dài tối đa của trường `name` là 160 ký tự.
+
+- `phone: yup.string().max(20, 'Độ dài tối đa là 20 ký tự')`: Định nghĩa kiểm tra cho trường `phone`:
+
+  - `.string()`: Xác định rằng trường `phone` là kiểu dữ liệu chuỗi.
+  - `.max(20, 'Độ dài tối đa là 20 ký tự')`: Kiểm tra độ dài tối đa của trường `phone` là 20 ký tự.
+
+- `address: yup.string().max(160, 'Độ dài tối đa là 160 ký tự')`: Định nghĩa kiểm tra cho trường `address`, tương tự như các trường trước đó.
+
+- `avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự')`: Định nghĩa kiểm tra cho trường `avatar`:
+
+  - `.string()`: Xác định rằng trường `avatar` là kiểu dữ liệu chuỗi.
+  - `.max(1000, 'Độ dài tối đa là 1000 ký tự')`: Kiểm tra độ dài tối đa của trường `avatar` là 1000 ký tự.
+
+- `date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khứ')`: Định nghĩa kiểm tra cho trường `date_of_birth`:
+
+  - `.date()`: Xác định rằng trường `date_of_birth` là kiểu dữ liệu ngày tháng.
+  - `.max(new Date(), 'Hãy chọn một ngày trong quá khứ')`: Kiểm tra ngày không được lớn hơn ngày hiện tại.
+
+- `password: schema.fields['password']`: Trường `password` sử dụng cùng kiểm tra như được định nghĩa trong schema `schema`.
+
+- `new_password: schema.fields['password']`: Tương tự như trường `password`, đối với `new_password`.
+
+- `confirm_password: handleConfirmPasswordYup('new_password')`: Gọi hàm `handleConfirmPasswordYup` để tạo schema kiểm tra cho trường `confirm_password`, sử dụng `new_password` để so sánh.
+
+- Tóm lại, đoạn code này định nghĩa một schema kiểm tra dữ liệu cho các trường của đối tượng người dùng (user), bao gồm các kiểm tra độ dài, kiểu dữ liệu và so sánh giá trị giữa các trường.
+
 ---
 
 ```jsx
 export type UserSchema = yup.InferType<typeof userSchema>
 ```
 
+- Dòng code này định nghĩa một kiểu dữ liệu mới có tên là `UserSchema`. Đây là kiểu dữ liệu được tạo ra bằng cách sử dụng `InferType` từ thư viện `Yup` để suy ra các kiểu dữ liệu của schema `userSchema` đã được định nghĩa trước đó.
+
+- Cụ thể, `userSchema` là một schema kiểm tra dữ liệu của các trường trong đối tượng người dùng, như tên, số điện thoại, địa chỉ, avatar, ngày sinh, mật khẩu và xác nhận mật khẩu. Khi chúng ta sử dụng `yup.InferType<typeof userSchema>`, thư viện `Yup` sẽ suy ra các kiểu dữ liệu cụ thể của các trường trong `userSchema` và tạo ra một kiểu dữ liệu mới dựa trên các kiểu dữ liệu này.
+
+- Ví dụ, nếu `userSchema` kiểm tra rằng trường `name` phải là kiểu chuỗi (string), thì kiểu `UserSchema` cũng sẽ áp dụng kiểu chuỗi cho trường `name`.
+
+- Tóm lại, dòng code này cho phép chúng ta tạo một kiểu dữ liệu mới `UserSchema` dựa trên schema kiểm tra `userSchema` đã được định nghĩa trước đó.
+
 ---
 
 ```jsx
 export type Schema = yup.InferType<typeof schema>
 ```
+
+- Dòng code này định nghĩa một kiểu dữ liệu mới có tên là `Schema`. Tương tự như trước đó, chúng ta sử dụng `yup.InferType<typeof schema>` để suy ra các kiểu dữ liệu cụ thể của các trường trong schema `schema` đã được định nghĩa trước đó.
+
+- schema là một `schema` kiểm tra dữ liệu của các trường trong đối tượng, như email, password, confirm_password, price_min, price_max, và name. Khi chúng ta sử dụng `yup.InferType<typeof schema>`, thư viện `Yup` sẽ suy ra các kiểu dữ liệu cụ thể của các trường trong `schema` và tạo ra một kiểu dữ liệu mới dựa trên các kiểu dữ liệu này.
+
+- Ví dụ, nếu `schema` kiểm tra rằng trường `email` phải là kiểu chuỗi (string), thì kiểu `Schema` cũng sẽ áp dụng kiểu chuỗi cho trường `email`.
+
+- Tóm lại, dòng code này cho phép chúng ta tạo một kiểu dữ liệu mới `Schema` dựa trên schema kiểm tra `schema` đã được định nghĩa trước đó.
 
 ---
