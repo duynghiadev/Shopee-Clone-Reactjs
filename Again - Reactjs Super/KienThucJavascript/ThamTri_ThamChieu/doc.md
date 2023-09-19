@@ -253,3 +253,21 @@ Nó chỉ lỗi khi chúng ta set `user=...` thôi.
   - Sau đó, bạn chuyển đổi chuỗi JSON này trở lại thành một đối tượng JavaScript hoặc mảng bằng `JSON.parse()`. Bước này tạo ra một bản sao sâu của đối tượng gốc `obj`, bao gồm cả các đối tượng lồng nhau bên trong nếu có.
 
 - Mục đích chính của việc này là tạo một bản sao độc lập của đối tượng gốc mà không ảnh hưởng đến đối tượng gốc khi bạn thay đổi đối tượng sao chép. Điều này rất hữu ích khi bạn làm việc với dữ liệu và muốn giữ nguyên dữ liệu gốc trong khi thay đổi dữ liệu sao chép.
+
+### ✅✅ Hãy giải thích ✅✅
+
+## Tạo đối tượng và tham chiếu trong JavaScript
+
+- cho em hỏi tóm lược như sau đã chính xác chưa ạ? : - Khi bạn định nghĩa `const user = {name: "tuấn", age: 26}`, hai vùng nhớ mới được tạo ra: 1. Vùng nhớ lưu trữ đối tượng: Một vùng nhớ mới được cấp phát để lưu trữ đối tượng `{name: "tuấn", age: 26}`. Đối tượng này được lưu trữ trong vùng nhớ này với các thuộc tính `name` và `age`. 2. Vùng nhớ lưu trữ tham chiếu: Một vùng nhớ khác chứa địa chỉ (tham chiếu) của vùng nhớ chứa đối tượng. Tham chiếu này được đặt tên là `user`.
+
+- Trả lời:
+
+- **Mô tả cách hoạt động của đối tượng và tham chiếu**
+
+- Khi bạn định nghĩa `const user = {name: "tuấn", age: 26}`, hai vùng nhớ mới được tạo ra:
+
+1. **Vùng nhớ lưu trữ đối tượng:** Một vùng nhớ mới được cấp phát để lưu trữ đối tượng `{name: "tuấn", age: 26}`. Đối tượng này chứa các thuộc tính `name` và `age` và được lưu trữ trong vùng nhớ này.
+
+2. **Vùng nhớ lưu trữ tham chiếu:** Một vùng nhớ khác (mà bạn gọi là "vùng nhớ lưu trữ tham chiếu") chứa địa chỉ của vùng nhớ chứa đối tượng. Tham chiếu này, trong trường hợp này, là biến `user`. Tham chiếu này không lưu trữ trực tiếp đối tượng, mà chỉ chứa địa chỉ của nơi đối tượng được lưu trữ.
+
+- Khi bạn sử dụng biến `user`, nó sẽ trỏ đến địa chỉ của vùng nhớ lưu trữ đối tượng, cho phép bạn truy cập và thay đổi thuộc tính của đối tượng thông qua biến `user`.
