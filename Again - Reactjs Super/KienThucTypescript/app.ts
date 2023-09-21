@@ -187,6 +187,11 @@ class Person1 {
     this.age = age;
   }
 
+  /**
+   * - Thuộc tính money được khai báo là readonly, nên thuộc tính đó chỉ được đọc thôi.
+   * - Ở đây chúng ta sẽ gán thuộc tính money vào biến value và đọc nó => việc đó là đúng ✅
+   * - Còn chúng ta gán thuộc tính money vào 1 số hay 1 chuỗi (vd: this.money = 100) thì nó bị lỗi liền ❌
+   */
   handle() {
     let value = this.money;
   }
@@ -194,7 +199,11 @@ class Person1 {
 
 const alex = new Person1("Alex", 27);
 
-// alex.money = 200;
+/**
+ * - Bởi vị thuộc tính name là private, nên thuộc tính đó chỉ được khai báo trong class Person1 thôi.
+ * - Ở đây chúng ta gọi thuộc tính money bên ngoài class Person1, nên nó bị lỗi không thể run dòng code đó được.
+ */
+// alex.money = 200; // error ❌
 
 class Person2 {
   public name: string;
