@@ -83,3 +83,30 @@ const p3 = () =>
     console.log("Finally bonus async await");
   }
 })();
+
+/**
+ * Dùng Promise.all để tối ưu performance 🚀
+ */
+
+const p = (time) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(time);
+    }, time);
+  });
+
+// Thay vì dùng như thế này
+// const handle_1 = async () => {
+//   const v1 = await p(1000) // tốn 1s
+//   const v2 = await p(2000) // tốn 2s
+//   const v3 = await p(3000) // tốn 3s
+//   console.log('Finish') // tổng cộng tốn 6s
+// }
+
+// Thì dùng như thế này sẽ nhanh hơn
+const handle_1 = async () => {
+  const [v1, v2, v3] = await Promise.all([p(1000), p(2000), p(3000)]); // Chỉ tốn 3s
+  console.log("Promise.all Finish"); // tổng cộng tốn 3s
+};
+
+handle_1();
