@@ -4,7 +4,10 @@ import "core-js/modules/es.promise";
 import sum from "./untils";
 import "./styles/style.css";
 import "./styles/style.scss";
+import domHandler from "./dom";
 console.log(sum(100, 40));
+
+domHandler();
 
 // ES6 spread operator
 const person = {
