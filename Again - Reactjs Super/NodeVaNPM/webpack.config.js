@@ -14,6 +14,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[contenthash].js",
       clean: true,
+      assetModuleFilename: "[file]",
     },
     devtool: isDevelopment ? "source-map" : false,
     module: {
@@ -21,6 +22,10 @@ module.exports = (env) => {
         {
           test: /\.s[ac]ss|css$/,
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif|pdf)$/i,
+          type: "asset/resource",
         },
         {
           test: /\.js$/,
