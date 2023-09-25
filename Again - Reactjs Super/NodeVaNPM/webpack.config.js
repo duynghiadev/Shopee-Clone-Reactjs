@@ -29,4 +29,14 @@ module.exports = {
       template: "src/template.html",
     }),
   ],
+  devServer: {
+    static: {
+      directory: "dist", // Đường dẫn tương đối đến với thư mục chứa index.html
+    },
+    port: 3000, // Port thay cho port mặc định (8080)
+    open: true, // Mở trang webpack khi chạy terminal
+    hot: true, // Bật tính năng reload nhanh Hot Module Replacement
+    compress: true, // Bật Gzip cho các tài nguyên
+    historyApiFallback: true, // Set true nếu bạn dùng cho các SPA và sử dụng History API của HTML5
+  },
 };
