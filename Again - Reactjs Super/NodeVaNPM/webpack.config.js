@@ -1,10 +1,25 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = (env) => {
-  console.log(process.env.NODE_ENV);
-  const isDevelopment = process.env.NODE_ENV === "development";
+  const basePlugins = [
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+    new HtmlWebpackPlugin({
+      title: "Webpack App",
+      filename: "index.html",
+      template: "src/template.html",
+    }),
+  ];
+
+  const isDevelopment = Boolean(env.development);
+  const plugins = isDevelopment
+    ? basePlugins
+    : [...basePlugins, new BundleAnalyzerPlugin()];
   return {
     mode: isDevelopment ? "development" : "production",
     entry: {
@@ -24,10 +39,6 @@ module.exports = (env) => {
           use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
         {
-          test: /\.(png|svg|jpg|jpeg|gif|pdf)$/i,
-          type: "asset/resource",
-        },
-        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -39,25 +50,20 @@ module.exports = (env) => {
                   {
                     debug: true, // Hiển thị debug lên terminal để dễ debug
                     useBuiltIns: "entry",
-                    corejs: "3.32.2", // nên quy định verson core-js để babel-preset-env nó hoạt động tối ưu
+                    corejs: "3.23.4", // nên quy định verson core-js để babel-preset-env nó hoạt động tối ưu
                   },
                 ],
               ],
             },
           },
         },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif|pdf)$/i,
+          type: "asset/resource",
+        },
       ],
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: "[name].[contenthash].css",
-      }),
-      new HtmlWebpackPlugin({
-        title: "Webpack App",
-        filename: "index.html",
-        template: "src/template.html",
-      }),
-    ],
+    plugins,
     devServer: {
       static: {
         directory: "dist", // Đường dẫn tương đối đến với thư mục chứa index.html
