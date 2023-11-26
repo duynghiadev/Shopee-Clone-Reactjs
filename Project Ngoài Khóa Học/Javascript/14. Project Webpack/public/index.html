@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog Management</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center text-info">Blog Management</h1>
+      <form class="mb-3">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Title"
+          />
+        </div>
+        <div class="mb-3">
+          <textarea
+            id="description"
+            class="form-control"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary" id="btn-add">Add</button>
+        <div class="d-none justify-content-between" id="btn-group">
+          <button class="btn btn-dark" id="btn-back">Back</button>
+          <button class="btn btn-info" id="btn-edit">Save</button>
+        </div>
+      </form>
+      <div id="notification"></div>
+      <h2 class="mb-3 text-center">
+        Posts
+      </h2>
+      <div id="list">
+      </div>
+    </div>
+
+    <noscript> You need to enable JavaScript to run this app. </noscript>
+    <script src="../dist/bundle.js"></script>
+  </body>
+</html>

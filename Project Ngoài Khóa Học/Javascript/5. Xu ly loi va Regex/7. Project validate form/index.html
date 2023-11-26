@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project validate</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center text-info">Project Validate Form</h1>
+      <form novalidate>
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-2 col-form-label">Tên</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="name" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="gender" class="col-sm-2 col-form-label">Giới tính</label>
+          <div class="col-sm-10">
+            <select class="form-select" id="gender">
+              <option value="" selected>Chọn</option>
+              <option value="1">Nam</option>
+              <option value="2">Nữ</option>
+              <option value="3">Khác</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="nation" class="col-sm-2 col-form-label">Quốc gia</label>
+          <div class="col-sm-10">
+            <div class="form-check  form-check-nation">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="nation"
+                id="vietnam"
+                value="vietnam"
+              />
+              <label class="form-check-label" for="vietnam"> Việt nam </label>
+            </div>
+            <div class="form-check form-check-nation">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="nation"
+                id="other"
+                value="other"
+              />
+              <label class="form-check-label" for="other"> Khác </label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-2 col-form-label">Mật khẩu</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="password" />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="confirmedPassword" class="col-sm-2 col-form-label"
+            >Nhập lại mật khẩu</label
+          >
+          <div class="col-sm-10">
+            <input
+              type="password"
+              class="form-control"
+              id="confirmedPassword"
+            />
+          </div>
+        </div>
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="true"
+            id="agree"
+          />
+          <label class="form-check-label" for="agree">
+            Tôi đồng ý với quy định và điều khoản
+          </label>
+        </div>
+        <button class="btn btn-primary">Đăng ký</button>
+      </form>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

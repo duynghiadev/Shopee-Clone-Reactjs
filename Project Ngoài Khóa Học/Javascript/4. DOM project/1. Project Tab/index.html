@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <style>
+      .tab-content-item {
+        display: none;
+        width: 300px;
+      }
+
+      .tab-content-item.active {
+        display: block;
+      }
+
+      .tab-content-item img {
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navtab mb-3">
+        <button class="btn btn-secondary navtab-btn active" id="1">Quần áo</button>
+        <button class="btn btn-secondary navtab-btn" id="2">Giày dép</button>
+        <button class="btn btn-secondary navtab-btn" id="3">Mỹ phẩm</button>
+      </div>
+      <div class="tab-content">
+        <div class="tab-content-item " data-tab="1">
+          <img src="https://img.global.news.samsung.com/global/wp-content/uploads/2020/11/AirDresser2_main1.jpg" alt="">
+        </div>
+        <div class="tab-content-item active" data-tab="2">
+          <img src="https://giayvietnamxuatkhau.vn/uploads/images/bai-viet/26172140-1663701130319153-1419404233214043206-o-1-.jpg" alt="">
+        </div>
+        <div class="tab-content-item" data-tab="3">
+          <img src="https://owa.bestprice.vn/images/articles/uploads/tu-a-z-kinh-nghiem-mua-my-pham-han-quoc-chat-luong-tiet-kiem-5e8698f6a74c9.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
