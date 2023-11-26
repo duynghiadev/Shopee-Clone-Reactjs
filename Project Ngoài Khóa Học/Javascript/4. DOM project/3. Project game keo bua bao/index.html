@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game kéo búa bao</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <style>
+      .user, #computer {
+        font-size: 5rem;
+      }
+      .user {
+        min-width: 130px;
+      }
+      #notification {
+        max-width: 300px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center text-info">Game kéo búa bao</h1>
+      <div class="row mb-5">
+        <div class="col-6">
+          <h2 class="text-center">Người chơi</h2>
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="mb-3">
+              <button class="btn btn-outline-warning user" id="scissors">
+                ✌️
+              </button>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-outline-warning user" id="rock">✊</button>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-outline-warning user" id="paper">
+                🖐
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="d-flex flex-column h-100">
+            <h2 class="text-center">Máy tính</h2>
+            <div
+              class="align-items-center d-flex flex-grow-1 justify-content-center"
+            >
+              <span id="computer">✊</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="notification"></div>
+      <div id="play-again" class="text-center d-none">
+        <button class="btn btn-primary btn-play-again">Chơi lại</button>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

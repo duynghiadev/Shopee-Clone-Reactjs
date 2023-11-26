@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tính toán khoản vay</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Tính toán khoản vay</h1>
+      <p class="text-center">Trả trên dư nợ ban đầu</p>
+      <form class="mb-3">
+        <div class="row">
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="loan">Số tiền vay</label>
+              <input type="number" id="loan" class="form-control" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="months">Thời hạn vay</label>
+              <input type="number" id="months" class="form-control" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="rate">Lãi suất cho vay</label>
+              <input type="number" id="rate" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="disbursementDate">Ngày giải ngân</label>
+              <input type="date" id="disbursementDate" class="form-control" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="interest">Số tiền lãi phải trả</label>
+              <input type="text" id="interest" class="form-control" readonly/>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-3">
+              <label for="originalAndInterest">Số gốc tiền lãi phải trả</label>
+              <input type="text" id="originalAndInterest" class="form-control" readonly/>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-primary">
+            Tính toán khoản vay
+          </button>
+        </div>
+      </form>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kì trả nợ</th>
+            <th>Trả gốc</th>
+            <th>Trả lãi</th>
+            <th>Trả gốc và lãi</th>
+            <th>Số gốc còn lại</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
