@@ -9,7 +9,6 @@ describe('Profile', () => {
   it('Hiển thị trang profile', async () => {
     setAccessTokenToLS(access_token)
     const { container } = renderWithRouter({ route: path.profile })
-
     await waitFor(() => {
       expect((container.querySelector('form input[placeholder="Tên"]') as HTMLInputElement).value).toBe('Dư Thanh Được')
     })

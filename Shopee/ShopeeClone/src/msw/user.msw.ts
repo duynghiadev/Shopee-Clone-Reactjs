@@ -6,13 +6,13 @@ import { access_token_1s } from './auth.msw'
 const meRes = {
   message: 'Lấy người dùng thành công',
   data: {
-    _id: '64abad6e1afc2e1a1f96b283',
+    _id: '636f935e5fdc5f037e6f68d3',
     roles: ['User'],
-    email: 'buck@gmail.com',
-    createdAt: '2023-07-10T07:04:14.644Z',
-    updatedAt: '2023-07-26T09:34:40.346Z',
-    avatar: '003f02dd-a5c8-49a8-a284-22e94112014c.jpg',
-    name: 'kid buck'
+    email: 'd3@gmail.com',
+    createdAt: '2022-11-12T12:36:46.282Z',
+    updatedAt: '2022-12-02T07:57:45.069Z',
+    avatar: 'a59b50bf-511c-4603-ae90-3ccc63d373a9.png',
+    name: 'Dư Thanh Được'
   }
 }
 

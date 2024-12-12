@@ -1,49 +1,44 @@
-import '../src/index.css'
 import React from 'react'
-import { HelmetProvider } from 'react-helmet-async'
-import ErrorBoundary from '../src/components/ErrorBoundary'
+import type { Preview } from '@storybook/react'
+import '../src/index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppProvider } from '../src/contexts/app.context'
-import { withRouter } from 'storybook-addon-react-router-v6'
-
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/
-    }
-  }
-}
+import { HelmetProvider } from 'react-helmet-async'
+import ErrorBoundary from '../src/components/ErrorBoundary'
+import { withRouter } from 'storybook-addon-remix-react-router'
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: false
-    },
-    mutations: {
-      retry: false
+      refetchOnWindowFocus: false,
+      retry: 0
     }
-  },
-  logger: {
-    log: console.log,
-    warn: console.warn,
-    // no more errors on the console
-    error: () => null
   }
 })
 
-export const decorators = [
-  withRouter,
-  (Story) => (
-    <QueryClientProvider client={queryClient}>
-      <AppProvider>
-        <HelmetProvider>
-          <ErrorBoundary>
-            <Story />
-          </ErrorBoundary>
-        </HelmetProvider>
-      </AppProvider>
-    </QueryClientProvider>
-  )
-]
+const preview: Preview = {
+  parameters: {
+    controls: {
+      matchers: {
+        color: /(background|color|bc)$/i,
+        date: /Date$/i
+      }
+    }
+  },
+  decorators: [
+    withRouter,
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <AppProvider>
+          <HelmetProvider>
+            <ErrorBoundary>
+              <Story />
+            </ErrorBoundary>
+          </HelmetProvider>
+        </AppProvider>
+      </QueryClientProvider>
+    )
+  ]
+}
+
+export default preview

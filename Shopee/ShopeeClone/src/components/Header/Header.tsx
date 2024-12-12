@@ -49,7 +49,7 @@ export default function Header() {
                 placeholder='Free Ship Đơn Từ 0Đ'
                 {...register('name')}
               />
-              <button className='flex-shrink-0 rounded-sm bg-orange px-6 py-2 hover:opacity-90'>
+              <button className='flex-shrink-0 rounded-sm bg-orange py-2 px-6 hover:opacity-90'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -131,7 +131,7 @@ export default function Header() {
                   />
                 </svg>
                 {purchasesInCart && purchasesInCart.length > 0 && (
-                  <span className='absolute left-[17px] top-[-5px] rounded-full bg-white px-[9px] py-[1px] text-xs text-orange '>
+                  <span className='absolute top-[-5px] left-[17px] rounded-full bg-white px-[9px] py-[1px] text-xs text-orange '>
                     {purchasesInCart?.length}
                   </span>
                 )}

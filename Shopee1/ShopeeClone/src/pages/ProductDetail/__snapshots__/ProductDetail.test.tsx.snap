@@ -1,0 +1,47 @@
+// Vitest Snapshot v1
+
+exports[`ProductDetail > Render UI ProductDetail 1`] = `
+<body>
+  <div>
+    <main
+      class="flex h-screen w-full flex-col items-center justify-center"
+    >
+      <h1
+        class="text-9xl font-extrabold tracking-widest text-gray-900"
+      >
+        500
+      </h1>
+      <div
+        class="absolute rotate-12 rounded bg-orange px-2 text-sm text-white"
+      >
+        Error!
+      </div>
+      <button
+        class="mt-5"
+      >
+        <a
+          class="active:text-orange-500 group relative inline-block text-sm font-medium text-white focus:outline-none focus:ring"
+          href="/"
+        >
+          <span
+            class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-orange transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+          />
+          <span
+            class="relative block border border-current px-8 py-3"
+          >
+            <span>
+              Go Home
+            </span>
+          </span>
+        </a>
+      </button>
+    </main>
+  </div>
+  <div
+    id=":r0:"
+  />
+  <div
+    id=":r1:"
+  />
+</body>
+`;

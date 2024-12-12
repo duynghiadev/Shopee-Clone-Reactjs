@@ -1,6 +1,5 @@
 import type { RegisterOptions, UseFormGetValues } from 'react-hook-form'
 import * as yup from 'yup'
-import { AnyObject } from 'yup/lib/types'
 
 type Rules = { [key in 'email' | 'password' | 'confirm_password']?: RegisterOptions }
 
@@ -58,7 +57,7 @@ export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
   }
 })
 
-function testPriceMinMax(this: yup.TestContext<AnyObject>) {
+function testPriceMinMax(this: yup.TestContext<yup.AnyObject>) {
   const { price_max, price_min } = this.parent as { price_min: string; price_max: string }
   if (price_min !== '' && price_max !== '') {
     return Number(price_max) >= Number(price_min)
@@ -107,9 +106,14 @@ export const userSchema = yup.object({
   address: yup.string().max(160, 'Độ dài tối đa là 160 ký tự'),
   avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
-  password: schema.fields['password'],
-  new_password: schema.fields['password'],
-  confirm_password: handleConfirmPasswordYup('new_password')
+  password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  new_password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  confirm_password: handleConfirmPasswordYup('new_password') as yup.StringSchema<
+    string | undefined,
+    yup.AnyObject,
+    undefined,
+    ''
+  >
 })
 
 export type UserSchema = yup.InferType<typeof userSchema>

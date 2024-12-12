@@ -26,7 +26,7 @@ Chia theo quy mô
 
 Những công ty mình làm nhiều công ty còn không viết test cơ, vì thời gian đâu mà viết test. Code còn không kịp cơ mà.
 
-_Còn KMS của công ty anh làm thì team mình viết code trước, test sau nhé._
+Còn KMS thì team mình viết code trước, test sau nhé.
 
 Sau khi viết xong unit test, chạy xong rồi thì đưa cho tester test bằng tay hoặc automation test
 
@@ -36,7 +36,7 @@ Viết đến khi nào cảm thấy bao quát đủ hết yêu cầu của dự 
 
 Nhưng có còn hơn không!
 
-## Unit test ở ReactJS
+## Unit test ở React
 
 Ngày trước thì người ta sẽ dùng combo Jest + React Testing library để viết unit test. Trong đó Jest là thư viện chuyên để viết Unit test cho Javascript
 

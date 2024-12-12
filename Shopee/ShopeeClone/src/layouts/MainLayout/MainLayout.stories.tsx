@@ -1,31 +1,27 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
+
 import MainLayout from './MainLayout'
-import ProductDetail from 'src/pages/ProductDetail'
-export default {
-  title: 'Layouts/MainLayout',
+
+// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const meta = {
+  title: 'Shopee/MainLayout',
   component: MainLayout,
-  argTypes: {
-    children: {
-      description: 'Body của layout',
-      table: { type: { summary: 'React.ReactNode' } }
-    }
-  }
-} as ComponentMeta<typeof MainLayout>
-
-const Template: ComponentStory<typeof MainLayout> = (props) => <MainLayout {...props} />
-
-export const Primary = Template.bind({})
-export const PageProductDetail = Template.bind({})
-
-PageProductDetail.args = {
-  children: <ProductDetail />
-}
-
-PageProductDetail.story = {
   parameters: {
-    reactRouter: {
-      routePath: '/:nameId',
-      routeParams: { nameId: 'Điện-thoại-OPPO-A12-3GB32GB--Hàng-chính-hãng-i-60afb2426ef5b902180aacb9' }
-    }
+    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
+    layout: 'fullscreen'
+  },
+  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
+  tags: ['autodocs']
+  // More on argTypes: https://storybook.js.org/docs/api/argtypes
+  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+} satisfies Meta<typeof MainLayout>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+export const Primary: Story = {
+  args: {
+    children: <div>Page đặt vào đây</div>
   }
 }

@@ -11,15 +11,15 @@ export default function InputFile({ onChange }: Props) {
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = event.target.files?.[0]
+    fileInputRef.current?.setAttribute('value', '')
     if (fileFromLocal && (fileFromLocal.size >= config.maxSizeUploadAvatar || !fileFromLocal.type.includes('image'))) {
-      toast.error(`Dung lượng file tối đa 1MB. Định dạng: .JPEG, .PNG`, {
+      toast.error(`Dụng lượng file tối đa 1 MB. Định dạng:.JPEG, .PNG`, {
         position: 'top-center'
       })
     } else {
       onChange && onChange(fileFromLocal)
     }
   }
-
   const handleUpload = () => {
     fileInputRef.current?.click()
   }

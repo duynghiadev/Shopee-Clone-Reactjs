@@ -23,7 +23,7 @@ describe('http axios', () => {
     // Nên có 1 cái account test
     // và 1 server test
     await http.post('login', {
-      email: 'buck@gmail.com',
+      email: 'd3@gmail.com',
       password: 'useruser'
     })
     const res = await http.get('me')

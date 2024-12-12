@@ -6,9 +6,7 @@ import RegisterHeader from 'src/components/RegisterHeader'
 interface Props {
   children?: React.ReactNode
 }
-
 function RegisterLayoutInner({ children }: Props) {
-  console.log('RegisterLayout')
   return (
     <div>
       <RegisterHeader />

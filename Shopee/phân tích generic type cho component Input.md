@@ -22,15 +22,15 @@ Ví dụ
 
 ```ts
 function identity<Type>(value: Type): Type {
-  return value;
+  return value
 }
 
 // Với trường hợp truyền type thì chúng ta sẽ có sự chặt chẽ
-const a = identity<string>("I'm a string"); // "a" sẽ là kiểu "string"
+const a = identity<string>("I'm a string") // "a" sẽ là kiểu "string"
 
 // Không cần truyền type vẫn được, Cái generic type vẫn đóng
 // vai trò như là một cầu nối giữa các kiểu dữ liệu trong function
 // Chỉ là nó sẽ không như kỳ vọng khi chúng ta khai báo function thôi
-const val = "Được";
-const b = identity(val); // "b" sẽ là kiểu "Được"
+const val = 'Được'
+const b = identity(val) // "b" sẽ là kiểu "Được"
 ```

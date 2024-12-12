@@ -44,7 +44,9 @@ export default function ProductDetail() {
     staleTime: 3 * 60 * 1000,
     enabled: Boolean(product)
   })
-  const addToCartMutation = useMutation(purchaseApi.addToCart)
+  const addToCartMutation = useMutation({
+    mutationFn: purchaseApi.addToCart
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -102,28 +104,15 @@ export default function ProductDetail() {
       { buy_count: buyCount, product_id: product?._id as string },
       {
         onSuccess: (data) => {
-          toast.success(data.data.message, {
-            autoClose: 1000
-          })
-          queryClient.invalidateQueries({
-            queryKey: [
-              'purchases',
-              {
-                status: purchasesStatus.inCart
-              }
-            ]
-          })
+          toast.success(data.data.message, { autoClose: 1000 })
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
         }
       }
     )
   }
 
   const buyNow = async () => {
-    const res = await addToCartMutation.mutateAsync({
-      buy_count: buyCount,
-      product_id: product?._id as string
-    })
-
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: product?._id as string })
     const purchase = res.data.data
     navigate(path.cart, {
       state: {
@@ -158,7 +147,7 @@ export default function ProductDetail() {
                 <img
                   src={activeImage}
                   alt={product.name}
-                  className='absolute left-0 top-0 h-full w-full bg-white object-cover'
+                  className='absolute top-0 left-0 h-full w-full bg-white object-cover'
                   ref={imageRef}
                 />
               </div>
@@ -185,7 +174,7 @@ export default function ProductDetail() {
                       <img
                         src={img}
                         alt={product.name}
-                        className='absolute left-0 top-0 h-full w-full cursor-pointer bg-white object-cover'
+                        className='absolute top-0 left-0 h-full w-full cursor-pointer bg-white object-cover'
                       />
                       {isActive && <div className='absolute inset-0 border-2 border-orange' />}
                     </div>
@@ -290,7 +279,7 @@ export default function ProductDetail() {
         <div className='container'>
           <div className=' bg-white p-4 shadow'>
             <div className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</div>
-            <div className='mx-4 mb-4 mt-12 text-sm leading-loose'>
+            <div className='mx-4 mt-12 mb-4 text-sm leading-loose'>
               <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(product.description)

@@ -30,7 +30,6 @@ export default function Login() {
   const loginMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.login(body)
   })
-
   const onSubmit = handleSubmit((data) => {
     loginMutation.mutate(data, {
       onSuccess: (data) => {
@@ -86,9 +85,9 @@ export default function Login() {
               <div className='mt-3'>
                 <Button
                   type='submit'
-                  className='flex  w-full items-center justify-center bg-red-500 px-2 py-4 text-sm uppercase text-white hover:bg-red-600'
-                  isLoading={loginMutation.isLoading}
-                  disabled={loginMutation.isLoading}
+                  className='flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
+                  isLoading={loginMutation.isPending}
+                  disabled={loginMutation.isPending}
                 >
                   Đăng nhập
                 </Button>

@@ -15,19 +15,18 @@ import { URL_LOGIN, URL_LOGOUT, URL_REFRESH_TOKEN, URL_REGISTER } from 'src/apis
 import { isAxiosExpiredTokenError, isAxiosUnauthorizedError } from './utils'
 import { ErrorResponse } from 'src/types/utils.type'
 
-// API Purchase: 1 - 3 (bắt đầu gọi API từ giây 1 -> giây 3)
-// API Me: 2 - 5 (bắt đầu gọi API từ giây 2 -> giây 5)
-// API Refresh Token cho API purchase: 3 -  4 (sau khi API Purchase bị lỗi là bắt đầu từ giây 3)
-// Gọi lại Purchase: 4 - 6 (sau đó gọi lại Purchase từ giây 4 -> giây 6)
-// Refresh Token mới cho API me: 5 - 6 (sau khi Me hết hạn thì nó lỗi. Sau đó nó gọi lại refresh token cho Me. Bắt đầu từ giây 5 -> giây 6)
-// Gọi lại Me: 6 (cuối cùng thì nó gọi lại API Me từ giây thứ 6)
+// Purchase: 1 - 3
+// Me: 2 - 5
+// Refresh Token cho purchase: 3 -  4
+// Gọi lại Purchase: 4 - 6
+// Refresh Token mới cho me: 5 - 6
+// Gọi lại Me: 6
 
 export class Http {
   instance: AxiosInstance
   private accessToken: string
   private refreshToken: string
   private refreshTokenRequest: Promise<string> | null
-
   constructor() {
     this.accessToken = getAccessTokenFromLS()
     this.refreshToken = getRefreshTokenFromLS()
@@ -89,7 +88,7 @@ export class Http {
 
         // Nếu là lỗi 401
         if (isAxiosUnauthorizedError<ErrorResponse<{ name: string; message: string }>>(error)) {
-          const config = error.response?.config || {}
+          const config = error.response?.config || { headers: {}, url: '' }
           const { url } = config
           // Trường hợp Token hết hạn và request đó không phải là của request refresh token
           // thì chúng ta mới tiến hành gọi refresh token
@@ -105,13 +104,7 @@ export class Http {
                 })
             return this.refreshTokenRequest.then((access_token) => {
               // Nghĩa là chúng ta tiếp tục gọi lại request cũ vừa bị lỗi
-              return this.instance({
-                ...config,
-                headers: {
-                  ...config.headers,
-                  authorization: access_token
-                }
-              })
+              return this.instance({ ...config, headers: { ...config.headers, authorization: access_token } })
             })
           }
 

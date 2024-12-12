@@ -12,7 +12,7 @@ interface Props {
 Với range = 2 áp dụng cho khoảng cách đầu, cuối và xung quanh current_page
 
 [1] 2 3 ... 19 20
-1 [2] 3 4 ... 19 20
+1 [2] 3 4 ... 19 20 
 1 2 [3] 4 5 ... 19 20
 1 2 3 [4] 5 6 ... 19 20
 1 2 3 4 [5] 6 7 ... 19 20
@@ -30,14 +30,12 @@ Với range = 2 áp dụng cho khoảng cách đầu, cuối và xung quanh curr
  */
 
 const RANGE = 2
-
 export default function Pagination({ queryConfig, pageSize }: Props) {
   const page = Number(queryConfig.page)
 
   const renderPagination = () => {
     let dotAfter = false
     let dotBefore = false
-
     const renderDotBefore = (index: number) => {
       if (!dotBefore) {
         dotBefore = true
@@ -49,7 +47,6 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
       }
       return null
     }
-
     const renderDotAfter = (index: number) => {
       if (!dotAfter) {
         dotAfter = true

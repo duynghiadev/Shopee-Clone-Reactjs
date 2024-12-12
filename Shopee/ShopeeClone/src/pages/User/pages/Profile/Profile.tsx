@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import userApi from 'src/apis/user.api'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
+import InputFile from 'src/components/InputFile'
 import InputNumber from 'src/components/InputNumber'
 import { AppContext } from 'src/contexts/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
@@ -13,7 +14,6 @@ import { setProfileToLS } from 'src/utils/auth'
 import { userSchema, UserSchema } from 'src/utils/rules'
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import DateSelect from '../../components/DateSelect'
-import InputFile from 'src/components/InputFile'
 
 function Info() {
   const {
@@ -21,7 +21,6 @@ function Info() {
     control,
     formState: { errors }
   } = useFormContext<FormData>()
-
   return (
     <Fragment>
       <div className='mt-6 flex flex-col flex-wrap sm:flex-row'>
@@ -80,13 +79,17 @@ export default function Profile() {
     return file ? URL.createObjectURL(file) : ''
   }, [file])
 
-  const { data: profileData, refetch } = useQuery({
+  const { data: profileData } = useQuery({
     queryKey: ['profile'],
     queryFn: userApi.getProfile
   })
   const profile = profileData?.data.data
-  const updateProfileMutation = useMutation(userApi.updateProfile)
-  const uploadAvatarMutaion = useMutation(userApi.uploadAvatar)
+  const updateProfileMutation = useMutation({
+    mutationFn: userApi.updateProfile
+  })
+  const uploadAvatarMutaion = useMutation({
+    mutationFn: userApi.uploadAvatar
+  })
   const methods = useForm<FormData>({
     defaultValues: {
       name: '',
@@ -95,9 +98,8 @@ export default function Profile() {
       avatar: '',
       date_of_birth: new Date(1990, 0, 1)
     },
-    resolver: yupResolver(profileSchema)
+    resolver: yupResolver<FormData>(profileSchema)
   })
-
   const {
     register,
     control,
@@ -112,14 +114,14 @@ export default function Profile() {
 
   useEffect(() => {
     if (profile) {
-      setValue('name', profile.name)
-      setValue('phone', profile.phone)
-      setValue('address', profile.address)
-      setValue('avatar', profile.avatar)
+      setValue('name', profile.name || '')
+      setValue('phone', profile.phone || '')
+      setValue('address', profile.address || '')
+      setValue('avatar', profile.avatar || '')
       setValue('date_of_birth', profile.date_of_birth ? new Date(profile.date_of_birth) : new Date(1990, 0, 1))
     }
   }, [profile, setValue])
-
+  console.log(profile)
   const onSubmit = handleSubmit(async (data) => {
     try {
       let avatarName = avatar
@@ -137,7 +139,7 @@ export default function Profile() {
       })
       setProfile(res.data.data)
       setProfileToLS(res.data.data)
-      refetch()
+      // refetch()
       toast.success(res.data.message)
     } catch (error) {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormDataError>>(error)) {
@@ -185,7 +187,6 @@ export default function Profile() {
                   errorMessage={errors.address?.message}
                 />
               </div>
-              Info
             </div>
             <Controller
               control={control}
@@ -223,7 +224,6 @@ export default function Profile() {
               <div className='mt-3 text-gray-400'>
                 <div>Dụng lượng file tối đa 1 MB</div>
                 <div>Định dạng:.JPEG, .PNG</div>
-                In
               </div>
             </div>
           </div>

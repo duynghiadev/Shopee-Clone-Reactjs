@@ -12,6 +12,7 @@ import RatingStars from '../RatingStars'
 import omit from 'lodash/omit'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { useTranslation } from 'react-i18next'
+import { ObjectSchema } from 'yup'
 
 interface Props {
   queryConfig: QueryConfig
@@ -41,7 +42,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       price_min: '',
       price_max: ''
     },
-    resolver: yupResolver(priceSchema)
+    resolver: yupResolver<FormData>(priceSchema as ObjectSchema<FormData>)
   })
   const navigate = useNavigate()
   const onSubmit = handleSubmit((data) => {
@@ -105,7 +106,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
                 })}
               >
                 {isActive && (
-                  <svg viewBox='0 0 4 7' className='absolute left-[-10px] top-1 h-2 w-2 fill-orange'>
+                  <svg viewBox='0 0 4 7' className='absolute top-1 left-[-10px] h-2 w-2 fill-orange'>
                     <polygon points='4 3.5 0 0 0 7' />
                   </svg>
                 )}

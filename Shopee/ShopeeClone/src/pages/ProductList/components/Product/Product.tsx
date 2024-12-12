@@ -16,7 +16,7 @@ export default function Product({ product }: Props) {
           <img
             src={product.image}
             alt={product.name}
-            className='absolute left-0 top-0 h-full w-full bg-white object-cover'
+            className='absolute top-0 left-0 h-full w-full bg-white object-cover'
           />
         </div>
         <div className='overflow-hidden p-2'>

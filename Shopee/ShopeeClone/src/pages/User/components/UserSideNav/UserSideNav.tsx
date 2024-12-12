@@ -38,7 +38,7 @@ export default function UserSideNav() {
         <NavLink
           to={path.profile}
           className={({ isActive }) =>
-            classNames('flex items-center capitalize transition-colors', {
+            classNames('flex items-center capitalize  transition-colors', {
               'text-orange': isActive,
               'text-gray-600': !isActive
             })
@@ -66,7 +66,7 @@ export default function UserSideNav() {
         <NavLink
           to={path.historyPurchase}
           className={({ isActive }) =>
-            classNames('mt-4 flex items-center capitalize transition-colors', {
+            classNames('mt-4 flex items-center  capitalize transition-colors', {
               'text-orange': isActive,
               'text-gray-600': !isActive
             })
